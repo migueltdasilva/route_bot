@@ -1,7 +1,7 @@
 
 import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.TelegramBotsApi;
-import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 public class RouteBot extends Bot {
 

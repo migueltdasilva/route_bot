@@ -3,24 +3,29 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>nikita-alekhin</groupId>
     <artifactId>route_bot</artifactId>
     <version>1.0-SNAPSHOT</version>
-
     <dependencies>
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots</artifactId>
-            <version>3.5</version>
+            <version>4.5</version>
         </dependency>
     </dependencies>
     <build>
         <plugins>
             <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.10</source>
+                    <target>1.10</target>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>appassembler-maven-plugin</artifactId>
-                <version>1.5</version>
+                <version>1.7</version>
                 <configuration>
                     <assembleDirectory>target</assembleDirectory>
                     <programs>
