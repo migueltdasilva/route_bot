@@ -1,5 +1,7 @@
+
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -24,9 +26,22 @@ public class Bot extends TelegramLongPollingBot {
      * @param update Содержит сообщение от пользователя.
      */
     public void onUpdateReceived(Update update) {
+
         String message = update.getMessage().getText();
         System.out.println("MSG REC: " + message);
         sendMsg(update.getMessage().getChatId().toString(), message);
+    }
+
+    public synchronized void answerCallbackQuery(String callbackId, String message) {
+        AnswerCallbackQuery answer = new AnswerCallbackQuery();
+        answer.setCallbackQueryId(callbackId);
+        answer.setText(message);
+        answer.setShowAlert(true);
+        try {
+            execute(answer);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -38,6 +53,7 @@ public class Bot extends TelegramLongPollingBot {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
+
         sendMessage.setText(s);
         try {
             execute(sendMessage);
