@@ -1,4 +1,5 @@
 
+import com.sun.tools.sjavac.Log;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -86,7 +87,7 @@ public class RouteBot extends Bot {
             execute(sendMessage);
         } catch (TelegramApiException e) {
             e.printStackTrace();
-            //log.log(Level.SEVERE, "Exception: ", e.toString());
+            //Log.log(Level, "Exception: ", e.toString());
         }
     }
 
@@ -97,6 +98,8 @@ public class RouteBot extends Bot {
             Long chatId = msg.getChatId();
 
             String message = msg.getText();
+            System.out.println("LOG: onUpdateReceived: msg = " + message);
+
             if (message.equals("/start")) {
                 hmChat2Answers.put(chatId, new ArrayList<>());
 
@@ -116,18 +119,25 @@ public class RouteBot extends Bot {
 
             List<String> alAns =
                     hmChat2Answers.getOrDefault(chatId, new ArrayList<>());
+            System.out.println("LOG: onUpdateReceived: alAns = [" + alAns.stream().reduce("", (s, s2) -> s + " " + s2) + "]");
+            System.out.println("LOG: onUpdateReceived: has user = [" + hmChat2UserInfo.get(chatId) + "]");
             String msgText = "";
+            String chooseOpt = "0";
             if (alAns.size() == 0) {
+                chooseOpt = "1";
                 msgText = vQuestions[0];
                 hmChat2UserInfo.put(chatId, userName);
             } else if (alAns.size() == 6) {
                 //TODO
+                chooseOpt = "2";
                 sendMsg(adminChatId, alAns.stream().reduce("", (s, s2) -> s+ "\n" + s2));
                 msgText = "Кайф, спасибо! Передам Коле и Алине все ответы, они свяжутся с тобой в ближайшее время. Если хочешь начать заново, нажми сюда /start";
             } else {
+                chooseOpt = "3";
                 alAns.add(message);
                 msgText = vQuestions[alAns.size()];
             }
+            System.out.println("LOG: onUpdateReceived: msg text = [" + msgText + "] $ " + chooseOpt);
 
             sendMsg(chatId.toString(), msgText, false);
         }
