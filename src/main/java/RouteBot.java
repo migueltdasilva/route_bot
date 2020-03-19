@@ -2,6 +2,9 @@
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -11,7 +14,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RouteBot extends Bot {
 
@@ -19,34 +24,40 @@ public class RouteBot extends Bot {
     private static final String token = "900084418:AAEfgGDNoCUstvOCWlw3cBTGrny80h0rSK0";
     RouteBot() {
         super(name, token);
+        hmChat2Answers = new HashMap<>();
     }
 
-    public synchronized void setButtons(SendMessage sendMessage) {
-        // Создаем клавиуатуру
+    private static final String[] vTrips = new String[]{"Хочу в road trip по Киргизии"};
+    private static final String[] vQuestions = new String[]{
+            "Расскажи, пожалуйста, в двух словах, о себе: чем ты занимаешься," +
+                    " что ты любишь, почему хочешь поехать с нами?\n" +
+                    " (Обещаю, дальше вопросы будут попроще)",
+            "есть ли у тебя права и готов ли ты быть водителем (водительницей) одной из машин?",
+            "когда в последний раз ты ночевал в палатке и как вообще к ним относишься?",
+            "белое или красное?",
+            "пришли, пожалуйста, ссылки на свои соц сети (например, фейсбук и инстаграм)",
+            "Очень важный вопрос про любимый стикер.\n\n" +
+                    "Во-первых нужно выбрать один из множества любимых. \n" +
+                    "Во-вторых описать его словами, точнее голосом и прислать аудиосообщение сюда.\n\n" +
+                    "Не претендуем на звание стикерных знатоков, но попборуем угадать!"};
+
+    private Map<String, List<String>> hmChat2Answers;
+
+
+    public synchronized void setTripButtons(SendMessage sendMessage) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
         replyKeyboardMarkup.setOneTimeKeyboard(false);
 
-        // Создаем список строк клавиатуры
-        List<KeyboardRow> keyboard = new ArrayList<>();
-
-        // Первая строчка клавиатуры
-        KeyboardRow keyboardFirstRow = new KeyboardRow();
-        // Добавляем кнопки в первую строчку клавиатуры
-        keyboardFirstRow.add(new KeyboardButton("Привет"));
-
-        // Вторая строчка клавиатуры
-        KeyboardRow keyboardSecondRow = new KeyboardRow();
-        // Добавляем кнопки во вторую строчку клавиатуры
-        keyboardSecondRow.add(new KeyboardButton("Помощь"));
-
-        // Добавляем все строчки клавиатуры в список
-        keyboard.add(keyboardFirstRow);
-        keyboard.add(keyboardSecondRow);
-        // и устанваливаем этот список нашей клавиатуре
-        replyKeyboardMarkup.setKeyboard(keyboard);
+        List<KeyboardRow> alKeyboardRows = new ArrayList<>();
+        for (String trip : vTrips) {
+            KeyboardRow keyboardFirstRow = new KeyboardRow();
+            keyboardFirstRow.add(new KeyboardButton(trip));
+            alKeyboardRows.add(keyboardFirstRow);
+        }
+        replyKeyboardMarkup.setKeyboard(alKeyboardRows);
     }
 
     private void setInline() {
@@ -59,18 +70,15 @@ public class RouteBot extends Bot {
         markupKeyboard.setKeyboard(buttons);
     }
 
-    /**
-     * Метод для настройки сообщения и его отправки.
-     * @param chatId id чата
-     * @param s Строка, которую необходимот отправить в качестве сообщения.
-     */
-    @Override
-    public synchronized void sendMsg(String chatId, String s) {
+
+    public synchronized void sendMsg(String chatId, String s, boolean bBtn) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
         sendMessage.setText(s);
-        setButtons(sendMessage);
+        if (bBtn) {
+            setTripButtons(sendMessage);
+        }
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
@@ -78,7 +86,27 @@ public class RouteBot extends Bot {
             //log.log(Level.SEVERE, "Exception: ", e.toString());
         }
     }
-    
+
+
+    public void onUpdateReceived(Update update) {
+        if (update.hasMessage() && update.getMessage().hasText()) {
+            Message msg = update.getMessage();
+            String message = msg.getText();
+            System.out.println("MSG REC: " + message);
+            User usr = msg.getFrom();
+            String userName = "";
+            if (usr != null) {
+                userName = usr.getUserName();
+            }
+            sendMsg(
+                    msg.getChatId().toString(),
+                    message + " " + msg.getAuthorSignature() + " " +
+                            msg.getChatId() + " " + userName + " " + msg.getMessageId(),
+                    message.equals("/start"));
+        }
+    }
+
+
     public static void main(String[] args) {
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();

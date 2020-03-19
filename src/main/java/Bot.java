@@ -26,10 +26,11 @@ public class Bot extends TelegramLongPollingBot {
      * @param update Содержит сообщение от пользователя.
      */
     public void onUpdateReceived(Update update) {
-
-        String message = update.getMessage().getText();
-        System.out.println("MSG REC: " + message);
-        sendMsg(update.getMessage().getChatId().toString(), message);
+        if (update.hasMessage() && update.getMessage().hasText()) {
+            String message = update.getMessage().getText();
+            System.out.println("MSG REC: " + message);
+            sendMsg(update.getMessage().getChatId().toString(), message);
+        }
     }
 
     public synchronized void answerCallbackQuery(String callbackId, String message) {
