@@ -34,7 +34,7 @@ public class RouteBot extends Bot {
     private static final String[] vQuestions = new String[]{
             "Расскажи, пожалуйста, в двух словах, о себе: чем ты занимаешься," +
                     " что ты любишь, почему хочешь поехать с нами?\n" +
-                    " (Обещаю, дальше вопросы будут попроще)",
+                    "(Обещаю, дальше вопросы будут попроще)",
             "есть ли у тебя права и готов ли ты быть водителем (водительницей) одной из машин?",
             "когда в последний раз ты ночевал в палатке и как вообще к ним относишься?",
             "белое или красное?",
@@ -124,7 +124,7 @@ public class RouteBot extends Bot {
             System.out.println("LOG: onUpdateReceived: has user = [" + hmChat2UserInfo.get(chatId) + "]");
             String msgText = "";
             String chooseOpt = "0";
-            if (alAns.size() == 0) {
+            if (alAns.size() == 0 && hmChat2UserInfo.get(chatId) == null) {
                 chooseOpt = "1";
                 msgText = vQuestions[0];
                 hmChat2UserInfo.put(chatId, userName);
