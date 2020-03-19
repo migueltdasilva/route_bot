@@ -22,6 +22,8 @@ public class RouteBot extends Bot {
 
     private static final String name = "RouteTestBot";
     private static final String token = "900084418:AAEfgGDNoCUstvOCWlw3cBTGrny80h0rSK0";
+    private static final String adminChatId = "3099992";
+
     RouteBot() {
         super(name, token);
         hmChat2Answers = new HashMap<>();
@@ -41,7 +43,8 @@ public class RouteBot extends Bot {
                     "Во-вторых описать его словами, точнее голосом и прислать аудиосообщение сюда.\n\n" +
                     "Не претендуем на звание стикерных знатоков, но попборуем угадать!"};
 
-    private Map<String, List<String>> hmChat2Answers;
+    private Map<Long, List<String>> hmChat2Answers;
+    private Map<Long, String> hmChat2UserInfo;
 
 
     public synchronized void setTripButtons(SendMessage sendMessage) {
@@ -91,21 +94,44 @@ public class RouteBot extends Bot {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             Message msg = update.getMessage();
+            Long chatId = msg.getChatId();
+
             String message = msg.getText();
-            System.out.println("MSG REC: " + message);
+            if (message.equals("/start")) {
+                hmChat2Answers.put(chatId, new ArrayList<>());
+
+                sendMsg(
+                        chatId.toString(),
+                        "Привет! Тут можно записаться в поездку рута ⚡️", true);
+
+                return;
+            }
+
+
             User usr = msg.getFrom();
             String userName = "";
             if (usr != null) {
                 userName = usr.getUserName();
             }
-            sendMsg(
-                    msg.getChatId().toString(),
-                    message + " " + msg.getAuthorSignature() + " " +
-                            msg.getChatId() + " " + userName + " " + msg.getMessageId(),
-                    message.equals("/start"));
+
+            List<String> alAns =
+                    hmChat2Answers.getOrDefault(chatId, new ArrayList<>());
+            String msgText = "";
+            if (alAns.size() == 0) {
+                msgText = vQuestions[0];
+                hmChat2UserInfo.put(chatId, userName);
+            } else if (alAns.size() == 6) {
+                //TODO
+                sendMsg(adminChatId, alAns.stream().reduce("", (s, s2) -> s+ "\n" + s2));
+                msgText = "Кайф, спасибо! Передам Коле и Алине все ответы, они свяжутся с тобой в ближайшее время. Если хочешь начать заново, нажми сюда /start";
+            } else {
+                alAns.add(message);
+                msgText = vQuestions[alAns.size()];
+            }
+
+            sendMsg(chatId.toString(), msgText, false);
         }
     }
-
 
     public static void main(String[] args) {
         ApiContextInitializer.init();
