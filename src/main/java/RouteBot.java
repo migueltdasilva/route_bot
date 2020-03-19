@@ -27,6 +27,7 @@ public class RouteBot extends Bot {
     RouteBot() {
         super(name, token);
         hmChat2Answers = new HashMap<>();
+        hmChat2UserInfo = new HashMap<>();
     }
 
     private static final String[] vTrips = new String[]{"Хочу в road trip по Киргизии"};
@@ -100,6 +101,7 @@ public class RouteBot extends Bot {
             System.out.println("LOG: onUpdateReceived: msg = " + message);
 
             if (message.equals("/start")) {
+                System.out.println("LOG: onUpdateReceived: deleting answers");
                 hmChat2Answers.put(chatId, new ArrayList<>());
 
                 sendMsg(
