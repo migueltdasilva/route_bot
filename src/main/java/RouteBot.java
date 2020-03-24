@@ -212,7 +212,7 @@ public class RouteBot extends Bot {
         Message msg = update.getMessage();
         String message = msg.getText();
         Long chatId = msg.getChatId();
-        Command cmd = Command.byName(message.toUpperCase());
+        Command cmd = Command.byName(message.toLowerCase());
         if (cmd == Command.START) {
             out.println("LOG: onUpdateReceived: deleting answers");
             hmChat2Answers.put(chatId, new ArrayList<>());
@@ -229,7 +229,7 @@ public class RouteBot extends Bot {
             sendMsg(String.valueOf(chatId),"Шутка - хуютка!");
         } else {
             sendMsg(String.valueOf(chatId),
-                    "Простите, я не знаю такой команды, я пенс. Вот команды, которые я знаю:");
+                    "Простите, я уже не помню такой команды, я пенс. Вот команды, которые я знаю:");
 
         }
     }
