@@ -46,12 +46,13 @@ public class RouteBot extends Bot {
 
         String name;
         String desr;
-        public static Map<String, Command> cmdByName;
+        public static Map<String, Command> cmdByName = new HashMap<>();
         public static Command byName(String name) {
             return cmdByName.get(name);
         }
         Command(String name, String desr) {
             this.name = name;
+            this.desr = desr;
         }
         static {
             for(Command cmd : Command.values()) {
