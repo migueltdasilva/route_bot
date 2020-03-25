@@ -35,7 +35,7 @@ public class RouteBot extends Bot {
 
     private static final String name = "RouteTestBot";
     private static final String token = "900084418:AAEfgGDNoCUstvOCWlw3cBTGrny80h0rSK0";
-    private static final String adminChatId = "3099992";
+    private static final Long adminChatId = 3099992L;
 
     RouteBot() {
         super(name, token);
@@ -77,7 +77,7 @@ public class RouteBot extends Bot {
             "Очень важный вопрос про любимый стикер.\n\n" +
                     "Во-первых нужно выбрать один из множества любимых. \n" +
                     "Во-вторых описать его словами, точнее голосом и прислать аудиосообщение сюда.\n\n" +
-                    "Не претендуем на звание стикерных знатоков, но попборуем угадать!"};
+                    "Не претендуем на звание стикерных знатоков, но попробуем угадать!"};
 
     private Map<Long, List<String>> hmChat2Answers;
     private Map<Long, String> hmChat2UserInfo;
@@ -380,12 +380,12 @@ public class RouteBot extends Bot {
                     .append("Ответ: *").append(alAns.get(i)).append("*\n\n");
         }
         sb.append("Вопрос: *").append(vQuestions[vQuestions.length-1]).append("*\n");
-        sendMsg(chatId, sb.toString());
+        sendMsg(adminChatId, sb.toString());
         String fileId = alAns.get(5);
         if ( fileId.startsWith("v_")) {
-            sendVoice(chatId, fileId.substring(2));
+            sendVoice(adminChatId, fileId.substring(2));
         } else if(fileId.startsWith("a_")) {
-            sendAudio(chatId, fileId.substring(2));
+            sendAudio(adminChatId, fileId.substring(2));
         }
     }
 
