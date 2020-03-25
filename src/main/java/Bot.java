@@ -29,7 +29,7 @@ public class Bot extends TelegramLongPollingBot {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String message = update.getMessage().getText();
             System.out.println("MSG REC: " + message);
-            sendMsg(update.getMessage().getChatId().toString(), message);
+            //sendMsg(update.getMessage().getChatId().toString(), message);
         }
     }
 
@@ -45,24 +45,6 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
-    /**
-     * Метод для настройки сообщения и его отправки.
-     * @param chatId id чата
-     * @param s Строка, которую необходимот отправить в качестве сообщения.
-     */
-    public synchronized void sendMsg(String chatId, String s) {
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.enableMarkdown(true);
-        sendMessage.setChatId(chatId);
-
-        sendMessage.setText(s);
-        try {
-            execute(sendMessage);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-            //log.log(Level.SEVERE, "Exception: ", e.toString());
-        }
-    }
 
     public void onUpdatesReceived(List<Update> updates) {
         for (Update upd : updates) {

@@ -130,10 +130,15 @@ public class RouteBot extends Bot {
         sendMsg(String.valueOf(chatId), s, null);
     }
 
-    @Override
     public synchronized void sendMsg(String chatId, String s) {
 
         sendMsg(chatId, s, null);
+    }
+
+    public synchronized void sendMsg(
+            Long chatId, String s, ReplyKeyboardMarkup replyKeyboardMarkup) {
+
+        sendMsg(String.valueOf(chatId), s, replyKeyboardMarkup);
     }
 
     public synchronized void sendMsg(
@@ -263,7 +268,16 @@ public class RouteBot extends Bot {
         String msgText = "";
         String chooseOpt = "0";
         ReplyKeyboardMarkup rkM = null;
-        if (alAns.size() == 0 && hmChat2UserInfo.get(chatId) == null) {
+
+        //TODO: сделать разветвление по поездкам.
+        if (alAns.size() == 0 &&
+                hmChat2UserInfo.get(chatId) == null && !message.equals(vTrips[0])) {
+
+            sendMsg(String.valueOf(chatId),
+                    "Простите, я что-то не понял что это. А чего мне делать с этим. А вы кто? Простите, я уже старый.");
+
+            return;
+        } else if (alAns.size() == 0 && hmChat2UserInfo.get(chatId) == null) {
             chooseOpt = "1";
             msgText = vQuestions[0];
             hmChat2UserInfo.put(chatId, userName);
@@ -275,7 +289,7 @@ public class RouteBot extends Bot {
         }
         out.println("LOG: onUpdateReceived: msg text = [" + msgText + "] $ " + chooseOpt);
 
-        sendMsg(chatId.toString(), msgText, rkM);
+        sendMsg(chatId, msgText, rkM);
     }
 
     private void handleCmd(Update update) {
