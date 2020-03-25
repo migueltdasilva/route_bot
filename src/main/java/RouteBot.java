@@ -267,7 +267,6 @@ public class RouteBot extends Bot {
 
         String msgText = "";
         String chooseOpt = "0";
-        ReplyKeyboardMarkup rkM = null;
 
         //TODO: сделать разветвление по поездкам.
         if (alAns.size() == 0 &&
@@ -281,7 +280,6 @@ public class RouteBot extends Bot {
             chooseOpt = "1";
             msgText = vQuestions[0];
             hmChat2UserInfo.put(chatId, userName);
-            rkM = getTripButtons();
         }  else {
             chooseOpt = "3";
             alAns.add(message);
@@ -289,7 +287,7 @@ public class RouteBot extends Bot {
         }
         out.println("LOG: onUpdateReceived: msg text = [" + msgText + "] $ " + chooseOpt);
 
-        sendMsg(chatId, msgText, rkM);
+        sendMsg(chatId, msgText);
     }
 
     private void handleCmd(Update update) {
