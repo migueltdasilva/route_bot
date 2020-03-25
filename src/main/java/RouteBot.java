@@ -328,8 +328,8 @@ public class RouteBot extends Bot {
             return;
         }
         for (int i = 0; i < vQuestions.length-2; i++) {
-            sb.append("Вопрос: <b>").append(vQuestions[i]).append("</b>\n")
-                    .append("Ответ: <b>").append(alAns.get(i)).append("</b>\n\n");
+            sb.append("Вопрос: **").append(vQuestions[i]).append("**\n")
+                    .append("Ответ: **").append(alAns.get(i)).append("**\n\n");
         }
         sb.append(vQuestions[vQuestions.length-1]).append("\n");
         sendMsg(chatId, sb.toString());
