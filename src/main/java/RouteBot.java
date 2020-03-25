@@ -258,7 +258,7 @@ public class RouteBot extends Bot {
 
             sendMsg(
                     chatId.toString(),
-                    "*Привет*! _Тут_ **можно** записаться в поездку рута ⚡️", getTripButtons());
+                    "Привет! Тут можно записаться в поездку рута ⚡️", getTripButtons());
 
         } else if (cmd == Command.COMMAND_LIST) {
 
@@ -315,7 +315,7 @@ public class RouteBot extends Bot {
     private void sendResponsesToAdmin(Long chatId) {
         String userName = hmChat2UserInfo.get(chatId);
         StringBuilder sb = new StringBuilder();
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z\n");
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z\n\n");
         Date date = new Date(System.currentTimeMillis());
 
         sb.append("Ответ пользователя @")
@@ -328,8 +328,8 @@ public class RouteBot extends Bot {
             return;
         }
         for (int i = 0; i < vQuestions.length-2; i++) {
-            sb.append("Вопрос: **").append(vQuestions[i]).append("**\n")
-                    .append("Ответ: **").append(alAns.get(i)).append("**\n\n");
+            sb.append("Вопрос: *").append(vQuestions[i]).append("*\n")
+                    .append("Ответ: *").append(alAns.get(i)).append("*\n\n");
         }
         sb.append(vQuestions[vQuestions.length-1]).append("\n");
         sendMsg(chatId, sb.toString());
