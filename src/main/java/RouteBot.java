@@ -5,12 +5,14 @@ import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
 import org.telegram.telegrambots.meta.api.objects.Audio;
 import org.telegram.telegrambots.meta.api.objects.Document;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.PhotoSize;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
+import org.telegram.telegrambots.meta.api.objects.Voice;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -133,6 +135,17 @@ public class RouteBot extends Bot {
         }
     }
 
+    public synchronized void sendVoice(Long chatId, String fileId) {
+        SendVoice voice = new SendVoice();
+        voice.setChatId(chatId);
+        voice.setVoice(fileId);
+        try {
+            execute(voice);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+            //Log.log(Level, "Exception: ", e.toString());
+        }
+    }
 
     public synchronized void sendAudio(Long chatId, String fileId) {
         SendAudio audio = new SendAudio();
@@ -156,20 +169,28 @@ public class RouteBot extends Bot {
         List<String> alAns =
                 hmChat2Answers.getOrDefault(chatId, new ArrayList<>());
         if (alAns.size() == 5) {
-            if (update.hasMessage() && update.getMessage().hasAudio()) {
+            if (update.getMessage().hasAudio()) {
 
                 out.println("LOG: onUpdateReceived: audio msg");
 
                 Audio audio = update.getMessage().getAudio();
-                String fileId = audio.getFileId();
+                String fileId = "a_" + audio.getFileId();
                 alAns.add(fileId);
-                String msgText = "Кайф, спасибо! Передам Коле и Алине все ответы, они свяжутся с тобой в ближайшее время. Если хочешь начать заново, нажми сюда /start";
-                sendMsg(chatId, msgText);
-                sendResponsesToAdmin(chatId);
+
+            } else if ( update.getMessage().hasVoice()) {
+
+                Voice voice = update.getMessage().getVoice();
+                String fileId = "v_" + voice.getFileId();
             } else {
                 sendMsg(chatId, "Я очень извиняюсь, но Коля с Алиной попросили взять у вас именно аудио. Я не думаю, что это оно. Попробуйте еще раз, пожалуйста.");
+                return;
             }
-        } else if (update.hasMessage() && update.getMessage().hasText())  {
+
+            String msgText = "Кайф, спасибо! Передам Коле и Алине все ответы, они свяжутся с тобой в ближайшее время. Если хочешь начать заново, нажми сюда /start";
+            sendMsg(chatId, msgText);
+            sendResponsesToAdmin(chatId);
+
+        } else if (update.getMessage().hasText())  {
 
             handleTextMsg(update);
         } else {
@@ -293,7 +314,7 @@ public class RouteBot extends Bot {
     private void sendResponsesToAdmin(Long chatId) {
         String userName = hmChat2UserInfo.get(chatId);
         StringBuilder sb = new StringBuilder();
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z\n");
         Date date = new Date(System.currentTimeMillis());
 
         sb.append("Ответ пользователя @")
@@ -306,12 +327,17 @@ public class RouteBot extends Bot {
             return;
         }
         for (int i = 0; i < vQuestions.length-2; i++) {
-            sb.append(vQuestions[i]).append("\n")
-                    .append(alAns.get(i)).append("\n\n");
+            sb.append("Вопрос: <b>").append(vQuestions[i]).append("</b>\n")
+                    .append("Ответ: <b>").append(alAns.get(i)).append("</b>\n\n");
         }
         sb.append(vQuestions[vQuestions.length-1]).append("\n");
         sendMsg(chatId, sb.toString());
-        sendAudio(chatId, alAns.get(5));
+        String fileId = alAns.get(5);
+        if ( fileId.startsWith("v_")) {
+            sendVoice(chatId, fileId.substring(2));
+        } else if(fileId.startsWith("a_")) {
+            sendAudio(chatId, fileId.substring(2));
+        }
     }
 
     public static void main(String[] args) {
