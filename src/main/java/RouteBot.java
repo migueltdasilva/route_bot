@@ -181,6 +181,7 @@ public class RouteBot extends Bot {
 
                 Voice voice = update.getMessage().getVoice();
                 String fileId = "v_" + voice.getFileId();
+                alAns.add(fileId);
             } else {
                 sendMsg(chatId, "Я очень извиняюсь, но Коля с Алиной попросили взять у вас именно аудио. Я не думаю, что это оно. Попробуйте еще раз, пожалуйста.");
                 return;
