@@ -19,8 +19,10 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,7 +80,6 @@ public class RouteBot extends Bot {
     private Map<Long, List<String>> hmChat2Answers;
     private Map<Long, String> hmChat2UserInfo;
 
-
     public synchronized ReplyKeyboardMarkup getTripButtons() {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
@@ -106,6 +107,11 @@ public class RouteBot extends Bot {
         markupKeyboard.setKeyboard(buttons);
     }
 
+    public synchronized void sendMsg(Long chatId, String s) {
+
+        sendMsg(String.valueOf(chatId), s, null);
+    }
+
     @Override
     public synchronized void sendMsg(String chatId, String s) {
 
@@ -128,7 +134,7 @@ public class RouteBot extends Bot {
     }
 
 
-    public synchronized void sendAudio(String chatId, String fileId) {
+    public synchronized void sendAudio(Long chatId, String fileId) {
         SendAudio audio = new SendAudio();
         audio.setChatId(chatId);
         audio.setAudio(fileId);
@@ -141,22 +147,36 @@ public class RouteBot extends Bot {
     }
 
     public void onUpdateReceived(Update update) {
-        if (update.hasMessage() && update.getMessage().hasText()) {
+        if (!update.hasMessage()) {
+            //TODO: Обработку ошибок
+
+            return;
+        }
+        Long chatId = update.getMessage().getChatId();
+        List<String> alAns =
+                hmChat2Answers.getOrDefault(chatId, new ArrayList<>());
+        if (alAns.size() == 5) {
+            if (update.hasMessage() && update.getMessage().hasAudio()) {
+
+                out.println("LOG: onUpdateReceived: audio msg");
+
+                Audio audio = update.getMessage().getAudio();
+                String fileId = audio.getFileId();
+                alAns.add(fileId);
+                String msgText = "Кайф, спасибо! Передам Коле и Алине все ответы, они свяжутся с тобой в ближайшее время. Если хочешь начать заново, нажми сюда /start";
+                sendMsg(chatId, msgText);
+                sendResponsesToAdmin(chatId);
+            } else {
+                sendMsg(chatId, "Я очень извиняюсь, но Коля с Алиной попросили взять у вас именно аудио. Я не думаю, что это оно. Попробуйте еще раз, пожалуйста.");
+            }
+        } else if (update.hasMessage() && update.getMessage().hasText())  {
 
             handleTextMsg(update);
-        } else if (update.hasMessage() && update.getMessage().hasAudio()) {
-
-            out.println("LOG: onUpdateReceived: audio msg");
-            handleAudioMsg(update);
-        } else if (update.hasMessage() && update.getMessage().hasPhoto()) {
-
-            out.println("LOG: onUpdateReceived: photo msg");
-            handlePhotoMsg(update);
-        }  else if (update.hasMessage() && update.getMessage().hasDocument()) {
-
-            out.println("LOG: onUpdateReceived: document msg");
-            handleDocMsg(update);
+        } else {
+            sendMsg(String.valueOf(chatId),
+                    "Простите, я что-то не понял что это. А чего мне делать с этим. А вы кто? Простите, я уже старый.");
         }
+
     }
 
     private void handleTextMsg(Update update) {
@@ -193,12 +213,7 @@ public class RouteBot extends Bot {
             msgText = vQuestions[0];
             hmChat2UserInfo.put(chatId, userName);
             rkM = getTripButtons();
-        } else if (alAns.size() == 6) {
-            //TODO сделать нормальную отправук
-            chooseOpt = "2";
-            sendMsg(adminChatId, alAns.stream().reduce("", (s, s2) -> s+ "\n" + s2));
-            msgText = "Кайф, спасибо! Передам Коле и Алине все ответы, они свяжутся с тобой в ближайшее время. Если хочешь начать заново, нажми сюда /start";
-        } else {
+        }  else {
             chooseOpt = "3";
             alAns.add(message);
             msgText = vQuestions[alAns.size()];
@@ -233,24 +248,7 @@ public class RouteBot extends Bot {
 
         }
     }
-    private void handleAudioMsg(Update update) {
-        Audio audio = update.getMessage().getAudio();
-        String fileId = audio.getFileId();
-        SendAudio msg = new SendAudio();
-        msg.setAudio(fileId);
-        msg.setChatId(adminChatId);
-        msg.setCaption("Вот ваш файл " + fileId + " " +
-                audio.getFileUniqueId() +  " " +
-                audio.getMimeType() + " " +
-                audio.getPerformer() + " " +
-                audio.getTitle() );
 
-        try {
-            execute(msg);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void handlePhotoMsg(Update update) {
         List<PhotoSize> photos = update.getMessage().getPhoto();
@@ -292,8 +290,33 @@ public class RouteBot extends Bot {
         }
     }
 
+    private void sendResponsesToAdmin(Long chatId) {
+        String userName = hmChat2UserInfo.get(chatId);
+        StringBuilder sb = new StringBuilder();
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+
+        sb.append("Ответ пользователя @")
+                .append(userName)
+                .append(". Время: ").append(formatter.format(date));
+        List<String> alAns = hmChat2Answers.get(chatId);
+        if (alAns.size() != vQuestions.length) {
+            out.println("Пользователь еще не закончил отвечать на вопросы. ["
+                    + alAns.size() + "], [" + vQuestions.length + "]");
+            return;
+        }
+        for (int i = 0; i < vQuestions.length-2; i++) {
+            sb.append(vQuestions[i]).append("\n")
+                    .append(alAns.get(i)).append("\n\n");
+        }
+        sb.append(vQuestions[vQuestions.length-1]).append("\n");
+        sendMsg(chatId, sb.toString());
+        sendAudio(chatId, alAns.get(5));
+    }
+
     public static void main(String[] args) {
         ApiContextInitializer.init();
+
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         try {
             Bot routeBot = new RouteBot();

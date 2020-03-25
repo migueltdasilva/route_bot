@@ -1,4 +1,6 @@
 TestBot.class
+Reply.class
 RouteBot.class
 RouteBot$Command.class
+Reply$Type.class
 Bot.class
