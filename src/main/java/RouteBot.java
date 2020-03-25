@@ -331,7 +331,7 @@ public class RouteBot extends Bot {
             sb.append("Вопрос: *").append(vQuestions[i]).append("*\n")
                     .append("Ответ: *").append(alAns.get(i)).append("*\n\n");
         }
-        sb.append(vQuestions[vQuestions.length-1]).append("\n");
+        sb.append("Вопрос: *").append(vQuestions[vQuestions.length-1]).append("*\n");
         sendMsg(chatId, sb.toString());
         String fileId = alAns.get(5);
         if ( fileId.startsWith("v_")) {
