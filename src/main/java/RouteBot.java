@@ -258,7 +258,7 @@ public class RouteBot extends Bot {
 
             sendMsg(
                     chatId.toString(),
-                    "*bold \\*text* Привет! Тут можно записаться в поездку рута ⚡️", getTripButtons());
+                    "*Привет*! _Тут_ **можно** записаться в поездку рута ⚡️", getTripButtons());
 
         } else if (cmd == Command.COMMAND_LIST) {
 
