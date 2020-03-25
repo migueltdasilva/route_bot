@@ -198,6 +198,8 @@ public class RouteBot extends Bot {
             sendMsg(
                     chatId.toString(),
                     "Действие отменено️", getTripButtons());
+
+            return;
         }
 
         List<String> alAns =
@@ -273,7 +275,8 @@ public class RouteBot extends Bot {
                 hmChat2UserInfo.get(chatId) == null && !message.equals(vTrips[0])) {
 
             sendMsg(String.valueOf(chatId),
-                    "Простите, я что-то не понял что это. А чего мне делать с этим. А вы кто? Простите, я уже старый.");
+                    "Простите, я что-то не понял что это. А чего мне делать с этим." +
+                            " А вы кто? Простите, я уже старый.", getTripButtons());
 
             return;
         } else if (alAns.size() == 0 && hmChat2UserInfo.get(chatId) == null) {
