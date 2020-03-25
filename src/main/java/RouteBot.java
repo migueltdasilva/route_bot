@@ -67,7 +67,7 @@ public class RouteBot extends Bot {
 
     private static final String[] vTrips = new String[]{"Хочу в road trip по Киргизии"};
     private static final String[] vQuestions = new String[]{
-            "Расскажи, пожалуйста, в двух словах, о себе: чем ты занимаешься," +
+            "Классно, что ты решил присоединиться к нашей поездке!\n\nРасскажи, пожалуйста, в двух словах, о себе: чем ты занимаешься," +
                     " что ты любишь, почему хочешь поехать с нами?\n" +
                     "(Обещаю, дальше вопросы будут попроще)",
             "есть ли у тебя права и готов ли ты быть водителем (водительницей) одной из машин?",
@@ -94,6 +94,22 @@ public class RouteBot extends Bot {
             keyboardFirstRow.add(new KeyboardButton(trip));
             alKeyboardRows.add(keyboardFirstRow);
         }
+        replyKeyboardMarkup.setKeyboard(alKeyboardRows);
+
+        return replyKeyboardMarkup;
+    }
+
+
+    public synchronized ReplyKeyboardMarkup getCancelButton() {
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
+
+        List<KeyboardRow> alKeyboardRows = new ArrayList<>();
+        KeyboardRow keyboardFirstRow = new KeyboardRow();
+        keyboardFirstRow.add(new KeyboardButton("Отмена"));
+        alKeyboardRows.add(keyboardFirstRow);
         replyKeyboardMarkup.setKeyboard(alKeyboardRows);
 
         return replyKeyboardMarkup;
@@ -126,6 +142,9 @@ public class RouteBot extends Bot {
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
         sendMessage.setText(s);
+        if (replyKeyboardMarkup == null) {
+            replyKeyboardMarkup = getCancelButton();
+        }
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
         try {
             execute(sendMessage);
@@ -166,31 +185,21 @@ public class RouteBot extends Bot {
             return;
         }
         Long chatId = update.getMessage().getChatId();
+        if (update.getMessage().hasText() &&
+                update.getMessage().getText().equals("Отмена")) {
+            hmChat2Answers.put(chatId, new ArrayList<>());
+            hmChat2UserInfo.put(chatId, null);
+
+            sendMsg(
+                    chatId.toString(),
+                    "Действие отменено️", getTripButtons());
+        }
+
         List<String> alAns =
                 hmChat2Answers.getOrDefault(chatId, new ArrayList<>());
         if (alAns.size() == 5) {
-            if (update.getMessage().hasAudio()) {
 
-                out.println("LOG: onUpdateReceived: audio msg");
-
-                Audio audio = update.getMessage().getAudio();
-                String fileId = "a_" + audio.getFileId();
-                alAns.add(fileId);
-
-            } else if ( update.getMessage().hasVoice()) {
-
-                Voice voice = update.getMessage().getVoice();
-                String fileId = "v_" + voice.getFileId();
-                alAns.add(fileId);
-            } else {
-                sendMsg(chatId, "Я очень извиняюсь, но Коля с Алиной попросили взять у вас именно аудио. Я не думаю, что это оно. Попробуйте еще раз, пожалуйста.");
-                return;
-            }
-
-            String msgText = "Кайф, спасибо! Передам Коле и Алине все ответы, они свяжутся с тобой в ближайшее время. Если хочешь начать заново, нажми сюда /start";
-            sendMsg(chatId, msgText);
-            sendResponsesToAdmin(chatId);
-
+            handleVoiceAudioMsg(update, alAns, chatId);
         } else if (update.getMessage().hasText())  {
 
             handleTextMsg(update);
@@ -198,6 +207,30 @@ public class RouteBot extends Bot {
             sendMsg(String.valueOf(chatId),
                     "Простите, я что-то не понял что это. А чего мне делать с этим. А вы кто? Простите, я уже старый.");
         }
+    }
+
+    private void handleVoiceAudioMsg(Update update,  List<String> alAns, Long chatId) {
+        if (update.getMessage().hasAudio()) {
+
+            out.println("LOG: onUpdateReceived: audio msg");
+
+            Audio audio = update.getMessage().getAudio();
+            String fileId = "a_" + audio.getFileId();
+            alAns.add(fileId);
+
+        } else if ( update.getMessage().hasVoice()) {
+
+            Voice voice = update.getMessage().getVoice();
+            String fileId = "v_" + voice.getFileId();
+            alAns.add(fileId);
+        } else {
+            sendMsg(chatId, "Я очень извиняюсь, но Коля с Алиной попросили взять у вас именно аудио. Я не думаю, что это оно. Попробуйте еще раз, пожалуйста.");
+            return;
+        }
+
+        String msgText = "Кайф, спасибо! Передам Коле и Алине все ответы, они свяжутся с тобой в ближайшее время. Если хочешь начать заново, нажми сюда /start";
+        sendMsg(chatId, msgText);
+        sendResponsesToAdmin(chatId);
 
     }
 
