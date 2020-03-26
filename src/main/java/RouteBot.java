@@ -20,6 +20,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
+import redis.clients.jedis.Jedis;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -271,6 +272,7 @@ public class RouteBot extends Bot {
         String chooseOpt = "0";
 
         //TODO: сделать разветвление по поездкам.
+        Jedis jedis = RedisCli.getConnection();
         if (alAns.size() == 0 &&
                 hmChat2UserInfo.get(chatId) == null && !message.equals(vTrips[0])) {
 
@@ -283,9 +285,11 @@ public class RouteBot extends Bot {
             chooseOpt = "1";
             msgText = vQuestions[0];
             hmChat2UserInfo.put(chatId, userName);
+            jedis.lpush("n"+chatId, userName);
         }  else {
             chooseOpt = "3";
             alAns.add(message);
+            jedis.lpush("a"+chatId+"_" +alAns.size(), message);
             msgText = vQuestions[alAns.size()];
         }
         out.println("LOG: onUpdateReceived: msg text = [" + msgText + "] $ " + chooseOpt);

@@ -1,6 +1,7 @@
-TestBot.class
 Reply.class
+Reply$Type.class
+RedisCli.class
+TestBot.class
 RouteBot.class
 RouteBot$Command.class
-Reply$Type.class
 Bot.class

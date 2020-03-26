@@ -17,6 +17,12 @@
             <artifactId>telegrambots-abilities</artifactId>
             <version>4.5</version>
         </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
