@@ -297,7 +297,7 @@ public class RouteBot extends Bot {
             chooseOpt = "3";
             alAns.add(message);
             jedis.lpush("a"+chatId+"_" +alAns.size(), message);
-            if (alAns.size() == 4 && userName != null) {
+            if (alAns.size() == 4 && usr.getUserName() != null) {
                 alAns.add("");
                 jedis.lpush("a"+chatId+"_" +alAns.size(), "");
             }
