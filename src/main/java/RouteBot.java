@@ -36,12 +36,13 @@ import static java.lang.System.out;
 
 public class RouteBot extends Bot {
 
-    private static final String name = "RouteTestBot";
-    private static final String token = "900084418:AAEfgGDNoCUstvOCWlw3cBTGrny80h0rSK0";
+    private static final String name = "helloroute_bot";
+    private static final String token = "1013761197:AAHv3uKJJzwiWMsQVxgnxUsqbpP5-PSrRy4";
     private static final Long adminChatId = 3099992L;
     private static final Set<Long> hsAdminChatId = new HashSet<>();
     static {
         hsAdminChatId.add(3099992L);
+        hsAdminChatId.add(96353936L);
     }
     RouteBot() {
         super(name, token);
