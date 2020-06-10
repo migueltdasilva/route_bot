@@ -247,7 +247,8 @@ public class RouteBot extends Bot {
 
         String msgText = "Кайф, спасибо! Передам Коле и Алине все ответы, они свяжутся с тобой в ближайшее время. Если хочешь начать заново, нажми сюда /start";
         sendMsg(chatId, msgText);
-        sendResponsesToAdmin(chatId);
+        User usr = update.getMessage().getFrom();
+        sendResponsesToAdmin(chatId, usr);
 
     }
 
@@ -378,14 +379,14 @@ public class RouteBot extends Bot {
         }
     }
 
-    private void sendResponsesToAdmin(Long chatId) {
+    private void sendResponsesToAdmin(Long chatId, User user) {
         String userName = hmChat2UserInfo.get(chatId);
         StringBuilder sb = new StringBuilder();
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z\n\n");
         Date date = new Date(System.currentTimeMillis());
 
         sb.append("Ответ от:  ")
-                .append(userName)
+                .append(getUserStr(user))
                 .append(". Время: ").append(formatter.format(date));
         List<String> alAns = hmChat2Answers.get(chatId);
         if (alAns.size() != vQuestions.length) {
@@ -398,7 +399,6 @@ public class RouteBot extends Bot {
                     .append("Ответ: *").append(alAns.get(i)).append("*\n\n");
         }
         sb.append("Вопрос: *").append(vQuestions[vQuestions.length-1]).append("*\n");
-        sendMsg(adminChatId, sb.toString());
         String responses = sb.toString();
         hsAdminChatId.
                 forEach(adminChatId -> sendMsg(adminChatId, responses));
