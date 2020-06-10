@@ -207,7 +207,7 @@ public class RouteBot extends Bot {
 
             sendMsg(
                     chatId.toString(),
-                    "Действие отменено️. Чтобы начать заново, выбери поездку и нажмин на нее.", getTripButtons());
+                    "Все забыл️. Чтобы начать заново, выбери поездку и нажмин на нее.", getTripButtons());
 
             return;
         }
@@ -294,7 +294,7 @@ public class RouteBot extends Bot {
         } else if (alAns.size() == 0 && hmChat2UserInfo.get(chatId) == null) {
             chooseOpt = "1";
             msgText = vQuestions[0];
-            hmChat2UserInfo.put(chatId, userName);
+            hmChat2UserInfo.put(chatId, getUserStr(usr));
             jedis.lpush("n" + chatId, userName);
         }  else {
             chooseOpt = "3";
@@ -414,7 +414,7 @@ public class RouteBot extends Bot {
     }
 
     private String getUserStr(User user) {
-        return "Пользователь:" + user.getId() + " ник: " + user.getUserName() +
+        return "Пользователь: " + user.getId() + " ник: " + user.getUserName() +
                 " имя: " + user.getFirstName() + " фамилия: " + user.getLastName();
     }
 

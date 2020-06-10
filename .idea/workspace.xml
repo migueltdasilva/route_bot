@@ -29,8 +29,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/RouteBot.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="87">
-              <caret line="267" column="8" lean-forward="true" selection-start-line="267" selection-start-column="8" selection-end-line="267" selection-end-column="8" />
+            <state relative-caret-position="349">
+              <caret line="293" column="78" lean-forward="true" selection-start-line="293" selection-start-column="78" selection-end-line="293" selection-end-column="78" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -130,7 +130,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>registerBot</find>
       <find>mainClass</find>
       <find>setWebook</find>
       <find>sendmessage</find>
@@ -156,10 +155,11 @@
       <find>getTrip</find>
       <find>send</find>
       <find>handleTe</find>
-      <find>user</find>
       <find>jedis</find>
       <find>redisCl</find>
       <find>chooseOpt</find>
+      <find>user</find>
+      <find>alAns =</find>
     </findStrings>
     <replaceStrings>
       <replace>msg</replace>
@@ -337,12 +337,12 @@
       <workItem from="1586192868780" duration="1465000" />
       <workItem from="1586354826768" duration="2804000" />
       <workItem from="1591712805754" duration="1291000" />
-      <workItem from="1591783790926" duration="3083000" />
+      <workItem from="1591783790926" duration="3583000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57803000" />
+    <option name="totallyTimeSpent" value="58303000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
@@ -683,8 +683,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/RouteBot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="267" column="8" lean-forward="true" selection-start-line="267" selection-start-column="8" selection-end-line="267" selection-end-column="8" />
+        <state relative-caret-position="349">
+          <caret line="293" column="78" lean-forward="true" selection-start-line="293" selection-start-column="78" selection-end-line="293" selection-end-column="78" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
