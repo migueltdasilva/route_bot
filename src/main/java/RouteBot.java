@@ -27,8 +27,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static java.lang.System.out;
 
@@ -37,7 +39,10 @@ public class RouteBot extends Bot {
     private static final String name = "RouteTestBot";
     private static final String token = "900084418:AAEfgGDNoCUstvOCWlw3cBTGrny80h0rSK0";
     private static final Long adminChatId = 3099992L;
-
+    private static final Set<Long> hsAdminChatId = new HashSet<>();
+    static {
+        hsAdminChatId.add(3099992L);
+    }
     RouteBot() {
         super(name, token);
         hmChat2Answers = new HashMap<>();
@@ -45,7 +50,7 @@ public class RouteBot extends Bot {
     }
 
     private enum Command {
-        COMMAND_LIST("/", "Список всех команд."),
+        HELP("/", "Список всех команд."),
         START("/start", "Начать все сначала."),
         SEND_JOKE("/send_joke", "Могу отправить тебе шутку.");
 
@@ -66,18 +71,16 @@ public class RouteBot extends Bot {
         }
     }
 
-    private static final String[] vTrips = new String[]{"Хочу в road trip по Киргизии"};
+    private static final String[] vTrips = new String[]{"Хочу на велике вдоль залива!"};
     private static final String[] vQuestions = new String[]{
             "Классно, что ты решил присоединиться к нашей поездке!\n\nРасскажи, пожалуйста, в двух словах, о себе: чем ты занимаешься," +
                     " что ты любишь, почему хочешь поехать с нами?\n" +
                     "(Обещаю, дальше вопросы будут попроще)",
-            "есть ли у тебя права и готов ли ты быть водителем (водительницей) одной из машин?",
-            "когда в последний раз ты ночевал в палатке и как вообще к ним относишься?",
-            "белое или красное?",
-            "пришли, пожалуйста, ссылки на свои соц сети (например, фейсбук и инстаграм)",
-            "Очень важный вопрос про любимый стикер.\n\n" +
-                    "Во-первых нужно выбрать один из множества любимых. \n" +
-                    "Во-вторых описать его словами, точнее голосом и прислать аудиосообщение сюда.\n\n" +
+            "Насколько ты уверен(а) в своих способностях проехать 60 километров за два дня на шоссейнике и сохранить бодрость духа? Когда ты в последний раз сидел(а) на велосипеде, как прошло?)",
+            "Белое или красное?",
+            "Пришли, пожалуйста, ссылки на свои соц сети (например, фейсбук и инстаграм)",
+            "Я не смог получить твой ник в телеграмме, поэтому пришли, пожалуйста, свой телефон, чтобы мы точно могли с тобой связаться",
+            "Очень важный вопрос про стикеры! Нужно описать голосом свой любимый стикер и прислать аудиосообщением сюда.\n" +
                     "Не претендуем на звание стикерных знатоков, но попробуем угадать!"};
 
     private Map<Long, List<String>> hmChat2Answers;
@@ -185,11 +188,17 @@ public class RouteBot extends Bot {
     }
 
     public void onUpdateReceived(Update update) {
+        debi(update.toString());
+
         if (!update.hasMessage()) {
             //TODO: Обработку ошибок
 
             return;
         }
+        if (update.getMessage().hasText()) {
+            sendMsg2Admins(update.getMessage());
+        }
+
         Long chatId = update.getMessage().getChatId();
         if (update.getMessage().hasText() &&
                 update.getMessage().getText().equals("Отмена")) {
@@ -198,14 +207,14 @@ public class RouteBot extends Bot {
 
             sendMsg(
                     chatId.toString(),
-                    "Действие отменено️", getTripButtons());
+                    "Действие отменено️. Чтобы начать заново, выбери поездку и нажмин на нее.", getTripButtons());
 
             return;
         }
 
         List<String> alAns =
                 hmChat2Answers.getOrDefault(chatId, new ArrayList<>());
-        if (alAns.size() == 5) {
+        if (alAns.size() == vQuestions.length - 1) {
 
             handleVoiceAudioMsg(update, alAns, chatId);
         } else if (update.getMessage().hasText())  {
@@ -272,7 +281,7 @@ public class RouteBot extends Bot {
         String chooseOpt = "0";
 
         //TODO: сделать разветвление по поездкам.
-        Jedis jedis = RedisCli.getConnection();
+        Jedis jedis = Helper.getConnection();
         if (alAns.size() == 0 &&
                 hmChat2UserInfo.get(chatId) == null && !message.equals(vTrips[0])) {
 
@@ -285,11 +294,16 @@ public class RouteBot extends Bot {
             chooseOpt = "1";
             msgText = vQuestions[0];
             hmChat2UserInfo.put(chatId, userName);
-            jedis.lpush("n"+chatId, userName);
+            jedis.lpush("n" + chatId, userName);
         }  else {
             chooseOpt = "3";
             alAns.add(message);
             jedis.lpush("a"+chatId+"_" +alAns.size(), message);
+            if (alAns.size() == 4 && userName != null) {
+                alAns.add("");
+                jedis.lpush("a"+chatId+"_" +alAns.size(), "");
+            }
+
             msgText = vQuestions[alAns.size()];
         }
         out.println("LOG: onUpdateReceived: msg text = [" + msgText + "] $ " + chooseOpt);
@@ -312,7 +326,7 @@ public class RouteBot extends Bot {
                     chatId.toString(),
                     "Привет! Тут можно записаться в поездку рута ⚡️", getTripButtons());
 
-        } else if (cmd == Command.COMMAND_LIST) {
+        } else if (cmd == Command.HELP) {
 
         } else if (cmd == Command.SEND_JOKE) {
             sendMsg(String.valueOf(chatId),"Шутка - хуютка!");
@@ -370,7 +384,7 @@ public class RouteBot extends Bot {
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z\n\n");
         Date date = new Date(System.currentTimeMillis());
 
-        sb.append("Ответ пользователя @")
+        sb.append("Ответ от:  ")
                 .append(userName)
                 .append(". Время: ").append(formatter.format(date));
         List<String> alAns = hmChat2Answers.get(chatId);
@@ -385,13 +399,52 @@ public class RouteBot extends Bot {
         }
         sb.append("Вопрос: *").append(vQuestions[vQuestions.length-1]).append("*\n");
         sendMsg(adminChatId, sb.toString());
+        String responses = sb.toString();
+        hsAdminChatId.
+                forEach(adminChatId -> sendMsg(adminChatId, responses));
+
         String fileId = alAns.get(5);
-        if ( fileId.startsWith("v_")) {
+        hsAdminChatId.
+                forEach(adminChatId -> {if ( fileId.startsWith("v_")) {
             sendVoice(adminChatId, fileId.substring(2));
         } else if(fileId.startsWith("a_")) {
             sendAudio(adminChatId, fileId.substring(2));
-        }
+        }});
+
     }
+
+    private String getUserStr(User user) {
+        return "Пользователь:" + user.getId() + " ник: " + user.getUserName() +
+                " имя: " + user.getFirstName() + " фамилия: " + user.getLastName();
+    }
+
+    private void  sendMsg2Admins(Message msg) {
+        User usr = msg.getFrom();
+        String userName = getUserStr(usr);
+        String msgText = msg.getText();
+
+        hsAdminChatId.
+                forEach(adminChatId -> sendMsg(adminChatId, userName + "\n" + msgText));
+    }
+
+    private static void debe(String... strings) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("LOG: ERR: ");
+        for (String string : strings) {
+            sb.append(string);
+        }
+        System.out.println(sb.toString());
+    }
+
+    private static void debi(String... strings) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("LOG: ");
+        for (String string : strings) {
+            sb.append(string);
+        }
+        System.out.println(sb.toString());
+    }
+
 
     public static void main(String[] args) {
         ApiContextInitializer.init();

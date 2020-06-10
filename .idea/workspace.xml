@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bbeb5125-01a8-474a-a022-21c968ce3cf9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/RedisCli.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Helper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/RouteBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RouteBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Bot.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Reply$Type.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Reply.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RouteBot$Command.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RouteBot.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TestBot.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -20,22 +26,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Bot.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-240">
-              <caret line="31" column="14" selection-start-line="31" selection-start-column="14" selection-end-line="31" selection-end-column="14" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2410#2411#0" expanded="true" />
-                <element signature="e#2440#2441#0" expanded="true" />
-                <element signature="e#2475#2476#0" expanded="true" />
-                <element signature="e#2506#2507#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="jar://$MAVEN_REPOSITORY$/org/telegram/telegrambots/4.5/telegrambots-4.5.jar!/org/telegram/telegrambots/bots/TelegramLongPollingBot.class">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="78">
@@ -47,8 +37,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/RouteBot.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="306" column="16" selection-start-line="306" selection-start-column="12" selection-end-line="306" selection-end-column="16" />
+            <state relative-caret-position="215">
+              <caret line="190" column="8" selection-start-line="190" selection-start-column="8" selection-end-line="190" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -59,8 +49,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+            <state relative-caret-position="338">
+              <caret line="26" selection-start-line="26" selection-end-line="58" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -68,8 +58,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/RedisCli.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="91">
-              <caret line="7" column="43" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
+            <state relative-caret-position="195">
+              <caret line="15" column="2" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="2" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -80,7 +70,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="jar://$MAVEN_REPOSITORY$/org/telegram/telegrambots-meta/4.5/telegrambots-meta-4.5.jar!/org/telegram/telegrambots/meta/api/methods/send/SendMessage.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
+            <state relative-caret-position="741">
               <caret line="73" column="22" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="22" />
             </state>
           </provider>
@@ -89,7 +79,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="jar://$MAVEN_REPOSITORY$/org/telegram/telegrambots-meta/4.5/telegrambots-meta-4.5.jar!/org/telegram/telegrambots/meta/bots/AbsSender.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
+            <state relative-caret-position="260">
               <caret line="47" column="70" selection-start-line="47" selection-start-column="70" selection-end-line="47" selection-end-column="70" />
             </state>
           </provider>
@@ -98,7 +88,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="jar://$MAVEN_REPOSITORY$/org/telegram/telegrambots/4.5/telegrambots-4.5.jar!/org/telegram/telegrambots/bots/DefaultAbsSender.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-138">
+            <state relative-caret-position="78">
               <caret line="59" column="22" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
             </state>
           </provider>
@@ -117,10 +107,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Helper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2444">
+              <caret line="188" selection-start-line="188" selection-end-line="188" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/TestBot.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
-              <caret line="2" column="39" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="39" />
+            <state relative-caret-position="117">
+              <caret line="10" column="14" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -136,7 +138,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>sendMess</find>
       <find>registerBot</find>
       <find>mainClass</find>
       <find>setWebook</find>
@@ -153,7 +154,6 @@
       <find>f_programme_guests_1</find>
       <find>callbackId</find>
       <find>onUpdateReceived</find>
-      <find>chooseOpt</find>
       <find>execu</find>
       <find>exe</find>
       <find>parse</find>
@@ -163,6 +163,11 @@
       <find>replyMarkup</find>
       <find>getTrip</find>
       <find>send</find>
+      <find>handleTe</find>
+      <find>user</find>
+      <find>jedis</find>
+      <find>redisCl</find>
+      <find>chooseOpt</find>
     </findStrings>
     <replaceStrings>
       <replace>msg</replace>
@@ -177,13 +182,14 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Procfile" />
-        <option value="$PROJECT_DIR$/src/main/java/TestBot.java" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_9.properties" />
         <option value="$PROJECT_DIR$/src/main/java/Reply.java" />
         <option value="$PROJECT_DIR$/src/main/java/Bot.java" />
-        <option value="$PROJECT_DIR$/src/main/java/RouteBot.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/RedisCli.java" />
+        <option value="$PROJECT_DIR$/src/main/java/TestBot.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Helper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/RouteBot.java" />
       </list>
     </option>
   </component>
@@ -232,8 +238,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -278,6 +282,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -285,6 +291,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Properties" />
+    <property name="editor.config.ad.shown" value="true" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Artifacts" />
@@ -330,18 +337,26 @@
       <updated>1584454497619</updated>
       <workItem from="1584454500263" duration="4314000" />
       <workItem from="1584482746196" duration="27095000" />
-      <workItem from="1585154248614" duration="8764000" />
+      <workItem from="1585154248614" duration="15032000" />
+      <workItem from="1585515221220" duration="475000" />
+      <workItem from="1585994624160" duration="1143000" />
+      <workItem from="1586029483277" duration="47000" />
+      <workItem from="1586172354824" duration="1054000" />
+      <workItem from="1586192868780" duration="1465000" />
+      <workItem from="1586354826768" duration="2804000" />
+      <workItem from="1591712805754" duration="1291000" />
+      <workItem from="1591783790926" duration="2797000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40173000" />
+    <option name="totallyTimeSpent" value="57517000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25767368" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.2819063" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
@@ -356,7 +371,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.329927" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49919224" visible="true" weight="0.329927" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49919224" weight="0.329927" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5016155" side_tool="true" weight="0.329927" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.329927" />
       <window_info anchor="bottom" id="Java Enterprise" order="13" />
@@ -447,7 +462,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/RouteBot.java</url>
-          <line>61</line>
+          <line>67</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
@@ -592,20 +607,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Reply.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Bot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="46" selection-start-line="46" selection-end-line="46" />
+        <state relative-caret-position="416">
+          <caret line="41" column="14" selection-start-line="41" selection-start-column="14" selection-end-line="41" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/TestBot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="2" column="39" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -616,52 +624,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/telegram/telegrambots/4.5/telegrambots-4.5.jar!/org/telegram/telegrambots/bots/DefaultAbsSender.class">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-138">
-          <caret line="59" column="22" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/telegram/telegrambots-meta/4.5/telegrambots-meta-4.5.jar!/org/telegram/telegrambots/meta/bots/AbsSender.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="47" column="70" selection-start-line="47" selection-start-column="70" selection-end-line="47" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Bot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-240">
-          <caret line="31" column="14" selection-start-line="31" selection-start-column="14" selection-end-line="31" selection-end-column="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2410#2411#0" expanded="true" />
-            <element signature="e#2440#2441#0" expanded="true" />
-            <element signature="e#2475#2476#0" expanded="true" />
-            <element signature="e#2506#2507#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="338">
+          <caret line="26" selection-start-line="26" selection-end-line="58" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/telegram/telegrambots-meta/4.5/telegrambots-meta-4.5.jar!/org/telegram/telegrambots/meta/api/methods/send/SendMessage.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
+        <state relative-caret-position="741">
           <caret line="73" column="22" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/telegram/telegrambots-meta/4.5/telegrambots-meta-4.5.jar!/org/telegram/telegrambots/meta/bots/AbsSender.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+        <state relative-caret-position="260">
+          <caret line="47" column="70" selection-start-line="47" selection-start-column="70" selection-end-line="47" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/telegram/telegrambots/4.5/telegrambots-4.5.jar!/org/telegram/telegrambots/bots/DefaultAbsSender.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="59" column="22" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/TestBot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="10" column="14" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/RedisCli.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="7" column="43" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
+        <state relative-caret-position="195">
+          <caret line="15" column="2" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="2" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Reply.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Helper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2444">
+          <caret line="188" selection-start-line="188" selection-end-line="188" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -670,8 +691,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/RouteBot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="306" column="16" selection-start-line="306" selection-start-column="12" selection-end-line="306" selection-end-column="16" />
+        <state relative-caret-position="215">
+          <caret line="190" column="8" selection-start-line="190" selection-start-column="8" selection-end-line="190" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -1,5 +1,6 @@
 Reply.class
 Reply$Type.class
+Helper.class
 RedisCli.class
 TestBot.class
 RouteBot.class
