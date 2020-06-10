@@ -267,10 +267,7 @@ public class RouteBot extends Bot {
         }
 
         User usr = msg.getFrom();
-        String userName = "";
-        if (usr != null) {
-            userName = usr.getUserName();
-        }
+        String userName = getUserStr(usr);
 
         List<String> alAns =
                 hmChat2Answers.getOrDefault(chatId, new ArrayList<>());
@@ -294,7 +291,7 @@ public class RouteBot extends Bot {
         } else if (alAns.size() == 0 && hmChat2UserInfo.get(chatId) == null) {
             chooseOpt = "1";
             msgText = vQuestions[0];
-            hmChat2UserInfo.put(chatId, getUserStr(usr));
+            hmChat2UserInfo.put(chatId, userName);
             jedis.lpush("n" + chatId, userName);
         }  else {
             chooseOpt = "3";
