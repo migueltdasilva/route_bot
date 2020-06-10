@@ -80,7 +80,7 @@ public class RouteBot extends Bot {
             "Насколько ты уверен(а) в своих способностях проехать 60 километров за два дня на шоссейнике и сохранить бодрость духа? Когда ты в последний раз сидел(а) на велосипеде, как прошло?)",
             "Белое или красное?",
             "Пришли, пожалуйста, ссылки на свои соц сети (например, фейсбук и инстаграм)",
-            "Я не смог получить твой ник в телеграмме, поэтому пришли, пожалуйста, свой телефон, чтобы мы точно могли с тобой связаться",
+            "Я не смог получить твой ник в телеграмме, поэтому пришли, пожалуйста, свой телефон, чтобы мы точно могли с тобой связаться.",
             "Очень важный вопрос про стикеры! Нужно описать голосом свой любимый стикер и прислать аудиосообщением сюда.\n" +
                     "Не претендуем на звание стикерных знатоков, но попробуем угадать!"};
 
@@ -208,7 +208,7 @@ public class RouteBot extends Bot {
 
             sendMsg(
                     chatId.toString(),
-                    "Все забыл️. Чтобы начать заново, выбери поездку и нажмин на нее.", getTripButtons());
+                    "Все забыл️. Чтобы начать заново, выбери поездку и нажми на нее.", getTripButtons());
 
             return;
         }
@@ -392,7 +392,7 @@ public class RouteBot extends Bot {
                     + alAns.size() + "], [" + vQuestions.length + "]");
             return;
         }
-        for (int i = 0; i < vQuestions.length-2; i++) {
+        for (int i = 0; i <= vQuestions.length-2; i++) {
             sb.append("Вопрос: *").append(vQuestions[i]).append("*\n")
                     .append("Ответ: *").append(alAns.get(i)).append("*\n\n");
         }
@@ -401,7 +401,7 @@ public class RouteBot extends Bot {
         hsAdminChatId.
                 forEach(adminChatId -> sendMsg(adminChatId, responses));
 
-        String fileId = alAns.get(5);
+        String fileId = alAns.get(vQuestions.length-1);
         hsAdminChatId.
                 forEach(adminChatId -> {if ( fileId.startsWith("v_")) {
             sendVoice(adminChatId, fileId.substring(2));
