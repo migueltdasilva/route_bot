@@ -178,6 +178,10 @@ public class Helper {
     }
 
     public static String escapeChars(String s) {
+        if (s == null) {
+
+            return "";
+        }
 
         return s
             .replace("_", "\\_")

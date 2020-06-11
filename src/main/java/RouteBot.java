@@ -152,7 +152,7 @@ public class RouteBot extends Bot {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
-        sendMessage.setText(Helper.escapeChars(s));
+        sendMessage.setText(s);
         if (replyKeyboardMarkup == null) {
             replyKeyboardMarkup = getCancelButton();
         }
@@ -351,8 +351,8 @@ public class RouteBot extends Bot {
         }
         long chatId = Helper.s2l(fullCmdString.split(" ")[1]);
         debi(methodLogPrefix, "" + chatId);
-
         if (chatId > 0) {
+            debi(methodLogPrefix, "chatId > 0");
             sendResponsesToAdmin(chatId);
         }
 
@@ -400,14 +400,21 @@ public class RouteBot extends Bot {
 
     private void sendResponsesToAdmin(Long chatId) {
         String methodLogPrefix = "sendResponsesToAdmin: ";
+        debi(methodLogPrefix, "starts");
+
         String userName = getUserName(chatId);
         debi(methodLogPrefix, "userName: " + userName);
+        if (userName == null || userName.isEmpty()) {
+            debi(methodLogPrefix, "cannot find user");
+
+            return;
+        }
         StringBuilder sb = new StringBuilder();
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z\n\n");
         Date date = new Date(System.currentTimeMillis());
 
         sb.append("Ответ от:  ")
-                .append(userName)
+                .append(Helper.escapeChars(userName))
                 .append(". Время: ").append(formatter.format(date));
         List<String> alAns = getUserAnswers(chatId);
         debi(methodLogPrefix, "ans: " + alAns);
@@ -418,7 +425,7 @@ public class RouteBot extends Bot {
         }
         for (int i = 0; i <= vQuestions.length-2; i++) {
             sb.append("Вопрос: *").append(vQuestions[i]).append("*\n")
-                    .append("Ответ: *").append(alAns.get(i)).append("*\n\n");
+                    .append("Ответ: *").append(Helper.escapeChars(alAns.get(i))).append("*\n\n");
         }
         sb.append("Вопрос: *").append(vQuestions[vQuestions.length-1]).append("*\n");
         String responses = sb.toString();
@@ -451,30 +458,40 @@ public class RouteBot extends Bot {
 
     private String getUserName(Long chatId) {
         String userName = hmChat2UserInfo.get(chatId);
-        if (userName == null) {
-            Jedis jedis = Helper.getConnection();
-            if (jedis != null) {
-                userName = jedis.get("n" + chatId);
+        try {
+            if (userName == null) {
+                Jedis jedis = Helper.getConnection();
+                if (jedis != null) {
+                    debi("redis len = " + jedis.llen("n" + chatId));
+                    userName = jedis.lindex("n" + chatId, 0);
+                }
             }
-        }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
 
         return userName;
     }
 
     private List<String> getUserAnswers(Long chatId) {
         List<String> answers = hmChat2Answers.get(chatId);
-        if (answers == null) {
-            Jedis jedis = Helper.getConnection();
-            if (jedis != null) {
-                answers = new ArrayList<>();
-                for (int i = 0; i<vQuestions.length; i++) {
-                    String answer = jedis.get("a" + chatId + "_" + i);
-                    if (answer == null) {
-                        answer = "";
+        try {
+            if (answers == null) {
+                Jedis jedis = Helper.getConnection();
+                if (jedis != null) {
+                    answers = new ArrayList<>();
+                    for (int i = 0; i<vQuestions.length; i++) {
+                        debi("redis len = " + jedis.llen("a" + chatId + "_" + i));
+                        String answer = jedis.lindex("a" + chatId + "_" + i, 0);
+                        if (answer == null) {
+                            answer = "";
+                        }
+                        answers.add(answer);
                     }
-                    answers.add(answer);
                 }
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
         return answers;
