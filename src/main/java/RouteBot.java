@@ -423,27 +423,29 @@ public class RouteBot extends Bot {
                 .append(". Время: ").append(formatter.format(date));
         List<String> alAns = getUserAnswers(chatId);
         debi(methodLogPrefix, "ans: " + alAns);
-        if (alAns.size() != vQuestions.length) {
-            out.println("Пользователь еще не закончил отвечать на вопросы. ["
-                    + alAns.size() + "], [" + vQuestions.length + "]");
-            return;
-        }
-        for (int i = 0; i <= vQuestions.length-2; i++) {
+        int numAns = alAns.size() == vQuestions.length ? vQuestions.length-1 : alAns.size();
+        for (int i = 0; i < numAns; i++) {
             sb.append("Вопрос: *").append(vQuestions[i]).append("*\n")
                     .append("Ответ: *").append(Helper.escapeChars(alAns.get(i))).append("*\n\n");
         }
-        sb.append("Вопрос: *").append(vQuestions[vQuestions.length-1]).append("*\n");
+        if (alAns.size() == vQuestions.length) {
+            sb.append("Вопрос: *").append(vQuestions[vQuestions.length - 1]).append("*\n");
+        }
         String responses = sb.toString();
         hsAdminChatId.
                 forEach(adminChatId -> sendMsg(adminChatId, responses));
 
-        String fileId = alAns.get(vQuestions.length-1);
-        hsAdminChatId.
-                forEach(adminChatId -> {if ( fileId.startsWith("v_")) {
-            sendVoice(adminChatId, fileId.substring(2));
-        } else if(fileId.startsWith("a_")) {
-            sendAudio(adminChatId, fileId.substring(2));
-        }});
+        if (alAns.size() == vQuestions.length) {
+            String fileId = alAns.get(vQuestions.length - 1);
+            hsAdminChatId.
+                    forEach(adminChatId -> {
+                        if (fileId.startsWith("v_")) {
+                            sendVoice(adminChatId, fileId.substring(2));
+                        } else if (fileId.startsWith("a_")) {
+                            sendAudio(adminChatId, fileId.substring(2));
+                        }
+                    });
+        }
 
     }
 
