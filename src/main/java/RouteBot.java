@@ -275,26 +275,26 @@ public class RouteBot extends Bot {
         User usr = msg.getFrom();
         String userName = getUserStr(usr);
 
-        List<String> alAns =
-                hmChat2Answers.getOrDefault(chatId, new ArrayList<>());
+        List<String> alAns = getUserAnswers(chatId);
 
         out.println("LOG: onUpdateReceived: alAns = [" + alAns.stream().reduce("", (s, s2) -> s + " " + s2) + "]");
-        out.println("LOG: onUpdateReceived: has user = [" + hmChat2UserInfo.get(chatId) + "]");
+        out.println("LOG: onUpdateReceived: has user = [" + hmChat2UserInfo.get(chatId) +  "|" + getUserName(chatId) + "]");
 
         String msgText = "";
         String chooseOpt = "0";
 
         //TODO: сделать разветвление по поездкам.
         Jedis jedis = Helper.getConnection();
+        String userInfo = getUserName(chatId);
         if (alAns.size() == 0 &&
-                hmChat2UserInfo.get(chatId) == null && !message.equals(vTrips[0])) {
+                userInfo == null && !message.equals(vTrips[0])) {
 
             sendMsg(String.valueOf(chatId),
                     "Простите, я что-то не понял что это. А чего мне делать с этим." +
                             " А вы кто? Простите, я уже старый.", getTripButtons());
 
             return;
-        } else if (alAns.size() == 0 && hmChat2UserInfo.get(chatId) == null) {
+        } else if (alAns.size() == 0 && userInfo == null) {
             chooseOpt = "1";
             msgText = vQuestions[0];
             hmChat2UserInfo.put(chatId, userName);
@@ -471,6 +471,9 @@ public class RouteBot extends Bot {
                 if (jedis != null) {
                     debi("redis len = " + jedis.llen("n" + chatId));
                     userName = jedis.lindex("n" + chatId, 0);
+                    if (userName != null) {
+                        hmChat2UserInfo.put(chatId, userName);
+                    }
                 }
             }
             } catch (Exception ex) {
@@ -491,10 +494,11 @@ public class RouteBot extends Bot {
                         debi("redis len = " + jedis.llen("a" + chatId + "_" + i));
                         String answer = jedis.lindex("a" + chatId + "_" + i, 0);
                         if (answer == null) {
-                            answer = "";
+                            break;
                         }
                         answers.add(answer);
                     }
+                    hmChat2Answers.put(chatId, answers);
                 }
             }
         } catch (Exception ex) {
