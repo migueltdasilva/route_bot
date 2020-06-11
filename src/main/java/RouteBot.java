@@ -330,6 +330,7 @@ public class RouteBot extends Bot {
 
         } else if (cmd == Command.SEND_RESPONSES) {
 
+            handleSendResponses(fullMsg);
         } else if (cmd == Command.HELP) {
 
         } else if (cmd == Command.SEND_JOKE) {
