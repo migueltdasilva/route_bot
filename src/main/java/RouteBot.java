@@ -197,11 +197,12 @@ public class RouteBot extends Bot {
 
             return;
         }
-        if (update.getMessage().hasText()) {
+        Long chatId = update.getMessage().getChatId();
+
+        if (update.getMessage().hasText() && !hsAdminChatId.contains(chatId)) {
             sendMsg2Admins(update.getMessage());
         }
 
-        Long chatId = update.getMessage().getChatId();
         if (update.getMessage().hasText() &&
                 update.getMessage().getText().equals("Отмена")) {
             hmChat2Answers.put(chatId, new ArrayList<>());
