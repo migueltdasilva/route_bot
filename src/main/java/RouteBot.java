@@ -53,6 +53,7 @@ public class RouteBot extends Bot {
     private enum Command {
         HELP("/", "Список всех команд."),
         START("/start", "Начать все сначала."),
+        SEND_RESPONSES("/send_resp", ""),
         SEND_JOKE("/send_joke", "Могу отправить тебе шутку.");
 
         String name;
@@ -151,7 +152,7 @@ public class RouteBot extends Bot {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
-        sendMessage.setText(s);
+        sendMessage.setText(Helper.escapeChars(s));
         if (replyKeyboardMarkup == null) {
             replyKeyboardMarkup = getCancelButton();
         }
@@ -247,10 +248,8 @@ public class RouteBot extends Bot {
         }
 
         String msgText = "Кайф, спасибо! Передам Коле и Алине все ответы, они свяжутся с тобой в ближайшее время. Если хочешь начать заново, нажми сюда /start";
-        sendMsg(chatId, msgText);
-        User usr = update.getMessage().getFrom();
-        sendResponsesToAdmin(chatId, usr);
-
+        sendMsg(chatId, msgText, getTripButtons());
+        sendResponsesToAdmin(chatId);
     }
 
     private void handleTextMsg(Update update) {
@@ -314,6 +313,10 @@ public class RouteBot extends Bot {
         Message msg = update.getMessage();
         String message = msg.getText();
         Long chatId = msg.getChatId();
+        String fullMsg = message.toLowerCase();
+        if (fullMsg.contains(" ")) {
+            message = fullMsg.split(" ")[0];
+        }
         Command cmd = Command.byName(message.toLowerCase());
         if (cmd == Command.START) {
             out.println("LOG: onUpdateReceived: deleting answers");
@@ -324,6 +327,8 @@ public class RouteBot extends Bot {
             sendMsg(
                     chatId.toString(),
                     "Привет! Тут можно записаться в поездку рута ⚡️", getTripButtons());
+
+        } else if (cmd == Command.SEND_RESPONSES) {
 
         } else if (cmd == Command.HELP) {
 
@@ -336,6 +341,16 @@ public class RouteBot extends Bot {
         }
     }
 
+    private void handleSendResponses(String fullCmdString) {
+        if (!fullCmdString.contains(" ")) {
+            return;
+        }
+        long chatId = Helper.s2l(fullCmdString.split(" ")[1]);
+        if (chatId > 0) {
+            sendResponsesToAdmin(chatId);
+        }
+
+    }
 
     private void handlePhotoMsg(Update update) {
         List<PhotoSize> photos = update.getMessage().getPhoto();
@@ -377,16 +392,16 @@ public class RouteBot extends Bot {
         }
     }
 
-    private void sendResponsesToAdmin(Long chatId, User user) {
-        String userName = hmChat2UserInfo.get(chatId);
+    private void sendResponsesToAdmin(Long chatId) {
+        String userName = getUserName(chatId);
         StringBuilder sb = new StringBuilder();
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z\n\n");
         Date date = new Date(System.currentTimeMillis());
 
         sb.append("Ответ от:  ")
-                .append(getUserStr(user))
+                .append(userName)
                 .append(". Время: ").append(formatter.format(date));
-        List<String> alAns = hmChat2Answers.get(chatId);
+        List<String> alAns = getUserAnswers(chatId);
         if (alAns.size() != vQuestions.length) {
             out.println("Пользователь еще не закончил отвечать на вопросы. ["
                     + alAns.size() + "], [" + vQuestions.length + "]");
@@ -425,6 +440,38 @@ public class RouteBot extends Bot {
                 forEach(adminChatId -> sendMsg(adminChatId, userName + "\n" + msgText));
     }
 
+    private String getUserName(Long chatId) {
+        String userName = hmChat2UserInfo.get(chatId);
+        if (userName == null) {
+            Jedis jedis = Helper.getConnection();
+            if (jedis != null) {
+                userName = jedis.get("n" + chatId);
+            }
+        }
+
+        return userName;
+    }
+
+    private List<String> getUserAnswers(Long chatId) {
+        List<String> answers = hmChat2Answers.get(chatId);
+        if (answers == null) {
+            Jedis jedis = Helper.getConnection();
+            if (jedis != null) {
+                answers = new ArrayList<>();
+                for (int i = 0; i<vQuestions.length; i++) {
+                    String answer = jedis.get("a" + chatId + "_" + i);
+                    if (answer == null) {
+                        answer = "";
+                    }
+                    answers.add(answer);
+                }
+            }
+        }
+
+        return answers;
+    }
+
+
     private static void debe(String... strings) {
         StringBuilder sb = new StringBuilder();
         sb.append("LOG: ERR: ");
@@ -442,6 +489,7 @@ public class RouteBot extends Bot {
         }
         System.out.println(sb.toString());
     }
+
 
 
     public static void main(String[] args) {

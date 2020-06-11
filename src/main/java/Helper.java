@@ -177,6 +177,15 @@ public class Helper {
         return null;
     }
 
+    public static String escapeChars(String s) {
+
+        return s
+            .replace("_", "\\_")
+            .replace("*", "\\*")
+            .replace("[", "\\[")
+            .replace("'", "\\'");
+    }
+
     public static long s2l(String s) {
         try {
             return Long.parseLong(s);
