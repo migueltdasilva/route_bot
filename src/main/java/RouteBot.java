@@ -508,7 +508,6 @@ public class RouteBot extends Bot {
         return answers;
     }
 
-
     private static void debe(String... strings) {
         StringBuilder sb = new StringBuilder();
         sb.append("LOG: ERR: ");
