@@ -343,10 +343,14 @@ public class RouteBot extends Bot {
     }
 
     private void handleSendResponses(String fullCmdString) {
+        String methodLogPrefix = "handleSendResponses: ";
+        debi(methodLogPrefix, "starts");
         if (!fullCmdString.contains(" ")) {
             return;
         }
         long chatId = Helper.s2l(fullCmdString.split(" ")[1]);
+        debi(methodLogPrefix, "" + chatId);
+
         if (chatId > 0) {
             sendResponsesToAdmin(chatId);
         }
@@ -394,7 +398,9 @@ public class RouteBot extends Bot {
     }
 
     private void sendResponsesToAdmin(Long chatId) {
+        String methodLogPrefix = "sendResponsesToAdmin: ";
         String userName = getUserName(chatId);
+        debi(methodLogPrefix, "userName: " + userName);
         StringBuilder sb = new StringBuilder();
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z\n\n");
         Date date = new Date(System.currentTimeMillis());
@@ -403,6 +409,7 @@ public class RouteBot extends Bot {
                 .append(userName)
                 .append(". Время: ").append(formatter.format(date));
         List<String> alAns = getUserAnswers(chatId);
+        debi(methodLogPrefix, "ans: " + alAns);
         if (alAns.size() != vQuestions.length) {
             out.println("Пользователь еще не закончил отвечать на вопросы. ["
                     + alAns.size() + "], [" + vQuestions.length + "]");
