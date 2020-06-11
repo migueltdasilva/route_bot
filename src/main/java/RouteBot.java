@@ -237,12 +237,17 @@ public class RouteBot extends Bot {
             Audio audio = update.getMessage().getAudio();
             String fileId = "a_" + audio.getFileId();
             alAns.add(fileId);
+            Jedis jedis = Helper.getConnection();
+            jedis.lpush("a" + chatId + "_" + alAns.size(), fileId);
 
         } else if ( update.getMessage().hasVoice()) {
 
             Voice voice = update.getMessage().getVoice();
             String fileId = "v_" + voice.getFileId();
             alAns.add(fileId);
+            Jedis jedis = Helper.getConnection();
+            jedis.lpush("a" + chatId + "_" + alAns.size(), fileId);
+
         } else {
             sendMsg(chatId, "Я очень извиняюсь, но Коля с Алиной попросили взять у вас именно аудио. Я не думаю, что это оно. Попробуйте еще раз, пожалуйста.");
             return;
@@ -480,7 +485,7 @@ public class RouteBot extends Bot {
                 Jedis jedis = Helper.getConnection();
                 if (jedis != null) {
                     answers = new ArrayList<>();
-                    for (int i = 0; i<vQuestions.length; i++) {
+                    for (int i = 1; i<= vQuestions.length; i++) {
                         debi("redis len = " + jedis.llen("a" + chatId + "_" + i));
                         String answer = jedis.lindex("a" + chatId + "_" + i, 0);
                         if (answer == null) {
