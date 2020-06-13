@@ -149,6 +149,7 @@ public class RouteBot extends Bot {
 
     public synchronized void sendMsg(
             String chatId, String s, ReplyKeyboardMarkup replyKeyboardMarkup) {
+        debi("sendMsg: ",chatId +" = " + s);
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
@@ -277,7 +278,7 @@ public class RouteBot extends Bot {
 
         List<String> alAns = getUserAnswers(chatId);
 
-        out.println("LOG: onUpdateReceived: alAns = [" + alAns.stream().reduce("", (s, s2) -> s + " " + s2) + "]");
+        out.println("LOG: onUpdateReceived: alAns = [" + alAns.stream().reduce("", (s, s2) -> s + ";" + s2) + "]");
         out.println("LOG: onUpdateReceived: has user = [" + hmChat2UserInfo.get(chatId) +  "|" + getUserName(chatId) + "]");
 
         String msgText = "";
