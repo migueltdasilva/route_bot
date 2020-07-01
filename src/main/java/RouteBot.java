@@ -73,17 +73,17 @@ public class RouteBot extends Bot {
         }
     }
 
-    private static final String[] vTrips = new String[]{"Хочу на велике вдоль залива!"};
+    private static final String[] vTrips = new String[]{"Хочу на кавказ и на парапланы!"};
     private static final String[] vQuestions = new String[]{
             "Классно, что ты решил присоединиться к нашей поездке!\n\nРасскажи, пожалуйста, в двух словах, о себе: чем ты занимаешься," +
                     " что ты любишь, почему хочешь поехать с нами?\n" +
                     "(Обещаю, дальше вопросы будут попроще)",
-            "Насколько ты уверен(а) в своих способностях проехать 60 километров за два дня на шоссейнике и сохранить бодрость духа? Когда ты в последний раз сидел(а) на велосипеде, как прошло?)",
+            "Когда в последний раз ты ночевал в палатке и как вообще к ним относишься?\n",
             "Белое или красное?",
             "Пришли, пожалуйста, ссылки на свои соц сети (например, фейсбук и инстаграм)",
             "Я не смог получить твой ник в телеграмме, поэтому пришли, пожалуйста, свой телефон, чтобы мы точно могли с тобой связаться.",
-            "Очень важный вопрос про стикеры! Нужно описать голосом свой любимый стикер и прислать аудиосообщением сюда.\n" +
-                    "Не претендуем на звание стикерных знатоков, но попробуем угадать!"};
+            "Давай начнем разговор! Пожалуйста, запиши аудиосообщение про то, собираешься ли ты полетать с нами на парапланах и как ты себе это представляешь?\n" +
+                    "А можешь записать, как будто ты уже на параплане?\n"};
 
     private Map<Long, List<String>> hmChat2Answers;
     private Map<Long, String> hmChat2UserInfo;
@@ -239,7 +239,7 @@ public class RouteBot extends Bot {
             String fileId = "a_" + audio.getFileId();
             alAns.add(fileId);
             Jedis jedis = Helper.getConnection();
-            jedis.lpush("a" + chatId + "_" + alAns.size(), fileId);
+            jedis.set("a" + chatId + "_" + alAns.size(), fileId);
 
         } else if ( update.getMessage().hasVoice()) {
 
@@ -247,7 +247,7 @@ public class RouteBot extends Bot {
             String fileId = "v_" + voice.getFileId();
             alAns.add(fileId);
             Jedis jedis = Helper.getConnection();
-            jedis.lpush("a" + chatId + "_" + alAns.size(), fileId);
+            jedis.set("a" + chatId + "_" + alAns.size(), fileId);
 
         } else {
             sendMsg(chatId, "Я очень извиняюсь, но Коля с Алиной попросили взять у вас именно аудио. Я не думаю, что это оно. Попробуйте еще раз, пожалуйста.");
@@ -299,14 +299,14 @@ public class RouteBot extends Bot {
             chooseOpt = "1";
             msgText = vQuestions[0];
             hmChat2UserInfo.put(chatId, userName);
-            jedis.lpush("n" + chatId, userName);
+            jedis.set("n" + chatId, userName);
         }  else {
             chooseOpt = "3";
             alAns.add(message);
-            jedis.lpush("a"+chatId+"_" +alAns.size(), message);
+            jedis.set("a"+chatId+"_" +alAns.size(), message);
             if (alAns.size() == 4 && usr.getUserName() != null) {
                 alAns.add("");
-                jedis.lpush("a"+chatId+"_" +alAns.size(), "");
+                jedis.set("a"+chatId+"_" +alAns.size(), "");
             }
 
             msgText = vQuestions[alAns.size()];
@@ -329,7 +329,16 @@ public class RouteBot extends Bot {
             out.println("LOG: onUpdateReceived: deleting answers");
             hmChat2Answers.put(chatId, new ArrayList<>());
             hmChat2UserInfo.put(chatId, null);
-
+            //TODO удалить из редиса ответы
+            Jedis jedis = Helper.getConnection();
+            if (jedis.exists("n" + chatId)) {
+                jedis.del("n" + chatId);
+            }
+            for (int i = 1; i<= vQuestions.length; i++) {
+                if (jedis.exists("a" + chatId + "_" + i)) {
+                    jedis.del("a" + chatId + "_" + i);
+                }
+            }
 
             sendMsg(
                     chatId.toString(),
@@ -471,7 +480,7 @@ public class RouteBot extends Bot {
                 Jedis jedis = Helper.getConnection();
                 if (jedis != null) {
                     debi("redis len = " + jedis.llen("n" + chatId));
-                    userName = jedis.lindex("n" + chatId, 0);
+                    userName = jedis.get("n" + chatId);
                     if (userName != null) {
                         hmChat2UserInfo.put(chatId, userName);
                     }
@@ -492,8 +501,7 @@ public class RouteBot extends Bot {
                 if (jedis != null) {
                     answers = new ArrayList<>();
                     for (int i = 1; i<= vQuestions.length; i++) {
-                        debi("redis len = " + jedis.llen("a" + chatId + "_" + i));
-                        String answer = jedis.lindex("a" + chatId + "_" + i, 0);
+                        String answer = jedis.get("a" + chatId + "_" + i);
                         if (answer == null) {
                             break;
                         }
