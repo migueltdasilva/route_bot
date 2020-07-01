@@ -22,26 +22,33 @@ import java.util.zip.GZIPInputStream;
 
 public class Helper {
 
-    private static Jedis jedis = null;
+    private static volatile Jedis jedis;
 
     public static Jedis getConnection()   {
         try {
-            if (jedis == null) {
-                jedis = getNewConn();
+            Jedis localJedis = jedis;
+            if (localJedis == null) {
+                synchronized (Jedis.class) {
+                    localJedis = jedis;
+                    if (localJedis == null) {
+                        jedis = localJedis = getNewConn();
+                    }
+                }
             } else {
                 try {
-                    String str = jedis.ping("");
-                    if (str.equals("PONG")) {
+                    String str = jedis.ping("A");
+                    if (str.equals("A")) {
                         return jedis;
                     } else {
-                        jedis = getNewConn();
+                        jedis = localJedis = getNewConn();
                     }
                 } catch (Exception ex) {
-                    jedis = getNewConn();
+                    ex.printStackTrace();
+                    jedis = localJedis = getNewConn();
                 }
             }
 
-            return jedis;
+            return localJedis;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -49,14 +56,16 @@ public class Helper {
         return null;
     }
 
-    private static Jedis getNewConn() {
+    private  static synchronized Jedis getNewConn() {
+        String methodLogPrefix = "getNewConn: ";
+        debi(methodLogPrefix, "starts");
         try {
             URI redisURI = new URI(System.getenv("REDIS_URL"));
             return new Jedis(redisURI);
         }  catch (URISyntaxException e) {
             e.printStackTrace();
         }
-
+        debe(methodLogPrefix, "jedis is null");
         return null;
     }
 
@@ -197,5 +206,24 @@ public class Helper {
             return 0L;
         }
     }
+
+    private static void debe(String... strings) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("RH: ERR: ");
+        for (String string : strings) {
+            sb.append(string);
+        }
+        System.out.println(sb.toString());
+    }
+
+    private static void debi(String... strings) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("RH: ");
+        for (String string : strings) {
+            sb.append(string);
+        }
+        System.out.println(sb.toString());
+    }
+
 
 }
