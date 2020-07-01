@@ -131,6 +131,22 @@ public class RouteBot extends Bot {
         markupKeyboard.setKeyboard(buttons);
     }
 
+    public synchronized void sendMsgNoMarkDown(
+            Long chatId, String s) {
+        debi("sendMsg: ",chatId +" = " + s);
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.enableMarkdown(false);
+        sendMessage.setChatId(chatId);
+        sendMessage.setText(s);
+        try {
+            execute(sendMessage);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+            //Log.log(Level, "Exception: ", e.toString());
+        }
+    }
+
+
     public synchronized void sendMsg(Long chatId, String s) {
 
         sendMsg(String.valueOf(chatId), s, null);
@@ -435,15 +451,15 @@ public class RouteBot extends Bot {
         debi(methodLogPrefix, "ans: " + alAns);
         int numAns = alAns.size() == vQuestions.length ? vQuestions.length-1 : alAns.size();
         for (int i = 0; i < numAns; i++) {
-            sb.append("Вопрос: *").append(vQuestions[i]).append("*\n")
-                    .append("Ответ: *").append(Helper.escapeChars(alAns.get(i))).append("*\n\n");
+            sb.append("Вопрос: ").append(vQuestions[i]).append("*\n")
+                    .append("Ответ: ").append(alAns.get(i)).append("\n\n");
         }
         if (alAns.size() == vQuestions.length) {
-            sb.append("Вопрос: *").append(vQuestions[vQuestions.length - 1]).append("*\n");
+            sb.append("Вопрос: ").append(vQuestions[vQuestions.length - 1]).append("\n");
         }
         String responses = sb.toString();
         hsAdminChatId.
-                forEach(adminChatId -> sendMsg(adminChatId, responses));
+                forEach(adminChatId -> sendMsgNoMarkDown(adminChatId, responses));
 
         if (alAns.size() == vQuestions.length) {
             String fileId = alAns.get(vQuestions.length - 1);
@@ -460,7 +476,7 @@ public class RouteBot extends Bot {
     }
 
     private String getUserStr(User user) {
-        return "Пользователь: " + user.getId() + " ник: " + user.getUserName() +
+        return "Пользователь: " + user.getId() + " ник: @" + user.getUserName() +
                 " имя: " + user.getFirstName() + " фамилия: " + user.getLastName();
     }
 
@@ -470,7 +486,7 @@ public class RouteBot extends Bot {
         String msgText = msg.getText();
 
         hsAdminChatId.
-                forEach(adminChatId -> sendMsg(adminChatId, userName + "\n" + msgText));
+                forEach(adminChatId -> sendMsgNoMarkDown(adminChatId, userName + "\n" + msgText));
     }
 
     private String getUserName(Long chatId) {
