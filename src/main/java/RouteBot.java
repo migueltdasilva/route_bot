@@ -416,6 +416,7 @@ public class RouteBot extends Bot {
     }
 
     private void handleCmd(Update update) {
+        String methodLogPrefix = "handleCmd: ";
         Message msg = update.getMessage();
         String message = msg.getText();
         Long chatId = msg.getChatId();
@@ -429,12 +430,13 @@ public class RouteBot extends Bot {
             hmChat2Answers.put(chatId, new ArrayList<>());
             hmChat2UserInfo.put(chatId, null);
             hmChat2Trip.put(chatId, null);
+            debi(methodLogPrefix, "maps cleared");
             removeAllUserData(chatId, getUserTrip(chatId));
-
+            debi(methodLogPrefix, "redis cleared");
             sendMsg(
-                    chatId.toString(),
-                    "Привет! Тут можно записаться в поездку рута ⚡️", getTripButtons());
-
+                    chatId, "Привет! Тут можно записаться в поездку рута ⚡️",
+                    getTripButtons());
+            debi(methodLogPrefix, "msg send");
         } else if (cmd == Command.SEND_RESPONSES) {
 
             handleSendResponses(fullMsg);
@@ -637,19 +639,22 @@ public class RouteBot extends Bot {
     }
 
     private void removeAllUserData(Long chatId, int trip) {
-        Jedis jedis = Helper.getConnection();
-        if (jedis.exists("n" + chatId)) {
-            jedis.del("n" + chatId);
-        }
-        if (jedis.exists("t" + chatId)) {
-            jedis.del("t" + chatId);
-        }
-        for (int i = 1; i<= vQuestions[trip].length; i++) {
-            if (jedis.exists("a" + chatId + "_" + i)) {
-                jedis.del("a" + chatId + "_" + i);
+        try {
+            Jedis jedis = Helper.getConnection();
+            if (jedis.exists("n" + chatId)) {
+                jedis.del("n" + chatId);
             }
+            if (jedis.exists("t" + chatId)) {
+                jedis.del("t" + chatId);
+            }
+            for (int i = 1; i <= vQuestions[trip].length; i++) {
+                if (jedis.exists("a" + chatId + "_" + i)) {
+                    jedis.del("a" + chatId + "_" + i);
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
     }
 
     private static void debe(String... strings) {
