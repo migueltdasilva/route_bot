@@ -404,14 +404,15 @@ public class RouteBot extends Bot {
             chooseOpt = "3";
             alAns.add(message);
             jedis.set("a" + chatId + "_" + alAns.size(), message);
-            if (alAns.size() == 4 && usr.getUserName() != null) {
+            msgText = vQuestions[tripIdx][alAns.size()];
+            if (msgText.startsWith("Я не смог получить твой ник") &&
+                    usr.getUserName() != null) {
                 alAns.add("");
                 jedis.set("a" + chatId + "_" + alAns.size(), "");
+                msgText = vQuestions[tripIdx][alAns.size()];
             }
-
-            msgText = vQuestions[tripIdx][alAns.size()];
         }
-        out.println("LOG: onUpdateReceived: msg text = [" + msgText + "] $ " + chooseOpt);
+         debi("msg text = [" + msgText + "] $ " + chooseOpt);
 
         sendMsg(chatId, msgText);
     }
