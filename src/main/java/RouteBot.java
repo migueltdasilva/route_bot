@@ -82,7 +82,7 @@ public class RouteBot extends Bot {
 
     private static final String[] vTrips =
             new String[]{"Хочу на кавказ и на парапланы! 10-12 июля",
-                    "Хочу Калиниград, море, песочек – и побыстрее! 16-19 июля"};
+                    "Хочу Калиниград, море, песочек! 22-26 июля"};
     private static final String[][] vQuestions = new String[vTrips.length][2];
     static {
         vQuestions[0] = new String[]{
@@ -239,6 +239,22 @@ public class RouteBot extends Bot {
         }
     }
 
+    public synchronized void sendMsgNoKeybord(
+            String chatId, String s) {
+        debi("sendMsg: ",chatId +" = " + s);
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.enableMarkdown(true);
+        sendMessage.setChatId(chatId);
+        sendMessage.setText(s);
+
+        try {
+            execute(sendMessage);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+            //Log.log(Level, "Exception: ", e.toString());
+        }
+    }
+
     public synchronized void sendVoice(Long chatId, String fileId) {
         SendVoice voice = new SendVoice();
         voice.setChatId(chatId);
@@ -345,10 +361,10 @@ public class RouteBot extends Bot {
         }
 
         String msgText = "Кайф, спасибо! Передам Коле и Алине все ответы, они свяжутся с тобой в ближайшее время. Если хочешь начать заново, нажми сюда /start";
-        sendMsg(chatId, msgText, getTripButtons());
+        sendMsgNoKeybord(String.valueOf(chatId), msgText);
         sendResponsesToAdmin(chatId);
         hmChat2Answers.put(chatId, new ArrayList<>());
-        hmChat2Trip.put(chatId, null);
+        hmChat2UserInfo.put(chatId, null);
         removeAllUserData(chatId, getUserTrip(chatId));
     }
 
