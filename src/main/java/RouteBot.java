@@ -98,7 +98,7 @@ public class RouteBot extends Bot {
                         "А можешь записать, как будто ты уже на параплане?\n"};
         vQuestions[1] = new String[]{
                 "Классно, что ты решил присоединиться к нашей поездке!\n" +
-                        "Чтобы оставить заявку – ответь, пожалуйста, на наши вопросы." +
+                        "Чтобы оставить заявку – ответь, пожалуйста, на наши вопросы. " +
                         "Тебе понадобится 5 свободных минут и не стесняться.",
                 "Расскажи, пожалуйста, в двух словах, о себе: чем ты занимаешься," +
                         " что ты любишь, почему хочешь поехать с нами?\n" +
@@ -513,7 +513,7 @@ public class RouteBot extends Bot {
 
         String userName = getUserName(chatId);
         Integer trip = getUserTrip(chatId);
-        debi(methodLogPrefix, "userName: " + userName);
+        debi(methodLogPrefix, "userName: " + userName + " trip: " + trip);
         if (userName == null || userName.isEmpty()) {
             debi(methodLogPrefix, "cannot find user");
 
@@ -530,7 +530,7 @@ public class RouteBot extends Bot {
         debi(methodLogPrefix, "ans: " + alAns);
         int numAns = alAns.size() == vQuestions[trip].length ? vQuestions[trip].length-1 : alAns.size();
         for (int i = 0; i < numAns; i++) {
-            sb.append("Вопрос: ").append(vQuestions[i]).append("\n")
+            sb.append("Вопрос: ").append(vQuestions[trip][i]).append("\n")
                     .append("Ответ: ").append(alAns.get(i)).append("\n\n");
         }
         if (alAns.size() == vQuestions[trip].length) {
