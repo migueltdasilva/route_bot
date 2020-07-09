@@ -82,7 +82,7 @@ public class RouteBot extends Bot {
     private static final String[] vTrips =
             new String[]{"Хочу на кавказ и на парапланы! 10-12 июля",
                     "Хочу Калиниград, море, песочек – и побыстрее! 16-19 июля"};
-    private static final String[][] vQuestions = new String[vTrips.length][0];
+    private static final String[][] vQuestions = new String[vTrips.length][2];
     static {
         vQuestions[0] = new String[]{
                 "Классно, что ты решил присоединиться к нашей поездке!\n\n" +
@@ -282,8 +282,9 @@ public class RouteBot extends Bot {
 
         if (updMsg.hasText() &&
                 updMsg.getText().startsWith("/")) {
-
             handleCmd(update);
+
+            return;
         }
 
         Integer trip = getUserTrip(chatId);
@@ -427,6 +428,7 @@ public class RouteBot extends Bot {
             out.println("LOG: onUpdateReceived: deleting answers");
             hmChat2Answers.put(chatId, new ArrayList<>());
             hmChat2UserInfo.put(chatId, null);
+            hmChat2Trip.put(chatId, null);
             removeAllUserData(chatId, getUserTrip(chatId));
 
             sendMsg(
