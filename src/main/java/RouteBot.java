@@ -128,7 +128,7 @@ public class RouteBot extends Bot {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(false);
+        replyKeyboardMarkup.setOneTimeKeyboard(true);
 
         List<KeyboardRow> alKeyboardRows = new ArrayList<>();
         for (String trip : vTrips) {
@@ -146,7 +146,7 @@ public class RouteBot extends Bot {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(false);
+        replyKeyboardMarkup.setOneTimeKeyboard(true);
 
         List<KeyboardRow> alKeyboardRows = new ArrayList<>();
         KeyboardRow keyboardFirstRow = new KeyboardRow();
