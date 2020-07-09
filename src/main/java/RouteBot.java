@@ -15,6 +15,7 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.Voice;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
@@ -161,7 +162,7 @@ public class RouteBot extends Bot {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(false);
+        replyKeyboardMarkup.setOneTimeKeyboard(true);
 
         List<KeyboardRow> alKeyboardRows = new ArrayList<>();
         KeyboardRow keyboardFirstRow = new KeyboardRow();
@@ -239,12 +240,14 @@ public class RouteBot extends Bot {
         }
     }
 
-    public synchronized void sendMsgNoKeybord(
+    public synchronized void sendMsgNoKeyboard(
             String chatId, String s) {
         debi("sendMsg: ",chatId +" = " + s);
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
+        ReplyKeyboardRemove replyKeyboardRemove = new ReplyKeyboardRemove();
+        sendMessage.setReplyMarkup(replyKeyboardRemove);
         sendMessage.setText(s);
 
         try {
@@ -361,7 +364,7 @@ public class RouteBot extends Bot {
         }
 
         String msgText = "Кайф, спасибо! Передам Коле и Алине все ответы, они свяжутся с тобой в ближайшее время. Если хочешь начать заново, нажми сюда /start";
-        sendMsgNoKeybord(String.valueOf(chatId), msgText);
+        sendMsgNoKeyboard(String.valueOf(chatId), msgText);
         sendResponsesToAdmin(chatId);
         hmChat2Answers.put(chatId, new ArrayList<>());
         hmChat2UserInfo.put(chatId, null);
