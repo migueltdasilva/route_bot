@@ -347,6 +347,8 @@ public class RouteBot extends Bot {
         String msgText = "Кайф, спасибо! Передам Коле и Алине все ответы, они свяжутся с тобой в ближайшее время. Если хочешь начать заново, нажми сюда /start";
         sendMsg(chatId, msgText, getTripButtons());
         sendResponsesToAdmin(chatId);
+        hmChat2Answers.put(chatId, new ArrayList<>());
+        hmChat2Trip.put(chatId, null);
         removeAllUserData(chatId, getUserTrip(chatId));
     }
 
