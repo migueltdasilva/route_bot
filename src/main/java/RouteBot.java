@@ -24,6 +24,7 @@ import redis.clients.jedis.Jedis;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,10 +41,12 @@ public class RouteBot extends Bot {
     private static final String token = "1013761197:AAHv3uKJJzwiWMsQVxgnxUsqbpP5-PSrRy4";
     private static final Long adminChatId = 3099992L;
     private static final Set<Long> hsAdminChatId = new HashSet<>();
+
     static {
         hsAdminChatId.add(3099992L);
         hsAdminChatId.add(96353936L);
     }
+
     RouteBot() {
         super(name, token);
         hmChat2Answers = new HashMap<>();
@@ -59,34 +62,66 @@ public class RouteBot extends Bot {
         String name;
         String desr;
         public static Map<String, Command> cmdByName = new HashMap<>();
+
         public static Command byName(String name) {
             return cmdByName.get(name);
         }
+
         Command(String name, String desr) {
             this.name = name;
             this.desr = desr;
         }
+
         static {
-            for(Command cmd : Command.values()) {
+            for (Command cmd : Command.values()) {
                 cmdByName.put(cmd.name, cmd);
             }
         }
     }
 
-    private static final String[] vTrips = new String[]{"Хочу на кавказ и на парапланы!"};
-    private static final String[] vQuestions = new String[]{
-            "Классно, что ты решил присоединиться к нашей поездке!\n\nРасскажи, пожалуйста, в двух словах, о себе: чем ты занимаешься," +
-                    " что ты любишь, почему хочешь поехать с нами?\n" +
-                    "(Обещаю, дальше вопросы будут попроще)",
-            "Когда в последний раз ты ночевал в палатке и как вообще к ним относишься?\n",
-            "Белое или красное?",
-            "Пришли, пожалуйста, ссылки на свои соц сети (например, фейсбук и инстаграм)",
-            "Я не смог получить твой ник в телеграмме, поэтому пришли, пожалуйста, свой телефон, чтобы мы точно могли с тобой связаться.",
-            "Давай начнем разговор! Пожалуйста, запиши аудиосообщение про то, собираешься ли ты полетать с нами на парапланах и как ты себе это представляешь?\n" +
-                    "А можешь записать, как будто ты уже на параплане?\n"};
+    private static final String[] vTrips =
+            new String[]{"Хочу на кавказ и на парапланы!",
+                    "Хочу Калиниград, море, песочек – и побыстрее!"};
+    private static final String[][] vQuestions = new String[vTrips.length][0];
+    static {
+        vQuestions[0] = new String[]{
+                "Классно, что ты решил присоединиться к нашей поездке!\n\n" +
+                        "Расскажи, пожалуйста, в двух словах, о себе: чем ты занимаешься," +
+                        " что ты любишь, почему хочешь поехать с нами?\n" +
+                        "(Обещаю, дальше вопросы будут попроще)",
+                "Когда в последний раз ты ночевал в палатке и как вообще к ним относишься?\n",
+                "Белое или красное?",
+                "Пришли, пожалуйста, ссылки на свои соц сети (например, фейсбук и инстаграм)",
+                "Я не смог получить твой ник в телеграмме, поэтому пришли, пожалуйста, свой телефон, чтобы мы точно могли с тобой связаться.",
+                "Давай начнем разговор! Пожалуйста, запиши аудиосообщение про то, собираешься ли ты полетать с нами на парапланах и как ты себе это представляешь?\n" +
+                        "А можешь записать, как будто ты уже на параплане?\n"};
+        vQuestions[1] = new String[]{
+                "Классно, что ты решил присоединиться к нашей поездке!\n" +
+                        "Чтобы оставить заявку – ответь, пожалуйста, на наши вопросы." +
+                        "Тебе понадобится 5 свободных минут и не стесняться.",
+                "Расскажи, пожалуйста, в двух словах, о себе: чем ты занимаешься," +
+                        " что ты любишь, почему хочешь поехать с нами?\n" +
+                        "(Обещаю, дальше вопросы будут попроще)",
+                "Есть ли у тебя свой проект или очень серьезное хобби," +
+                        " про которое хочется рассказать? Если есть – расскажи!",
+                "Когда в последний раз ты ночевал в палатке и как вообще к ним относишься?",
+                "Белое или красное?",
+                "Есть ли у тебя права и готов ли ты быть водителем (водительницей) одной из машин?",
+                "Пришли, пожалуйста, ссылки на свои соц сети (например, фейсбук и инстаграм)",
+                "Я не смог получить твой ник в телеграмме, поэтому пришли," +
+                        " пожалуйста, свой телефон, чтобы мы точно могли с тобой связаться.",
+                "Ты когда-нибудь пробовал серфить? Как прошло?" +
+                        "Хочешь ли повторить или готов ли попробовать с нами на Косе? " +
+                        "*Запиши аудиосообщение* про свой опыт / ожидания / или" +
+                        " как ты обычно себя подбадриваешь, попадая в очередную мясорубку из волн?\n" +
+                        "Если стесняешься – запиши шепотом, мы все услышим."};
+
+    }
 
     private Map<Long, List<String>> hmChat2Answers;
     private Map<Long, String> hmChat2UserInfo;
+    private Map<Long, Integer> hmChat2Trip;
+
 
     public synchronized ReplyKeyboardMarkup getTripButtons() {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
@@ -120,6 +155,27 @@ public class RouteBot extends Bot {
 
         return replyKeyboardMarkup;
     }
+
+    public synchronized ReplyKeyboardMarkup getGoAndCancelButton() {
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
+
+        List<KeyboardRow> alKeyboardRows = new ArrayList<>();
+        KeyboardRow keyboardFirstRow = new KeyboardRow();
+        keyboardFirstRow.add(new KeyboardButton("Поехали"));
+        alKeyboardRows.add(keyboardFirstRow);
+
+        keyboardFirstRow = new KeyboardRow();
+        keyboardFirstRow.add(new KeyboardButton("Отмена"));
+        alKeyboardRows.add(keyboardFirstRow);
+
+        replyKeyboardMarkup.setKeyboard(alKeyboardRows);
+
+        return replyKeyboardMarkup;
+    }
+
 
     private void setInline() {
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
@@ -215,7 +271,7 @@ public class RouteBot extends Bot {
             return;
         }
         Long chatId = update.getMessage().getChatId();
-
+        Integer trip = getUserTrip(chatId);
         if (update.getMessage().hasText() && !hsAdminChatId.contains(chatId)) {
             sendMsg2Admins(update.getMessage());
         }
@@ -224,6 +280,7 @@ public class RouteBot extends Bot {
                 update.getMessage().getText().equals("Отмена")) {
             hmChat2Answers.put(chatId, new ArrayList<>());
             hmChat2UserInfo.put(chatId, null);
+            removeAllUserData(chatId, trip);
 
             sendMsg(
                     chatId.toString(),
@@ -234,7 +291,7 @@ public class RouteBot extends Bot {
 
         List<String> alAns =
                 hmChat2Answers.getOrDefault(chatId, new ArrayList<>());
-        if (alAns.size() == vQuestions.length - 1) {
+        if (alAns.size() == vQuestions[trip].length - 1) {
 
             handleVoiceAudioMsg(update, alAns, chatId);
         } else if (update.getMessage().hasText())  {
@@ -273,6 +330,7 @@ public class RouteBot extends Bot {
         String msgText = "Кайф, спасибо! Передам Коле и Алине все ответы, они свяжутся с тобой в ближайшее время. Если хочешь начать заново, нажми сюда /start";
         sendMsg(chatId, msgText, getTripButtons());
         sendResponsesToAdmin(chatId);
+        removeAllUserData(chatId, getUserTrip(chatId));
     }
 
     private void handleTextMsg(Update update) {
@@ -292,7 +350,8 @@ public class RouteBot extends Bot {
         User usr = msg.getFrom();
         String userName = getUserStr(usr);
 
-        List<String> alAns = getUserAnswers(chatId);
+        Integer tripIdx = getUserTrip(chatId);
+        List<String> alAns = getUserAnswers(chatId, tripIdx);
 
         out.println("LOG: onUpdateReceived: alAns = [" + alAns.stream().reduce("", (s, s2) -> s + ";" + s2) + "]");
         out.println("LOG: onUpdateReceived: has user = [" + hmChat2UserInfo.get(chatId) +  "|" + getUserName(chatId) + "]");
@@ -300,11 +359,10 @@ public class RouteBot extends Bot {
         String msgText = "";
         String chooseOpt = "0";
 
-        //TODO: сделать разветвление по поездкам.
         Jedis jedis = Helper.getConnection();
         String userInfo = getUserName(chatId);
         if (alAns.size() == 0 &&
-                userInfo == null && !message.equals(vTrips[0])) {
+                userInfo == null && Arrays.stream(vTrips).noneMatch(message::equals)) {
 
             sendMsg(String.valueOf(chatId),
                     "Простите, я что-то не понял что это. А чего мне делать с этим." +
@@ -313,19 +371,28 @@ public class RouteBot extends Bot {
             return;
         } else if (alAns.size() == 0 && userInfo == null) {
             chooseOpt = "1";
-            msgText = vQuestions[0];
+            tripIdx = getTripIdx(message);
+            hmChat2Trip.put(chatId,tripIdx);
+            jedis.set("t" + chatId, String.valueOf(tripIdx));
             hmChat2UserInfo.put(chatId, userName);
             jedis.set("n" + chatId, userName);
+
+            msgText = vQuestions[tripIdx][0];
+            if (tripIdx == 1) {
+                sendMsg(chatId, msgText, getGoAndCancelButton());
+
+                return;
+            }
         }  else {
             chooseOpt = "3";
             alAns.add(message);
-            jedis.set("a"+chatId+"_" +alAns.size(), message);
+            jedis.set("a" + chatId + "_" + alAns.size(), message);
             if (alAns.size() == 4 && usr.getUserName() != null) {
                 alAns.add("");
-                jedis.set("a"+chatId+"_" +alAns.size(), "");
+                jedis.set("a" + chatId + "_" + alAns.size(), "");
             }
 
-            msgText = vQuestions[alAns.size()];
+            msgText = vQuestions[tripIdx][alAns.size()];
         }
         out.println("LOG: onUpdateReceived: msg text = [" + msgText + "] $ " + chooseOpt);
 
@@ -345,16 +412,7 @@ public class RouteBot extends Bot {
             out.println("LOG: onUpdateReceived: deleting answers");
             hmChat2Answers.put(chatId, new ArrayList<>());
             hmChat2UserInfo.put(chatId, null);
-            //TODO удалить из редиса ответы
-            Jedis jedis = Helper.getConnection();
-            if (jedis.exists("n" + chatId)) {
-                jedis.del("n" + chatId);
-            }
-            for (int i = 1; i<= vQuestions.length; i++) {
-                if (jedis.exists("a" + chatId + "_" + i)) {
-                    jedis.del("a" + chatId + "_" + i);
-                }
-            }
+            removeAllUserData(chatId, getUserTrip(chatId));
 
             sendMsg(
                     chatId.toString(),
@@ -397,7 +455,7 @@ public class RouteBot extends Bot {
                 .findFirst()
                 .orElse(null).getFileId();
 
-        String caption = photos.stream().map(photoSize -> photoSize.toString()).reduce("", String::concat);
+        String caption = photos.stream().map(PhotoSize::toString).reduce("", String::concat);
         SendPhoto msg = new SendPhoto();
         msg.setPhoto(fileId);
         msg.setChatId(adminChatId);
@@ -434,6 +492,7 @@ public class RouteBot extends Bot {
         debi(methodLogPrefix, "starts");
 
         String userName = getUserName(chatId);
+        Integer trip = getUserTrip(chatId);
         debi(methodLogPrefix, "userName: " + userName);
         if (userName == null || userName.isEmpty()) {
             debi(methodLogPrefix, "cannot find user");
@@ -447,22 +506,22 @@ public class RouteBot extends Bot {
         sb.append("Ответ от:  ")
                 .append(Helper.escapeChars(userName))
                 .append(". Время: ").append(formatter.format(date));
-        List<String> alAns = getUserAnswers(chatId);
+        List<String> alAns = getUserAnswers(chatId, trip);
         debi(methodLogPrefix, "ans: " + alAns);
-        int numAns = alAns.size() == vQuestions.length ? vQuestions.length-1 : alAns.size();
+        int numAns = alAns.size() == vQuestions[trip].length ? vQuestions[trip].length-1 : alAns.size();
         for (int i = 0; i < numAns; i++) {
-            sb.append("Вопрос: ").append(vQuestions[i]).append("*\n")
+            sb.append("Вопрос: ").append(vQuestions[i]).append("\n")
                     .append("Ответ: ").append(alAns.get(i)).append("\n\n");
         }
-        if (alAns.size() == vQuestions.length) {
-            sb.append("Вопрос: ").append(vQuestions[vQuestions.length - 1]).append("\n");
+        if (alAns.size() == vQuestions[trip].length) {
+            sb.append("Вопрос: ").append(vQuestions[trip][vQuestions[trip].length - 1]).append("\n");
         }
         String responses = sb.toString();
         hsAdminChatId.
                 forEach(adminChatId -> sendMsgNoMarkDown(adminChatId, responses));
 
-        if (alAns.size() == vQuestions.length) {
-            String fileId = alAns.get(vQuestions.length - 1);
+        if (alAns.size() == vQuestions[trip].length) {
+            String fileId = alAns.get(vQuestions[trip].length - 1);
             hsAdminChatId.
                     forEach(adminChatId -> {
                         if (fileId.startsWith("v_")) {
@@ -472,7 +531,6 @@ public class RouteBot extends Bot {
                         }
                     });
         }
-
     }
 
     private String getUserStr(User user) {
@@ -509,14 +567,14 @@ public class RouteBot extends Bot {
         return userName;
     }
 
-    private List<String> getUserAnswers(Long chatId) {
+    private List<String> getUserAnswers(Long chatId, int trip) {
         List<String> answers = hmChat2Answers.get(chatId);
         try {
             if (answers == null) {
                 Jedis jedis = Helper.getConnection();
                 if (jedis != null) {
                     answers = new ArrayList<>();
-                    for (int i = 1; i<= vQuestions.length; i++) {
+                    for (int i = 1; i<= vQuestions[trip].length; i++) {
                         String answer = jedis.get("a" + chatId + "_" + i);
                         if (answer == null) {
                             break;
@@ -531,6 +589,46 @@ public class RouteBot extends Bot {
         }
 
         return answers;
+    }
+
+    private Integer getUserTrip(Long chatId) {
+        Integer trip = hmChat2Trip.get(chatId);
+        try {
+            if (trip == null) {
+                Jedis jedis = Helper.getConnection();
+                if (jedis != null) {
+                    trip = Integer.parseInt(jedis.get("t" + chatId));
+                    hmChat2Trip.put(chatId, trip);
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return trip == null ? 0: trip;
+    }
+
+    private int getTripIdx(String message) {
+        int idx = -1;
+        for (int i = 0; i<vTrips.length; i++) {
+            if (vTrips[i].equals(message)) {
+                idx = i;
+            }
+        }
+
+        return idx;
+    }
+
+    private void removeAllUserData(Long chatId, int trip) {
+        Jedis jedis = Helper.getConnection();
+        if (jedis.exists("n" + chatId)) {
+            jedis.del("n" + chatId);
+        }
+        for (int i = 1; i<= vQuestions[trip].length; i++) {
+            if (jedis.exists("a" + chatId + "_" + i)) {
+                jedis.del("a" + chatId + "_" + i);
+            }
+        }
     }
 
     private static void debe(String... strings) {
