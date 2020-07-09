@@ -51,6 +51,7 @@ public class RouteBot extends Bot {
         super(name, token);
         hmChat2Answers = new HashMap<>();
         hmChat2UserInfo = new HashMap<>();
+        hmChat2Trip = new HashMap<>();
     }
 
     private enum Command {
