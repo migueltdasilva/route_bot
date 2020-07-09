@@ -272,16 +272,24 @@ public class RouteBot extends Bot {
 
             return;
         }
-        Long chatId = update.getMessage().getChatId();
+        Message updMsg = update.getMessage();
+        Long chatId = updMsg.getChatId();
         debi(methodLogPrefix, "chatId = " + chatId);
-        Integer trip = getUserTrip(chatId);
-        debi(methodLogPrefix, "trip = " + trip);
-        if (update.getMessage().hasText() && !hsAdminChatId.contains(chatId)) {
-            sendMsg2Admins(update.getMessage());
+
+        if (updMsg.hasText() && !hsAdminChatId.contains(chatId)) {
+            sendMsg2Admins(updMsg);
         }
 
-        if (update.getMessage().hasText() &&
-                update.getMessage().getText().equals("Отмена")) {
+        if (updMsg.hasText() &&
+                updMsg.getText().startsWith("/")) {
+
+            handleCmd(update);
+        }
+
+        Integer trip = getUserTrip(chatId);
+        debi(methodLogPrefix, "trip = " + trip);
+        if (updMsg.hasText() &&
+                updMsg.getText().equals("Отмена")) {
             hmChat2Answers.put(chatId, new ArrayList<>());
             hmChat2UserInfo.put(chatId, null);
             hmChat2Trip.put(chatId, null);
@@ -301,7 +309,7 @@ public class RouteBot extends Bot {
         if (alAns.size() == vQuestions[trip].length - 1) {
 
             handleVoiceAudioMsg(update, alAns, chatId);
-        } else if (update.getMessage().hasText())  {
+        } else if (updMsg.hasText())  {
 
             handleTextMsg(update);
         } else {
