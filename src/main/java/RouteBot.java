@@ -263,15 +263,19 @@ public class RouteBot extends Bot {
     }
 
     public void onUpdateReceived(Update update) {
+        String methodLogPrefix = "onUpdateReceived: ";
         debi(update.toString());
 
         if (!update.hasMessage()) {
             //TODO: Обработку ошибок
+            debi(methodLogPrefix, "no msg");
 
             return;
         }
         Long chatId = update.getMessage().getChatId();
+        debi(methodLogPrefix, "chatId = " + chatId);
         Integer trip = getUserTrip(chatId);
+        debi(methodLogPrefix, "trip = " + trip);
         if (update.getMessage().hasText() && !hsAdminChatId.contains(chatId)) {
             sendMsg2Admins(update.getMessage());
         }
@@ -280,6 +284,7 @@ public class RouteBot extends Bot {
                 update.getMessage().getText().equals("Отмена")) {
             hmChat2Answers.put(chatId, new ArrayList<>());
             hmChat2UserInfo.put(chatId, null);
+            hmChat2Trip.put(chatId, null);
             removeAllUserData(chatId, trip);
 
             sendMsg(
@@ -289,8 +294,10 @@ public class RouteBot extends Bot {
             return;
         }
 
-        List<String> alAns =
-                hmChat2Answers.getOrDefault(chatId, new ArrayList<>());
+        List<String> alAns = getUserAnswers(chatId, trip);
+        if (alAns == null) {
+            alAns = new ArrayList<>();
+        }
         if (alAns.size() == vQuestions[trip].length - 1) {
 
             handleVoiceAudioMsg(update, alAns, chatId);
@@ -624,11 +631,15 @@ public class RouteBot extends Bot {
         if (jedis.exists("n" + chatId)) {
             jedis.del("n" + chatId);
         }
+        if (jedis.exists("t" + chatId)) {
+            jedis.del("t" + chatId);
+        }
         for (int i = 1; i<= vQuestions[trip].length; i++) {
             if (jedis.exists("a" + chatId + "_" + i)) {
                 jedis.del("a" + chatId + "_" + i);
             }
         }
+
     }
 
     private static void debe(String... strings) {
