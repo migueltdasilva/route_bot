@@ -80,8 +80,8 @@ public class RouteBot extends Bot {
     }
 
     private static final String[] vTrips =
-            new String[]{"Хочу на кавказ и на парапланы!",
-                    "Хочу Калиниград, море, песочек – и побыстрее!"};
+            new String[]{"Хочу на кавказ и на парапланы! 10-12 июля",
+                    "Хочу Калиниград, море, песочек – и побыстрее! 16-19 июля"};
     private static final String[][] vQuestions = new String[vTrips.length][0];
     static {
         vQuestions[0] = new String[]{
@@ -597,7 +597,7 @@ public class RouteBot extends Bot {
             if (trip == null) {
                 Jedis jedis = Helper.getConnection();
                 if (jedis != null) {
-                    trip = Integer.parseInt(jedis.get("t" + chatId));
+                    trip = Helper.s2i(jedis.get("t" + chatId));
                     hmChat2Trip.put(chatId, trip);
                 }
             }

@@ -207,6 +207,14 @@ public class Helper {
         }
     }
 
+    public static int s2i(String s) {
+        try {
+            return Integer.parseInt(s);
+        } catch (Exception var2) {
+            return 0;
+        }
+    }
+
     private static void debe(String... strings) {
         StringBuilder sb = new StringBuilder();
         sb.append("RH: ERR: ");
