@@ -425,7 +425,7 @@ public class RouteBot extends Bot {
             jedis.set("n" + chatId, userName);
 
             msgText = vQuestions[tripIdx][0];
-            if (tripIdx == 1) {
+            if (tripIdx == 0 || tripIdx == 1) {
                 sendMsg(chatId, msgText, getGoAndCancelButton());
 
                 return;
