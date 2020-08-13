@@ -81,6 +81,7 @@ public class RouteBot extends Bot {
         }
     }
 
+
     private static final String[] vTrips =
             new String[]{"Хочу в Крым гонять на мопедах! 20-23 августа\n"};
     private static final String[][] vQuestions = new String[vTrips.length][1];
@@ -100,8 +101,6 @@ public class RouteBot extends Bot {
                         " пожалуйста, свой телефон, чтобы мы точно могли с тобой связаться.",
                 "Запиши аудиосообщение, как рычит мотик, " +
                         "а ты кричишь продавщице устриц на обочине, сколько штук тебе завернуть."};
-        vQuestions[1] = new String[]{""};
-
     }
 
     private Map<Long, List<String>> hmChat2Answers;

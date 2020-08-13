@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bbeb5125-01a8-474a-a022-21c968ce3cf9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/RouteBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RouteBot.java" afterDir="false" />
-    </list>
+    <list default="true" id="bbeb5125-01a8-474a-a022-21c968ce3cf9" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -134,7 +131,6 @@
       <find>execu</find>
       <find>exe</find>
       <find>parse</find>
-      <find>vTrips</find>
       <find>хочу в</find>
       <find>хочу</find>
       <find>replyMarkup</find>
@@ -158,6 +154,7 @@
       <find>hmChat2Trip</find>
       <find>one_time_keyboard</find>
       <find>vQuestions</find>
+      <find>vTrips</find>
     </findStrings>
     <replaceStrings>
       <replace>msg</replace>
@@ -301,12 +298,12 @@
       <workItem from="1594762468220" duration="1628000" />
       <workItem from="1594815321299" duration="575000" />
       <workItem from="1594910306402" duration="588000" />
-      <workItem from="1597311107678" duration="289000" />
+      <workItem from="1597311107678" duration="573000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87808000" />
+    <option name="totallyTimeSpent" value="88092000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
