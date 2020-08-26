@@ -46,6 +46,7 @@ public class RouteBot extends Bot {
     static {
         hsAdminChatId.add(3099992L);
         hsAdminChatId.add(96353936L);
+        hsAdminChatId.add(489194L);
     }
 
     RouteBot() {
