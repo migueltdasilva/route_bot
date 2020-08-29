@@ -587,7 +587,6 @@ public class RouteBot extends Bot {
             if (userName == null) {
                 Jedis jedis = Helper.getConnection();
                 if (jedis != null) {
-                    debi("redis len = " + jedis.llen("n" + chatId));
                     userName = jedis.get("n" + chatId);
                     if (userName != null) {
                         hmChat2UserInfo.put(chatId, userName);
