@@ -56,6 +56,18 @@ public class Helper {
         return null;
     }
 
+    private boolean testConn(Jedis jedis) {
+        try {
+            String str = jedis.ping("A");
+
+            return str.equals("A");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
+
     private  static synchronized Jedis getNewConn() {
         String methodLogPrefix = "getNewConn: ";
         debi(methodLogPrefix, "starts");

@@ -22,6 +22,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -84,8 +85,9 @@ public class RouteBot extends Bot {
 
 
     private static final String[] vTrips =
-            new String[]{"Хочу в Дальние-дальние Зеленцы! 18-20 сентября"};
-    private static final String[][] vQuestions = new String[vTrips.length][1];
+            new String[]{"Хочу в Дальние-дальние Зеленцы! 18-20 сентября",
+            "Хочу в Крым гонять на мопедах! 24-27 сентября"};
+    private static final String[][] vQuestions = new String[vTrips.length][];
     static {
         vQuestions[0] = new String[]{
                 "Классно, что ты решил присоединиться к нашей поездке!\n" +
@@ -110,6 +112,29 @@ public class RouteBot extends Bot {
                 "Запиши аудиосообщение, " +
                  "как ты говоришь крабам не щипать тебя за ноги, а то ты их съешь, " +
                         "или про любую другую ситуацию, которая может там произойти."};
+
+        vQuestions[1] = new String[] {
+                "Классно, что ты решил присоединиться к нашей поездке!\n" +
+                        "Чтобы оставить заявку – ответь, пожалуйста, на наши вопросы. " +
+                        "Тебе понадобится 5 свободных минут и не стесняться.",
+
+                "Расскажи, пожалуйста, в двух словах, о себе: чем ты занимаешься," +
+                        " что ты любишь, почему хочешь поехать с нами?\n" +
+                        "(Обещаю, дальше вопросы будут попроще)",
+
+                "Когда в последний раз ты ночевал в палатке и как вообще к ним относишься?",
+
+                "Собираешься ли ты водить мопед и есть ли у тебя права категории В?",
+
+                "Белое или красное? Или игристое? Или все-таки водить мопед?",
+
+                "Пришли, пожалуйста, ссылки на свои соц сети (например, фейсбук и инстаграм)",
+
+                "Я не смог получить твой ник в телеграмме, поэтому пришли," +
+                        " пожалуйста, свой телефон, чтобы мы точно могли с тобой связаться.",
+
+                "Запиши аудиосообщение, как рычит мотик, " +
+                        "а ты кричишь продавщице устриц на обочине, сколько штук тебе завернуть."};
     }
 
     private Map<Long, List<String>> hmChat2Answers;
