@@ -85,7 +85,7 @@ public class RouteBot extends Bot {
 
 
     private static final String[] vTrips =
-            new String[]{"Хочу в Дальние-дальние Зеленцы! 18-20 сентября",
+            new String[]{"Хочу в Дальние-дальние Зеленцы! 25-27 сентября    ",
             "Хочу в Крым гонять на мопедах! 24-27 сентября"};
     private static final String[][] vQuestions = new String[vTrips.length][];
     static {
@@ -564,7 +564,8 @@ public class RouteBot extends Bot {
 
         sb.append("Ответ от:  ")
                 .append(Helper.escapeChars(userName))
-                .append(". Время: ").append(formatter.format(date));
+                .append(". Время: ").append(formatter.format(date))
+                .append(".\n Поездка: ").append(vTrips[trip]);
         List<String> alAns = getUserAnswers(chatId, trip);
         debi(methodLogPrefix, "ans: " + alAns);
         int numAns = alAns.size() == vQuestions[trip].length ? vQuestions[trip].length-1 : alAns.size();
