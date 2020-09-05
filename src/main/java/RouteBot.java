@@ -559,13 +559,13 @@ public class RouteBot extends Bot {
             return;
         }
         StringBuilder sb = new StringBuilder();
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z\n\n");
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
 
         sb.append("Ответ от:  ")
                 .append(Helper.escapeChars(userName))
                 .append(". Время: ").append(formatter.format(date))
-                .append(".\n Поездка: ").append(vTrips[trip]);
+                .append("/n Поездка: ").append(vTrips[trip]).append("/n/n");
         List<String> alAns = getUserAnswers(chatId, trip);
         debi(methodLogPrefix, "ans: " + alAns);
         int numAns = alAns.size() == vQuestions[trip].length ? vQuestions[trip].length-1 : alAns.size();
