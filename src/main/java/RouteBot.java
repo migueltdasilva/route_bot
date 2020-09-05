@@ -565,7 +565,7 @@ public class RouteBot extends Bot {
         sb.append("Ответ от:  ")
                 .append(Helper.escapeChars(userName))
                 .append(". Время: ").append(formatter.format(date))
-                .append("/n Поездка: ").append(vTrips[trip]).append("/n/n");
+                .append("\n Поездка: ").append(vTrips[trip]).append("\n\n");
         List<String> alAns = getUserAnswers(chatId, trip);
         debi(methodLogPrefix, "ans: " + alAns);
         int numAns = alAns.size() == vQuestions[trip].length ? vQuestions[trip].length-1 : alAns.size();
