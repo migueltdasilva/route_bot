@@ -21,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/RouteBot.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="561" column="82" selection-start-line="561" selection-start-column="82" selection-end-line="561" selection-end-column="82" />
+            <state relative-caret-position="258">
+              <caret line="476" column="31" selection-start-line="476" selection-start-column="31" selection-end-line="476" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -153,11 +153,11 @@
       <find>hmChat2Trip</find>
       <find>one_time_keyboard</find>
       <find>vQuestions</find>
-      <find>vTrips</find>
       <find>поехали</find>
       <find>starts</find>
       <find>jed</find>
       <find>se</find>
+      <find>vTrips</find>
     </findStrings>
     <replaceStrings>
       <replace>msg</replace>
@@ -231,7 +231,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -261,7 +261,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -341,18 +341,18 @@
       <workItem from="1598447391410" duration="521000" />
       <workItem from="1598597058005" duration="6972000" />
       <workItem from="1598965796341" duration="472000" />
-      <workItem from="1599138525627" duration="2514000" />
+      <workItem from="1599138525627" duration="2922000" />
+      <workItem from="1601562668038" duration="1006000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="102032000" />
+    <option name="totallyTimeSpent" value="103446000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2907916" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2956381" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
@@ -657,8 +657,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/RouteBot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="561" column="82" selection-start-line="561" selection-start-column="82" selection-end-line="561" selection-end-column="82" />
+        <state relative-caret-position="258">
+          <caret line="476" column="31" selection-start-line="476" selection-start-column="31" selection-end-line="476" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
