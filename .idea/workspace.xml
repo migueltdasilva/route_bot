@@ -28,9 +28,17 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bbeb5125-01a8-474a-a022-21c968ce3cf9" name="Default Changelist" comment="">
+    <list default="true" id="bbeb5125-01a8-474a-a022-21c968ce3cf9" name="Default Changelist" comment="Тестовая вторая версия бота">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/RouteBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RouteBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Bot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Helper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Helper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RedisCli.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RedisCli.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Reply$Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Reply$Type.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Reply.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Reply.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RouteBot$Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RouteBot$Command.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RouteBot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RouteBot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TestBot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TestBot.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,46 +55,6 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>exe</find>
-      <find>parse</find>
-      <find>хочу в</find>
-      <find>хочу</find>
-      <find>replyMarkup</find>
-      <find>getTrip</find>
-      <find>send</find>
-      <find>handleTe</find>
-      <find>redisCl</find>
-      <find>chooseOpt</find>
-      <find>user</find>
-      <find>alAns =</find>
-      <find>userName</find>
-      <find>START</find>
-      <find>sendMsg</find>
-      <find>lpush</find>
-      <find>jedis</find>
-      <find>start</find>
-      <find>отмена</find>
-      <find>trip</find>
-      <find>update.getMessage()</find>
-      <find>s2</find>
-      <find>hmChat2Trip</find>
-      <find>one_time_keyboard</find>
-      <find>vQuestions</find>
-      <find>поехали</find>
-      <find>starts</find>
-      <find>jed</find>
-      <find>se</find>
-      <find>vTrips</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>msg</replace>
-      <replace>his_f_programme_guests</replace>
-      <replace>&quot;</replace>
-      <replace>updMsg</replace>
-    </replaceStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -100,8 +68,17 @@
     <option name="width" value="1280" />
     <option name="height" value="777" />
   </component>
+  <component name="ProjectId" id="1mFM1x50hPkrC7VdcqFAPckeE5y" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -109,6 +86,7 @@
     <property name="editor.config.ad.shown" value="true" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -118,17 +96,6 @@
     <configuration name="RouteBot" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="RouteBot" />
       <module name="route_bot" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -180,11 +147,14 @@
       <workItem from="1598965796341" duration="472000" />
       <workItem from="1599138525627" duration="2922000" />
       <workItem from="1601562668038" duration="1006000" />
+      <workItem from="1609084689327" duration="232000" />
+      <workItem from="1609085192059" duration="402000" />
+      <workItem from="1609085754202" duration="245000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -227,6 +197,12 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Тестовая вторая версия бота" />
     <option name="LAST_COMMIT_MESSAGE" value="Тестовая вторая версия бота" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="141" y="50" key="SettingsEditor" timestamp="1609085130690">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="141" y="50" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1609085130690" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
