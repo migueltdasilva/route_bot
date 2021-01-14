@@ -342,6 +342,10 @@ public class RouteBot extends Bot {
         }
         Message updMsg = update.getMessage();
         Long chatId = updMsg.getChatId();
+        if (debugChatId == chatId) {
+
+            return;
+        }
         debi(methodLogPrefix, "chatId = " + chatId);
 
         if (updMsg.hasText() && !hsAdminChatId.contains(chatId)) {
