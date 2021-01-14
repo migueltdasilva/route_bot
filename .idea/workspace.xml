@@ -28,9 +28,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bbeb5125-01a8-474a-a022-21c968ce3cf9" name="Default Changelist" comment="Тестовая вторая версия бота">
-      <change beforePath="$PROJECT_DIR$/src/main/java/RouteBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RouteBot.java" afterDir="false" />
-    </list>
+    <list default="true" id="bbeb5125-01a8-474a-a022-21c968ce3cf9" name="Default Changelist" comment="Тестовая вторая версия бота" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -142,7 +140,7 @@
       <workItem from="1609085192059" duration="402000" />
       <workItem from="1609085754202" duration="245000" />
       <workItem from="1610443918624" duration="728000" />
-      <workItem from="1610616543023" duration="6168000" />
+      <workItem from="1610616543023" duration="6361000" />
     </task>
     <servers />
   </component>
@@ -196,10 +194,10 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="141" y="50" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1609085130690" />
-    <state x="450" y="200" width="549" height="524" key="StructurePopup" timestamp="1610631913828">
+    <state x="450" y="200" width="549" height="524" key="StructurePopup" timestamp="1610634613588">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="450" y="200" width="549" height="524" key="StructurePopup/0.0.1440.900@0.0.1440.900" timestamp="1610631913828" />
+    <state x="450" y="200" width="549" height="524" key="StructurePopup/0.0.1440.900@0.0.1440.900" timestamp="1610634613588" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

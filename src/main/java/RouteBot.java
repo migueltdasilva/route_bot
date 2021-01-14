@@ -7,6 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
 import org.telegram.telegrambots.meta.api.objects.Audio;
+import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Document;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.PhotoSize;
@@ -346,6 +347,7 @@ public class RouteBot extends Bot {
 
             return;
         }
+        addChatToDB(chatId);
         debi(methodLogPrefix, "chatId = " + chatId);
 
         if (updMsg.hasText() && !hsAdminChatId.contains(chatId)) {
@@ -519,6 +521,7 @@ public class RouteBot extends Bot {
         Command cmd = Command.byName(message.toLowerCase());
         if (cmd == Command.START) {
             out.println("LOG: onUpdateReceived: deleting answers");
+            //addChatToDB(chatId);
             hmChat2Answers.put(chatId, new ArrayList<>());
             hmChat2UserInfo.put(chatId, null);
             hmChat2Trip.put(chatId, null);
@@ -823,6 +826,17 @@ public class RouteBot extends Bot {
                 hsChatId2MailingState.put(chatId, null);
             }
         }
+    }
+
+    private void addChatToDB(Long chatId) {
+        Jedis jedis = Helper.getConnection();
+        if (jedis == null) {
+
+            return;
+        }
+
+        jedis.sadd("chats_on", String.valueOf(chatId));
+        debi("Chats on = " + jedis.smembers("chats_on"));
     }
 
     private void sendCustomMsgToAll(String msgText, String fileId) {
