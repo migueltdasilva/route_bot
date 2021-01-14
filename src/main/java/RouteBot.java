@@ -837,7 +837,7 @@ public class RouteBot extends Bot {
                     sendPhoto(chat, msgText, fileId);
                 }
                 i++;
-                Thread.sleep(1000);
+                //Thread.sleep(1000);
             } catch (Exception ex) {
                 debe(methodLogPrefix, ex.getMessage());
             }
