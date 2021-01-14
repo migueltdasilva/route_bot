@@ -830,7 +830,9 @@ public class RouteBot extends Bot {
         int i = 0;
         for (String chatId : hsUsers) {
             Long chat = Long.parseLong(chatId.substring(1));
-            String userName = getUserName(chat);
+            String userName = getUserName(chat) + " " +
+                jedis.get("a" + chatId + "_" + 1) + " " +
+                jedis.get("a" + chatId + "_" + 2);
             chat = adminChatId;
             try {
                 if (fileId == null) {
