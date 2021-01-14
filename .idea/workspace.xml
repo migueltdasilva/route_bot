@@ -31,7 +31,6 @@
     <list default="true" id="bbeb5125-01a8-474a-a022-21c968ce3cf9" name="Default Changelist" comment="Тестовая вторая версия бота">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/RouteBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RouteBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/route_bot-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/route_bot-1.0-SNAPSHOT.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +143,7 @@
       <workItem from="1609085192059" duration="402000" />
       <workItem from="1609085754202" duration="245000" />
       <workItem from="1610443918624" duration="728000" />
-      <workItem from="1610616543023" duration="2044000" />
+      <workItem from="1610616543023" duration="4825000" />
     </task>
     <servers />
   </component>
@@ -198,17 +197,17 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="141" y="50" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1609085130690" />
-    <state x="450" y="200" width="549" height="524" key="StructurePopup" timestamp="1610623776312">
+    <state x="450" y="200" width="549" height="524" key="StructurePopup" timestamp="1610629092215">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="450" y="200" width="549" height="524" key="StructurePopup/0.0.1440.900@0.0.1440.900" timestamp="1610623776312" />
+    <state x="450" y="200" width="549" height="524" key="StructurePopup/0.0.1440.900@0.0.1440.900" timestamp="1610629092215" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/RouteBot.java</url>
-          <line>100</line>
+          <line>110</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

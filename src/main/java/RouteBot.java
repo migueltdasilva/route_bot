@@ -44,11 +44,20 @@ public class RouteBot extends Bot {
     private static final Long adminChatId = 3099992L;
     private static final Set<Long> hsAdminChatId = new HashSet<>();
     private static final Long debugChatId = -487931131L;
+    private Map<Long, MailinigState> hsChatId2MailingState = new HashMap<>();
+    private Map<Long, String> hsChatId2MailingMsg = new HashMap<>();
+    private Map<Long, String> hsChatId2MailingFile = new HashMap<>();
 
     static {
         hsAdminChatId.add(3099992L);
         hsAdminChatId.add(96353936L);
         hsAdminChatId.add(489194L);
+    }
+
+    private enum MailinigState {
+        BEGAN,
+        MSG_RECIEVED,
+        END;
     }
 
     RouteBot() {
@@ -63,6 +72,7 @@ public class RouteBot extends Bot {
         START("/start", "Начать все сначала."),
         SEND_RESPONSES("/send_resp", ""),
         GET_USERS("/get_users", ""),
+        MAILING("/mailing", "Запустить произвольную рассылку"),
         SEND_JOKE("/send_joke", "Могу отправить тебе шутку.");
 
         String name;
@@ -258,6 +268,18 @@ public class RouteBot extends Bot {
         }
     }
 
+    public synchronized void sendMsgNotSafe(
+        String chatId, String s, ReplyKeyboardMarkup replyKeyboardMarkup) throws Exception {
+        debi("sendMsg: ",chatId +" = " + s);
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.enableMarkdown(true);
+        sendMessage.setChatId(chatId);
+        sendMessage.setText(s);
+        ReplyKeyboardRemove replyKeyboardRemove = new ReplyKeyboardRemove();
+        sendMessage.setReplyMarkup(replyKeyboardRemove);
+        execute(sendMessage);
+    }
+
     public synchronized void sendMsgNoKeyboard(
             String chatId, String s) {
         debi("sendMsg: ",chatId +" = " + s);
@@ -300,12 +322,20 @@ public class RouteBot extends Bot {
         }
     }
 
+    public synchronized void sendPhoto(
+        Long chatId, String caption, String fileId) throws Exception {
+        SendPhoto msg = new SendPhoto();
+        msg.setChatId(chatId);
+        msg.setPhoto(fileId);
+        msg.setCaption(caption);
+        execute(msg);
+    }
+
     public void onUpdateReceived(Update update) {
         String methodLogPrefix = "onUpdateReceived: ";
         debi(update.toString());
 
         if (!update.hasMessage()) {
-            //TODO: Обработку ошибок
             debi(methodLogPrefix, "no msg");
 
             return;
@@ -323,6 +353,23 @@ public class RouteBot extends Bot {
             handleCmd(update);
 
             return;
+        }
+        if (hsAdminChatId.contains(chatId)) {
+            if (hsChatId2MailingState.get(chatId) != null &&
+                hsChatId2MailingState.get(chatId) != MailinigState.END) {
+                if (updMsg.hasPhoto()) {
+                    String fileId = updMsg.getPhoto().stream()
+                        .sorted(Comparator.comparing(PhotoSize::getFileSize).reversed())
+                        .findFirst()
+                        .orElse(null).getFileId();
+
+                    String caption = updMsg.getCaption();
+                    handleMailing(chatId, caption, fileId);
+                } else {
+                    handleMailing(chatId, updMsg.getText(), null);
+                }
+                return;
+            }
         }
 
         Integer trip = getUserTrip(chatId);
@@ -496,6 +543,12 @@ public class RouteBot extends Bot {
                 return;
             }
             handleGetUsers(fullMsg);
+        } else if (cmd == Command.MAILING) {
+            if (!hsAdminChatId.contains(chatId)) {
+
+                return;
+            }
+            handleMailing(chatId, fullMsg, null);
         } else if (cmd == Command.SEND_JOKE) {
             sendMsg(String.valueOf(chatId),"Шутка - хуютка!");
         } else {
@@ -717,6 +770,90 @@ public class RouteBot extends Bot {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+
+    private void handleMailing(Long chatId, String msg, String photoId) {
+        MailinigState state = hsChatId2MailingState.get(chatId);
+        if (state == null || state == MailinigState.END &&
+            msg.equals(Command.MAILING.name)) {
+
+            hsChatId2MailingState.put(chatId, MailinigState.BEGAN);
+            sendMsg(chatId, "Вы собиретесь запустить рассылку по всем пользователям бота. Ввести сообщение для рассылки в ответ на это сообщение.");
+        } else if (state == MailinigState.BEGAN) {
+            if (msg == null || msg.isEmpty()) {
+                sendMsg(chatId, "Все таки нужно ввести сообщение. ");
+
+                return;
+            }
+            if (photoId != null) {
+                hsChatId2MailingFile.put(chatId, photoId);
+            }
+            hsChatId2MailingMsg.put(chatId, msg);
+            hsChatId2MailingState.put(chatId, MailinigState.MSG_RECIEVED);
+            String msgText = "Чтобы отправить сообщение: \n\"" + msg + "\"\n введите ДА, чтобы отменить, введите любуе другое слово";
+            try {
+                if (photoId == null) {
+                    sendMsg(chatId, msgText);
+                } else {
+                    sendPhoto(chatId, msgText, photoId);
+                }
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        } else if(state == MailinigState.MSG_RECIEVED) {
+            if (msg.equalsIgnoreCase("ДА")) {
+                String msgText = hsChatId2MailingMsg.get(chatId);
+                String fileId = hsChatId2MailingFile.get(chatId);
+                if (msgText != null && !msg.isEmpty()) {
+                    sendCustomMsgToAll(msgText, fileId);
+                    hsChatId2MailingState.put(chatId, MailinigState.END);
+
+                } else {
+                    sendMsg(chatId, "Не могу найти ваше сообщение, попробуйте заново по команде " + Command.MAILING.name);
+                    hsChatId2MailingState.put(chatId, null);
+                }
+            } else {
+                sendMsg(chatId, "Рассылка отменена. Чтобы начать сначала нажмите " + Command.MAILING.name);
+                hsChatId2MailingState.put(chatId, null);
+            }
+        }
+    }
+
+    private void sendCustomMsgToAll(String msgText, String fileId) {
+        String methodLogPrefix = "sendCustomMsgToAll: ";
+        Jedis jedis = Helper.getConnection();
+        Set<String> hsUsers = jedis.keys("n*");
+           debi(methodLogPrefix, "Chats = " + hsUsers);
+
+        int i = 0;
+        for (String chatId : hsUsers) {
+            Long chat = Long.parseLong(chatId.substring(1));
+            String userName = getUserName(chat);
+            chat = adminChatId;
+            try {
+                if (fileId == null) {
+                    sendMsg(chat, userName + "\n" + msgText);
+                } else {
+                    sendPhoto(chat, userName + "\n" + msgText, fileId);
+                }
+                i++;
+                //Thread.sleep(500);
+            } catch (Exception ex) {
+                debe(methodLogPrefix, ex.getMessage());
+            }
+            if (i > 10) {
+                break;
+            }
+        }
+
+        int qty = i;
+        hsAdminChatId.
+            forEach(adminChatId -> sendMsg(
+                adminChatId, "Всего " + hsUsers.size() +
+                    " чатов.\nCобщение из рассылки отправлено в " + qty + " чатов."));
+
     }
 
     private static void debe(String... strings) {
