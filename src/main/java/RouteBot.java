@@ -43,6 +43,7 @@ public class RouteBot extends Bot {
     private static final String token = "1013761197:AAHv3uKJJzwiWMsQVxgnxUsqbpP5-PSrRy4";
     private static final Long adminChatId = 3099992L;
     private static final Set<Long> hsAdminChatId = new HashSet<>();
+    private static final Long debugChatId = -487931131L;
 
     static {
         hsAdminChatId.add(3099992L);
@@ -61,6 +62,7 @@ public class RouteBot extends Bot {
         HELP("/", "Список всех команд."),
         START("/start", "Начать все сначала."),
         SEND_RESPONSES("/send_resp", ""),
+        GET_USERS("/get_users", ""),
         SEND_JOKE("/send_joke", "Могу отправить тебе шутку.");
 
         String name;
@@ -488,6 +490,12 @@ public class RouteBot extends Bot {
             handleSendResponses(fullMsg);
         } else if (cmd == Command.HELP) {
 
+        } else if (cmd == Command.GET_USERS) {
+            if (!hsAdminChatId.contains(chatId)) {
+
+                return;
+            }
+            handleGetUsers(fullMsg);
         } else if (cmd == Command.SEND_JOKE) {
             sendMsg(String.valueOf(chatId),"Шутка - хуютка!");
         } else {
@@ -510,6 +518,16 @@ public class RouteBot extends Bot {
             sendResponsesToAdmin(chatId);
         }
 
+    }
+
+    private void handleGetUsers(String fullCmdString) {
+        String methodLogPrefix = "handleSendResponses: ";
+        debi(methodLogPrefix, "starts");
+        Jedis jedis = Helper.getConnection();
+        Set<String> hsUsers =  jedis.keys("n*");
+        String users = hsUsers.stream().reduce((s, s2) -> s + "\n" + s2).orElse("");
+
+        sendMsgNoMarkDown(adminChatId, users);
     }
 
     private void handlePhotoMsg(Update update) {
@@ -608,9 +626,7 @@ public class RouteBot extends Bot {
         User usr = msg.getFrom();
         String userName = getUserStr(usr);
         String msgText = msg.getText();
-
-        hsAdminChatId.
-                forEach(adminChatId -> sendMsgNoMarkDown(adminChatId, userName + "\n" + msgText));
+        sendMsgNoMarkDown(debugChatId, userName + "\n" + msgText);
     }
 
     private String getUserName(Long chatId) {
