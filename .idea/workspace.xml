@@ -54,6 +54,14 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="1mFM1x50hPkrC7VdcqFAPckeE5y" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -93,6 +101,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration>$USER_HOME$/.subversion</configuration>
   </component>
@@ -145,11 +154,16 @@
       <workItem from="1613488137331" duration="416000" />
       <workItem from="1614177759403" duration="98000" />
       <workItem from="1614344051289" duration="143000" />
+      <workItem from="1616667349353" duration="2167000" />
+      <workItem from="1617101098444" duration="1096000" />
+      <workItem from="1617102771623" duration="1000" />
+      <workItem from="1617103016626" duration="3000" />
+      <workItem from="1617103179305" duration="6000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -192,16 +206,6 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Тестовая вторая версия бота" />
     <option name="LAST_COMMIT_MESSAGE" value="Тестовая вторая версия бота" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="141" y="50" key="SettingsEditor" timestamp="1609085130690">
-      <screen x="0" y="23" width="1440" height="877" />
-    </state>
-    <state x="141" y="50" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1609085130690" />
-    <state x="450" y="200" width="549" height="524" key="StructurePopup" timestamp="1610634653236">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="450" y="200" width="549" height="524" key="StructurePopup/0.0.1440.900@0.0.1440.900" timestamp="1610634653236" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
