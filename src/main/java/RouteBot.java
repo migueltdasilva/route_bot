@@ -169,6 +169,26 @@ public class RouteBot extends Bot {
     }
 
 
+    public InlineKeyboardMarkup getInlineKeyBoardWithTrips() {
+        if (vTrips.length == 0) {
+
+            return null;
+        }
+
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+        for (String trip : vTrips) {
+            InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
+            inlineKeyboardButton.setText("trip");
+            inlineKeyboardButton.setCallbackData(trip);
+            List<InlineKeyboardButton> keyboardButtonsRow = new ArrayList<>();
+            rowList.add(keyboardButtonsRow);
+        }
+        inlineKeyboardMarkup.setKeyboard(rowList);
+
+        return inlineKeyboardMarkup;
+    }
+
     public synchronized ReplyKeyboardMarkup getCancelButton() {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
@@ -233,12 +253,12 @@ public class RouteBot extends Bot {
 
     public synchronized void sendMsg(Long chatId, String s) {
 
-        sendMsg(String.valueOf(chatId), s, null);
+        sendMsg(String.valueOf(chatId), s, null, null);
     }
 
     public synchronized void sendMsg(String chatId, String s) {
 
-        sendMsg(chatId, s, null);
+        sendMsg(chatId, s, null, null);
     }
 
     public synchronized void sendMsg(
@@ -248,22 +268,40 @@ public class RouteBot extends Bot {
     }
 
     public synchronized void sendMsg(
-            String chatId, String s, ReplyKeyboardMarkup replyKeyboardMarkup) {
+            String chatId, String s, ReplyKeyboardMarkup replyKeyboardMarkup,
+            InlineKeyboardMarkup inlineKeyboardMarkup) {
         debi("sendMsg: ",chatId +" = " + s);
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
         sendMessage.setText(s);
-        if (replyKeyboardMarkup == null) {
-            replyKeyboardMarkup = getCancelButton();
+        if (inlineKeyboardMarkup != null) {
+            sendMessage.setReplyMarkup(inlineKeyboardMarkup);
+        }  else {
+            if (replyKeyboardMarkup == null) {
+                replyKeyboardMarkup = getCancelButton();
+            }
+            sendMessage.setReplyMarkup(replyKeyboardMarkup);
         }
-        sendMessage.setReplyMarkup(replyKeyboardMarkup);
+
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
             e.printStackTrace();
             //Log.log(Level, "Exception: ", e.toString());
         }
+    }
+
+    public synchronized void sendMsg(
+        String chatId, String s, ReplyKeyboardMarkup replyKeyboardMarkup) {
+
+        sendMsg(chatId, s, replyKeyboardMarkup, null);
+    }
+
+    public synchronized void sendMsg(
+        String chatId, String s, InlineKeyboardMarkup inlineKeyboardMarkup) {
+
+        sendMsg(chatId, s, null, inlineKeyboardMarkup);
     }
 
     public synchronized void sendMsgNotSafe(
@@ -329,9 +367,52 @@ public class RouteBot extends Bot {
         execute(msg);
     }
 
+    private synchronized void handleCallbackQuery(Update update) {
+        String methodLogPrefix = "handleCallbackQuery: ";
+        if (!update.hasCallbackQuery()) {
+            debe(methodLogPrefix, "No callback query");
+
+            return;
+        }
+        Long chatId = update.getCallbackQuery().getMessage().getChatId();
+        String message = update.getCallbackQuery().getData();
+        User usr = update.getCallbackQuery().getFrom();
+
+        if (Arrays.stream(vTrips).noneMatch(message::equals)) {
+
+            sendMsg(String.valueOf(chatId),
+                "Простите, я что-то не понял что это. А чего мне делать с этим." +
+                    " А вы кто? Простите, я уже старый.", getInlineKeyBoardWithTrips());
+            return;
+        }
+        String userName = getUserStr(usr);
+
+        Jedis jedis = Helper.getConnection();
+        Integer tripIdx = getTripIdx(message);
+
+        hmChat2Trip.put(chatId,tripIdx);
+        jedis.set("t" + chatId, String.valueOf(tripIdx));
+        hmChat2UserInfo.put(chatId, userName);
+        jedis.set("n" + chatId, userName);
+
+        String msgText = vQuestions[tripIdx][0];
+        if (tripIdx == 0 || tripIdx == 1) {
+            sendMsg(chatId, msgText, getGoAndCancelButton());
+
+        } else {
+            sendMsg(chatId, msgText);
+        }
+    }
+
     public void onUpdateReceived(Update update) {
         String methodLogPrefix = "onUpdateReceived: ";
         debi(update.toString());
+
+        if (update.hasCallbackQuery()) {
+            handleCallbackQuery(update);
+
+            return;
+        }
 
         if (!update.hasMessage()) {
             debi(methodLogPrefix, "no msg");
@@ -378,7 +459,7 @@ public class RouteBot extends Bot {
         Integer trip = getUserTrip(chatId);
         debi(methodLogPrefix, "trip = " + trip);
         if (updMsg.hasText() &&
-                updMsg.getText().equals("Отмена")) {
+                updMsg.getText().equalsIgnoreCase("отмена")) {
             hmChat2Answers.put(chatId, new ArrayList<>());
             hmChat2UserInfo.put(chatId, null);
             hmChat2Trip.put(chatId, null);
