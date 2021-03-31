@@ -613,8 +613,9 @@ public class RouteBot extends Bot {
                                 " Следи за обновлениеями в группе на фейсбуке и возвращайся ко мне, как что-то увидишь там!\nИли просто пиши мне, я такой, я бот, выслушаю с удовольствием!️");
             } else {
                 sendMsg(
-                        chatId, "Привет! Тут можно записаться в поездку рута ⚡️",
-                        getTripButtons());
+                    String.valueOf(chatId),
+                    "Привет! Тут можно записаться в поездку рута ⚡️",
+                    getInlineKeyBoardWithTrips());
             }
             debi(methodLogPrefix, "msg send");
         } else if (cmd == Command.SEND_RESPONSES) {
