@@ -182,6 +182,7 @@ public class RouteBot extends Bot {
             inlineKeyboardButton.setText(trip);
             inlineKeyboardButton.setCallbackData(trip);
             List<InlineKeyboardButton> keyboardButtonsRow = new ArrayList<>();
+            keyboardButtonsRow.add(inlineKeyboardButton);
             rowList.add(keyboardButtonsRow);
         }
         inlineKeyboardMarkup.setKeyboard(rowList);
