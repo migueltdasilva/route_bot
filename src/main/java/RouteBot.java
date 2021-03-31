@@ -466,9 +466,9 @@ public class RouteBot extends Bot {
             hmChat2Trip.put(chatId, null);
             removeAllUserData(chatId, trip);
 
-            sendMsg(
+            sendMsgNoKeyboard(
                     chatId.toString(),
-                    "Все забыл️. Чтобы начать заново, выбери поездку и нажми на нее.", getTripButtons());
+                    "Все забыл️. Чтобы начать заново нажми /start");
 
             return;
         }
