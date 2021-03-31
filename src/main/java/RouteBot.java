@@ -179,7 +179,7 @@ public class RouteBot extends Bot {
         List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
         for (String trip : vTrips) {
             InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
-            inlineKeyboardButton.setText("trip");
+            inlineKeyboardButton.setText(trip);
             inlineKeyboardButton.setCallbackData(trip);
             List<InlineKeyboardButton> keyboardButtonsRow = new ArrayList<>();
             rowList.add(keyboardButtonsRow);
