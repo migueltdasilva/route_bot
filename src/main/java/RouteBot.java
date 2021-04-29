@@ -379,13 +379,6 @@ public class RouteBot extends Bot {
         String message = update.getCallbackQuery().getData();
         User usr = update.getCallbackQuery().getFrom();
 
-        if (Arrays.stream(vTrips).noneMatch(message::equals)) {
-
-            sendMsg(String.valueOf(chatId),
-                "Простите, я что-то не понял что это. А чего мне делать с этим." +
-                    " А вы кто? Простите, я уже старый.", getInlineKeyBoardWithTrips());
-            return;
-        }
         String userName = getUserStr(usr);
 
         Jedis jedis = Helper.getConnection();
