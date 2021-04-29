@@ -98,11 +98,11 @@ public class RouteBot extends Bot {
 
 
     private static final String[] vTrips =
-            new String[] {"Хочу в Красную поляну! 23-25 апреля", "Хочу в Киргизию! 5-10 мая"};
+            new String[] {"Хочу в Киргизию! 5-10 мая", "Хочу фланировать по имперскому Питеру 15-16 мая"};
 
     private static final String[][] vQuestions = new String[2][];
     static {
-                vQuestions[0] = new String[] {
+                vQuestions[1] = new String[] {
                 "Классно, что ты решил присоединиться к нашей поездке!\n" +
                         "Чтобы оставить заявку – ответь, пожалуйста, на наши вопросы. " +
                         "Тебе понадобится 5 свободных минут и не стесняться.",
@@ -111,18 +111,18 @@ public class RouteBot extends Bot {
                         " что ты любишь, почему хочешь поехать с нами?\n" +
                         "(Обещаю, дальше вопросы будут попроще)",
 
-                "Гоняешь на велике или даже мотоцикле?",
+                "Ночевка в спальниках во дворце — это курьёза или не comme il faut?",
 
-                "А какой спорт / активность давно хочется поробовать?",
+                "Ты голубчик или шельмец?",
 
                 "Пришли, пожалуйста, ссылки на свои соц сети (например, фейсбук и инстаграм)",
 
                 "Я не смог получить твой ник в телеграмме, поэтому пришли," +
                         " пожалуйста, свой телефон, чтобы мы точно могли с тобой связаться.",
 
-                "Попробуй описать голосом (в аудиосообщении) свой любимый стикер, а мы попробуем угадать!"};
+                "Запиши аудиосообщение, в котором ты рассказываешь своему лакею, какой парик нужно тебе достать для бала во дворце на Английской набережной"};
 
-        vQuestions[1] = new String[]{
+        vQuestions[0] = new String[]{
                 "Классно, что ты решил присоединиться к нашей поездке!\n" +
                         "Чтобы оставить заявку – ответь, пожалуйста, на наши вопросы. " +
                         "Тебе понадобится 5 свободных минут и не стесняться.",
@@ -176,10 +176,11 @@ public class RouteBot extends Bot {
 
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
-        for (String trip : vTrips) {
+
+        for (int i = 0; i < vTrips.length; i ++) {
             InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
-            inlineKeyboardButton.setText(trip);
-            inlineKeyboardButton.setCallbackData(trip);
+            inlineKeyboardButton.setText(vTrips[i]);
+            inlineKeyboardButton.setCallbackData("t_" + i);
             List<InlineKeyboardButton> keyboardButtonsRow = new ArrayList<>();
             keyboardButtonsRow.add(inlineKeyboardButton);
             rowList.add(keyboardButtonsRow);
@@ -388,7 +389,7 @@ public class RouteBot extends Bot {
         String userName = getUserStr(usr);
 
         Jedis jedis = Helper.getConnection();
-        Integer tripIdx = getTripIdx(message);
+        Integer tripIdx = Helper.s2i(message.substring(2));
 
         hmChat2Trip.put(chatId,tripIdx);
         jedis.set("t" + chatId, String.valueOf(tripIdx));
