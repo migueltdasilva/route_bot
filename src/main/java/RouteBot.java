@@ -607,7 +607,7 @@ public class RouteBot extends Bot {
             } else {
                 sendMsg(
                     String.valueOf(chatId),
-                    "Привет! Тут можно записаться в поездку рута ⚡️ \n Сейчас есть вариант: \n Чилить и экстримить в Красной поляне 28-30 мая",
+                    "Привет! Тут можно записаться в поездку рута ⚡️ \nСейчас есть вариант: \nЧилить и экстримить в Красной поляне 28-30 мая",
                     getInlineKeyBoardWithTrips());
             }
             debi(methodLogPrefix, "msg send");
