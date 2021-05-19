@@ -100,7 +100,7 @@ public class RouteBot extends Bot {
     private static final String[] vTrips =
             new String[] {"Хочу в Красную поляну!"};
 
-    private static final String[][] vQuestions = new String[0][];
+    private static final String[][] vQuestions = new String[1][];
     static {
 //                vQuestions[1] = new String[] {
 //                "Классно, что ты решил присоединиться к нашей поездке!\n" +
