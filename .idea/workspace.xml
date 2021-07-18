@@ -31,6 +31,15 @@
     <list default="true" id="bbeb5125-01a8-474a-a022-21c968ce3cf9" name="Default Changelist" comment="Тестовая вторая версия бота">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/RouteBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RouteBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Bot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Helper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Helper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RedisCli.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RedisCli.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Reply$Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Reply$Type.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Reply.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Reply.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RouteBot$Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RouteBot$Command.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RouteBot$MailinigState.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RouteBot$MailinigState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RouteBot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RouteBot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TestBot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TestBot.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,6 +184,10 @@
       <workItem from="1617799912173" duration="5356000" />
       <workItem from="1619710532980" duration="1081000" />
       <workItem from="1621421283671" duration="2960000" />
+      <workItem from="1625581197328" duration="78000" />
+      <workItem from="1625581308423" duration="13000" />
+      <workItem from="1625581349306" duration="2157000" />
+      <workItem from="1626101279145" duration="1210000" />
     </task>
     <servers />
   </component>
@@ -228,7 +241,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/RouteBot.java</url>
-          <line>132</line>
+          <line>134</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
