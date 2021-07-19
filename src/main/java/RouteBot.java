@@ -142,7 +142,7 @@ public class RouteBot extends Bot {
 
                 "Какой атрибут обязательно нужно взять для путешествия в стиле Королевства полной луны?",
 
-                "Серфинг, это в России это фан или слёзы?",
+                "Серфинг в России - это фан или слёзы?",
 
                 "Попробуй передать в аудиосообщении звуки ретро-тачки 80х годов."};
 
@@ -169,7 +169,6 @@ public class RouteBot extends Bot {
 
         return replyKeyboardMarkup;
     }
-
 
     public InlineKeyboardMarkup getInlineKeyBoardWithTrips() {
         if (vTrips.length == 0) {
