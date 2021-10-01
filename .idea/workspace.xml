@@ -31,9 +31,6 @@
     <list default="true" id="bbeb5125-01a8-474a-a022-21c968ce3cf9" name="Default Changelist" comment="Тестовая вторая версия бота">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/RouteBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RouteBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/repo/nikita-alekhin/route_bot/1.0-SNAPSHOT/route_bot-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/repo/nikita-alekhin/route_bot/1.0-SNAPSHOT/route_bot-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/route_bot-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/route_bot-1.0-SNAPSHOT.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +184,9 @@
       <workItem from="1629295099283" duration="45500000" />
       <workItem from="1629462500595" duration="900000" />
       <workItem from="1629984752166" duration="4031000" />
-      <workItem from="1631552351768" duration="306000" />
+      <workItem from="1631552351768" duration="2804000" />
+      <workItem from="1632316985662" duration="434000" />
+      <workItem from="1632317438477" duration="1640000" />
     </task>
     <servers />
   </component>
