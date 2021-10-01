@@ -673,7 +673,7 @@ public class RouteBot extends Bot {
             } else {
                 sendMsg(
                     String.valueOf(chatId),
-                    "Привет! Тут можно записаться в поездку рута ⚡️ \nСейчас есть вариант: \nМедовеевка 29-31 октября\n!\n",
+                    "Привет! Тут можно записаться в поездку рута ⚡️ \nСейчас есть вариант: \nМедовеевка 29-31 октября!",
                     getInlineKeyBoardWithTrips());
             }
             debi(methodLogPrefix, "msg send");
