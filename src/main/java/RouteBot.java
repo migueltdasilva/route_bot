@@ -98,7 +98,7 @@ public class RouteBot extends Bot {
 
 
     private static final String[] vTrips =
-            new String[]{"Хочу в Медовеевку!, Хочу в Крым!"};
+            new String[]{"Хочу в Медовеевку!", "Хочу в Крым!"};
 
     private static final String[][] vQuestions = new String[vTrips.length][];
     static {
