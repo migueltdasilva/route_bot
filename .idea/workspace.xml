@@ -105,6 +105,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.RouteBot" />
@@ -192,7 +203,8 @@
       <workItem from="1634994730319" duration="6194000" />
       <workItem from="1637579515379" duration="1977000" />
       <workItem from="1637763347967" duration="247000" />
-      <workItem from="1637922671793" duration="820000" />
+      <workItem from="1637922671793" duration="1186000" />
+      <workItem from="1641911478629" duration="546000" />
     </task>
     <servers />
   </component>
@@ -251,7 +263,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/RouteBot.java</url>
-          <line>722</line>
+          <line>747</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
