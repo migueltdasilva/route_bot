@@ -1063,12 +1063,14 @@ public class RouteBot extends Bot {
     private void handleAllChats(Long chatId) {
         Jedis jedis = Helper.getConnection();
         if (jedis == null) {
-
+            debe("handleAllChats:", "jedis is null");
             return;
         }
 
-        String chats = jedis.get("chats_on");
-        sendMsg(chatId, chats);
+        Set<String> chats = jedis.smembers("chats_on");
+
+        debi("chats: ", chats.stream().reduce((s, s2) -> s + "," + s2).orElse(""));
+        sendMsg(chatId, chats.stream().reduce((s, s2) -> s + "," + s2).orElse(""));
     }
 
     private void addChatToDB(Long chatId) {
