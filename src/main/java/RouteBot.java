@@ -795,7 +795,7 @@ public class RouteBot extends Bot {
                 return;
             }
 
-            sendMsgToChatHandle(chatId, message);
+            sendMsgToChatHandle(chatId, fullMsg);
         } else if (cmd == Command.SEND_JOKE) {
             sendMsg(String.valueOf(chatId),"Шутка - хуютка!");
         } else {
