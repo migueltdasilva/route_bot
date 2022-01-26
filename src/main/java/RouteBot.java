@@ -1068,9 +1068,8 @@ public class RouteBot extends Bot {
         }
 
         Set<String> chats = jedis.smembers("chats_on");
-
-        debi("chats: ", chats.stream().reduce((s, s2) -> s + "," + s2).orElse(""));
-        sendMsg(chatId, chats.stream().reduce((s, s2) -> s + "," + s2).orElse(""));
+        String sChats =  chats.stream().reduce((s, s2) -> s + "," + s2).orElse("");
+        debi("chats: SIZE: [", chats.size() + "] \n ALL= " + sChats);
     }
 
     private void addChatToDB(Long chatId) {
