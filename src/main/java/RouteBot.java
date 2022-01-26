@@ -54,6 +54,12 @@ public class RouteBot extends Bot {
         hsAdminChatId.add(96353936L);
         hsAdminChatId.add(489194L);
     }
+    private static Map<Long, String> hmId2AdminName = new HashMap<>();
+    static {
+        hmId2AdminName.put(3099992L, "Никита");
+        hmId2AdminName.put(96353936L, "Алина");
+        hmId2AdminName.put(489194L, "Коля");
+    }
 
     private enum MailinigState {
         BEGAN,
@@ -1105,7 +1111,10 @@ public class RouteBot extends Bot {
 
             return;
         }
-        sendMsgNoMarkDown(debugChatId, "Отправляю пользователю: " + chatId + ", Текст: " + msgParts[1] + ". Отвественный: " + admChatId);
+        sendMsgNoMarkDown(debugChatId, "Отправляю пользователю: " + chatId +
+            ", Текст [ " + msgParts[1] + "]" +
+            " Отвественный: " +
+            hmId2AdminName.getOrDefault(admChatId, String.valueOf(admChatId));
 
         sendMsgNoKeyboard(String.valueOf(chatId), msgParts[1]);
     }
