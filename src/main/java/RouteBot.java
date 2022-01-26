@@ -75,6 +75,7 @@ public class RouteBot extends Bot {
         GET_USERS("/get_users", ""),
         MAILING("/mailing", "Запустить произвольную рассылку"),
         ALL_CHATS("/all_chats", "Покажи все чаты"),
+        SEND_MSG("/send_msg", "Покажи все чаты"),
         SEND_JOKE("/send_joke", "Могу отправить тебе шутку.");
 
         String name;
@@ -788,6 +789,13 @@ public class RouteBot extends Bot {
                 return;
             }
             handleAllChats(chatId);
+        } else if (cmd == Command.SEND_MSG) {
+            if (!hsAdminChatId.contains(chatId)) {
+
+                return;
+            }
+
+            sendMsgToChatHandle(chatId, message);
         } else if (cmd == Command.SEND_JOKE) {
             sendMsg(String.valueOf(chatId),"Шутка - хуютка!");
         } else {
@@ -1077,6 +1085,24 @@ public class RouteBot extends Bot {
         String sChats =  chats.stream().reduce((s, s2) -> s + "," + s2).orElse("");
         debi("chats: SIZE: [", chats.size() + "] \n ALL= " + sChats);
         sendMsg(chatId, "Всего чатов: " + chats.size());
+    }
+
+    private void sendMsgToChatHandle(Long admChatId, String msg) {
+        String methodLogPrefix = "sendMsgToChatHandle: ";
+        Jedis jedis = Helper.getConnection();
+        if (jedis == null) {
+            debe(methodLogPrefix, "jedis is null");
+            return;
+        }
+        String[] msgParts = msg.split("#");
+        long chatId = Helper.s2l(msgParts[0].trim());
+        if (chatId == 0 || msgParts.length < 2) {
+            sendMsg(admChatId, "Не получилось отправить сообщение. Нормально делай.");
+
+            return;
+        }
+
+        sendMsgNoKeyboard(String.valueOf(chatId), msgParts[1]);
     }
 
     private void addChatToDB(Long chatId) {
