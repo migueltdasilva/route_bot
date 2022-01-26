@@ -1094,9 +1094,12 @@ public class RouteBot extends Bot {
             debe(methodLogPrefix, "jedis is null");
             return;
         }
-
-        String[] msgParts = msg.substring(0, Command.SEND_MSG.name.length()).split("#");
+        debi(methodLogPrefix, msg);
+        msg = msg.substring(0, Command.SEND_MSG.name.length());
+        debi(methodLogPrefix, msg);
+        String[] msgParts = msg.split("#");
         long chatId = Helper.s2l(msgParts[0].trim());
+        debi(methodLogPrefix, "" + chatId);
         if (chatId == 0 || msgParts.length < 2) {
             sendMsg(admChatId, "Не получилось отправить сообщение. Нормально делай.");
 
