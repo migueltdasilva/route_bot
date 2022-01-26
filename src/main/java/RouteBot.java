@@ -1042,19 +1042,25 @@ public class RouteBot extends Bot {
             }
 
         } else if(state == MailinigState.MSG_RECIEVED) {
-            if (msg.equalsIgnoreCase("ДА")) {
-                String msgText = hsChatId2MailingMsg.get(chatId);
-                String fileId = hsChatId2MailingFile.get(chatId);
-                if (msgText != null && !msgText.isEmpty()) {
-                    sendCustomMsgToAll(msgText, fileId);
-                    hsChatId2MailingState.put(chatId, MailinigState.END);
+            try {
+                if (msg.equalsIgnoreCase("ДА")) {
+                    String msgText = hsChatId2MailingMsg.get(chatId);
+                    String fileId = hsChatId2MailingFile.get(chatId);
+                    if (msgText != null && !msgText.isEmpty()) {
+                        sendCustomMsgToAll(msgText, fileId);
+                        hsChatId2MailingState.put(chatId, MailinigState.END);
 
+                    } else {
+                        sendMsg(chatId, "Не могу найти ваше сообщение, попробуйте заново по команде " + Command.MAILING.name);
+                        hsChatId2MailingState.put(chatId, null);
+                    }
                 } else {
-                    sendMsg(chatId, "Не могу найти ваше сообщение, попробуйте заново по команде " + Command.MAILING.name);
+                    sendMsg(chatId, "Рассылка отменена. Чтобы начать сначала нажмите " + Command.MAILING.name);
                     hsChatId2MailingState.put(chatId, null);
                 }
-            } else {
-                sendMsg(chatId, "Рассылка отменена. Чтобы начать сначала нажмите " + Command.MAILING.name);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                sendMsg(chatId, "Рассылка не получилась. Была какая-то ошибка. Оскорбите вашего разработчика. Чтобы начать сначала нажмите " + Command.MAILING.name);
                 hsChatId2MailingState.put(chatId, null);
             }
         }
@@ -1070,6 +1076,7 @@ public class RouteBot extends Bot {
         Set<String> chats = jedis.smembers("chats_on");
         String sChats =  chats.stream().reduce((s, s2) -> s + "," + s2).orElse("");
         debi("chats: SIZE: [", chats.size() + "] \n ALL= " + sChats);
+        sendMsg(chatId, "Всего чатов: " + chats.size());
     }
 
     private void addChatToDB(Long chatId) {
@@ -1086,8 +1093,14 @@ public class RouteBot extends Bot {
     private void sendCustomMsgToAll(String msgText, String fileId) {
         String methodLogPrefix = "sendCustomMsgToAll: ";
         Jedis jedis = Helper.getConnection();
-        Set<String> hsUsers = jedis.keys("n*");
-           debi(methodLogPrefix, "Chats = " + hsUsers);
+        if (jedis == null) {
+            debe(methodLogPrefix, "Jedis is null");
+
+            return;
+        }
+        Set<String> hsUsers = jedis.smembers("chats_on");
+        debi(methodLogPrefix, "Chats SIZE = " + hsUsers.size());
+        debi(methodLogPrefix, "Chats = " + hsUsers);
 
         int i = 0;
         for (String chatId : hsUsers) {
