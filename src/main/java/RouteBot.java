@@ -795,7 +795,7 @@ public class RouteBot extends Bot {
                 return;
             }
 
-            sendMsgToChatHandle(chatId, fullMsg);
+            sendMsgToChatHandle(chatId, msg.getText());
         } else if (cmd == Command.SEND_JOKE) {
             sendMsg(String.valueOf(chatId),"Шутка - хуютка!");
         } else {
@@ -1131,6 +1131,7 @@ public class RouteBot extends Bot {
         Set<String> hsUsers = jedis.smembers("chats_on");
         debi(methodLogPrefix, "Chats SIZE = " + hsUsers.size());
         debi(methodLogPrefix, "Chats = " + hsUsers);
+
 
         int i = 0;
         for (String chatId : hsUsers) {
