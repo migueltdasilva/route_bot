@@ -1095,7 +1095,7 @@ public class RouteBot extends Bot {
             return;
         }
         debi(methodLogPrefix, msg);
-        msg = msg.substring(0, Command.SEND_MSG.name.length());
+        msg = msg.substring(Command.SEND_MSG.name.length());
         debi(methodLogPrefix, msg);
         String[] msgParts = msg.split("#");
         long chatId = Helper.s2l(msgParts[0].trim());
