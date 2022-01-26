@@ -1105,6 +1105,7 @@ public class RouteBot extends Bot {
 
             return;
         }
+        sendMsgNoMarkDown(debugChatId, "Отправляю пользователю: " + chatId + ", Текст: " + msgParts[1] + ". Отвественный: " + admChatId);
 
         sendMsgNoKeyboard(String.valueOf(chatId), msgParts[1]);
     }
