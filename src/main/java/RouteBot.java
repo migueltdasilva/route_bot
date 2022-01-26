@@ -74,6 +74,7 @@ public class RouteBot extends Bot {
         SEND_RESPONSES("/send_resp", ""),
         GET_USERS("/get_users", ""),
         MAILING("/mailing", "Запустить произвольную рассылку"),
+        ALL_CHATS("/all_chats", "Покажи все чаты"),
         SEND_JOKE("/send_joke", "Могу отправить тебе шутку.");
 
         String name;
@@ -781,6 +782,12 @@ public class RouteBot extends Bot {
                 return;
             }
             handleMailing(chatId, fullMsg, null);
+        } else if (cmd == Command.ALL_CHATS) {
+            if (!hsAdminChatId.contains(chatId)) {
+
+                return;
+            }
+            handleAllChats(chatId);
         } else if (cmd == Command.SEND_JOKE) {
             sendMsg(String.valueOf(chatId),"Шутка - хуютка!");
         } else {
@@ -988,9 +995,9 @@ public class RouteBot extends Bot {
     private void removeAllUserData(Long chatId, int trip) {
         try {
             Jedis jedis = Helper.getConnection();
-            if (jedis.exists("n" + chatId)) {
-                jedis.del("n" + chatId);
-            }
+//            if (jedis.exists("n" + chatId)) {
+//                jedis.del("n" + chatId);
+//            }
             if (jedis.exists("t" + chatId)) {
                 jedis.del("t" + chatId);
             }
@@ -1038,7 +1045,7 @@ public class RouteBot extends Bot {
             if (msg.equalsIgnoreCase("ДА")) {
                 String msgText = hsChatId2MailingMsg.get(chatId);
                 String fileId = hsChatId2MailingFile.get(chatId);
-                if (msgText != null && !msg.isEmpty()) {
+                if (msgText != null && !msgText.isEmpty()) {
                     sendCustomMsgToAll(msgText, fileId);
                     hsChatId2MailingState.put(chatId, MailinigState.END);
 
@@ -1051,6 +1058,17 @@ public class RouteBot extends Bot {
                 hsChatId2MailingState.put(chatId, null);
             }
         }
+    }
+
+    private void handleAllChats(Long chatId) {
+        Jedis jedis = Helper.getConnection();
+        if (jedis == null) {
+
+            return;
+        }
+
+        String chats = jedis.get("chats_on");
+        sendMsg(chatId, chats);
     }
 
     private void addChatToDB(Long chatId) {
