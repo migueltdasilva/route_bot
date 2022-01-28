@@ -1155,7 +1155,7 @@ public class RouteBot extends Bot {
         debi(methodLogPrefix, "Chats SIZE = " + hsUsers.size());
         debi(methodLogPrefix, "Chats = " + hsUsers);
 
-
+        sendMsgNoMarkDown(debugChatId, "НАЧАЛ РАССЫЛКУ");
         int i = 0;
         for (String chatId : hsUsers) {
             Long chat = Long.parseLong(chatId.substring(1));
@@ -1165,13 +1165,18 @@ public class RouteBot extends Bot {
                 } else {
                     sendPhoto(chat, msgText, fileId);
                 }
+                try {
+                    sendMsgNoMarkDown(debugChatId, "Отправлено: " + chat);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
                 i++;
                 //Thread.sleep(1000);
             } catch (Exception ex) {
                 debe(methodLogPrefix, ex.getMessage());
             }
         }
-
+        sendMsgNoMarkDown(debugChatId, "ЗАКОНЧИЛ РАССЫЛКУ");
         int qty = i;
         hsAdminChatId.
             forEach(adminChatId -> sendMsg(
