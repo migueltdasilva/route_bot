@@ -570,12 +570,7 @@ public class RouteBot extends Bot {
         jedis.set("n" + chatId, userName);
 
         String msgText = vQuestions[tripIdx][0];
-        if (tripIdx == 0 || tripIdx == 1) {
-            sendMsg(chatId, msgText, getGoAndCancelButton());
-
-        } else {
-            sendMsg(chatId, msgText);
-        }
+        sendMsg(chatId, msgText, getGoAndCancelButton());
     }
 
     public void onUpdateReceived(Update update) {
