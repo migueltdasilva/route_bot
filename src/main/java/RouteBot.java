@@ -495,7 +495,7 @@ public class RouteBot extends Bot {
 
     public synchronized void sendMsgNoKeyboard(
             String chatId, String s) {
-        debi("sendMsg: ",chatId +" = " + s);
+        debi("sendMsg: ",chatId +"   = " + s);
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
@@ -1154,7 +1154,7 @@ public class RouteBot extends Bot {
         photots.add("AgACAgIAAxkBAAJpy2H5HYktIXmhAuM0OM6Gwsg52zkFAAJIuTEbSxvJS8SLgwIWxo3QAQADAgADeAADIwQ");
         photots.add("AgACAgIAAxkBAAJpzWH5HdbAo-OsCA3xP7MzGK_E-P6JAAJJuTEbSxvJS5OSoBYHaQJNAQADAgADeAADIwQ");
         photots.add("AgACAgIAAxkBAAJpz2H5HfUpoZWJtXBHrtTVPkW12vlJAAJKuTEbSxvJS9RHfT4QEfNbAQADAgADeQADIwQ");
-        photots.add("AgACAgIAAxkBAAJp0WH5HimOB85PpHh3k1td6wABLGcGnAACSbkxG0sbyUuTkqAWB2kCTQEAAwIAA3kAAyME");
+        photots.add("AgACAgIAAxkBAAJp42H5LBjl-kWriitFCSU8yilw-99pAAKIuTEbSxvJS-2FlEaSTBJNAQADAgADbQADIwQ");
         String text = "Ни года без Байкала: 23-27 февраля зовем на Ольхон и в Листвянку. \n" +
             "\n" +
             "Байкал – это про лед: лежать на льду, кататься на льду, облизывать лед, залезать на горы из льда, топить лед, садиться на льдышку, чтобы разогнаться на льду, подлезать под ледяную пещеру и так далее. Ощущения как будто ты ребенок, который узнает мир, в основном, ползая. При этом сверху чаще всего светит солнце, кто-то заботливо варит супчик, а через час добрый водитель буханки повезет тебя в баню.\n" +
