@@ -500,6 +500,7 @@ public class RouteBot extends Bot {
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
         ReplyKeyboardRemove replyKeyboardRemove = new ReplyKeyboardRemove();
+        replyKeyboardRemove.setRemoveKeyboard(true);
         sendMessage.setReplyMarkup(replyKeyboardRemove);
         sendMessage.setText(s);
 
