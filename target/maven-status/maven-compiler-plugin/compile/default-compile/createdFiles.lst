@@ -1,9 +1,6 @@
-Reply.class
-Reply$Type.class
-Helper.class
 RedisCli.class
-TestBot.class
 RouteBot$MailinigState.class
 RouteBot.class
 RouteBot$Command.class
+Helper.class
 Bot.class

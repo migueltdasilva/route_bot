@@ -2,13 +2,34 @@
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.groupadministration.SetChatPhoto;
+import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
+import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
+import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
+import org.telegram.telegrambots.meta.api.methods.send.SendMediaGroup;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.methods.send.SendSticker;
+import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
+import org.telegram.telegrambots.meta.api.methods.send.SendVideoNote;
+import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
+import org.telegram.telegrambots.meta.api.methods.stickers.AddStickerToSet;
+import org.telegram.telegrambots.meta.api.methods.stickers.CreateNewStickerSet;
+import org.telegram.telegrambots.meta.api.methods.stickers.SetStickerSetThumb;
+import org.telegram.telegrambots.meta.api.methods.stickers.UploadStickerFile;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageMedia;
+import org.telegram.telegrambots.meta.api.objects.File;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
+import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class Bot extends TelegramLongPollingBot {
 
@@ -60,16 +81,99 @@ public class Bot extends TelegramLongPollingBot {
         return botToken;
     }
 
-    public static void main(String[] args) {
-        ApiContextInitializer.init();
-        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
+    public static void main(String[] args) throws TelegramApiException {
+        TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
         try {
             Bot routeBot = new Bot("RouteTestBot", "900084418:AAEfgGDNoCUstvOCWlw3cBTGrny80h0rSK0");
-            telegramBotsApi.registerBot(routeBot);
-        } catch (TelegramApiRequestException e) {
+            botsApi.registerBot(routeBot);
+        } catch (TelegramApiException e) {
 
             e.printStackTrace();
         }
     }
 
+    @Override
+    public Boolean execute(SetStickerSetThumb setStickerSetThumb) throws TelegramApiException {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<Message> executeAsync(SendDocument sendDocument) {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<Message> executeAsync(SendPhoto sendPhoto) {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<Message> executeAsync(SendVideo sendVideo) {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<Message> executeAsync(SendVideoNote sendVideoNote) {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<Message> executeAsync(SendSticker sendSticker) {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<Message> executeAsync(SendAudio sendAudio) {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<Message> executeAsync(SendVoice sendVoice) {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<List<Message>> executeAsync(SendMediaGroup sendMediaGroup) {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<Boolean> executeAsync(SetChatPhoto setChatPhoto) {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<Boolean> executeAsync(AddStickerToSet addStickerToSet) {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<Boolean> executeAsync(SetStickerSetThumb setStickerSetThumb) {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<Boolean> executeAsync(CreateNewStickerSet createNewStickerSet) {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<File> executeAsync(UploadStickerFile uploadStickerFile) {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<Serializable> executeAsync(EditMessageMedia editMessageMedia) {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<Message> executeAsync(SendAnimation sendAnimation) {
+        return null;
+    }
+
+    @Override
+    protected <T extends Serializable, Method extends BotApiMethod<T>> CompletableFuture<T> sendApiMethodAsync(Method method) {
+        return null;
+    }
 }

@@ -28,7 +28,22 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bbeb5125-01a8-474a-a022-21c968ce3cf9" name="Default Changelist" comment="Тестовая вторая версия бота" />
+    <list default="true" id="bbeb5125-01a8-474a-a022-21c968ce3cf9" name="Default Changelist" comment="Тестовая вторая версия бота">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Reply.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/RouteBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RouteBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TestBot.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Bot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Helper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Helper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RedisCli.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RedisCli.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Reply$Type.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Reply.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RouteBot$Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RouteBot$Command.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RouteBot$MailinigState.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RouteBot$MailinigState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RouteBot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RouteBot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TestBot.class" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -98,6 +113,19 @@
     <configuration name="RouteBot" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="RouteBot" />
       <module name="route_bot" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -191,7 +219,7 @@
       <workItem from="1637763347967" duration="247000" />
       <workItem from="1637922671793" duration="1186000" />
       <workItem from="1641911478629" duration="11498000" />
-      <workItem from="1643297772455" duration="2419000" />
+      <workItem from="1643297772455" duration="6991000" />
     </task>
     <servers />
   </component>
@@ -245,12 +273,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/RouteBot.java</url>
-          <line>131</line>
+          <line>138</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/RouteBot.java</url>
-          <line>787</line>
+          <line>799</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>

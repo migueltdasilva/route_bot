@@ -3,17 +3,21 @@ import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
+import org.telegram.telegrambots.meta.api.methods.send.SendMediaGroup;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
 import org.telegram.telegrambots.meta.api.objects.Audio;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Document;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.PhotoSize;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.Voice;
+import org.telegram.telegrambots.meta.api.objects.media.InputMedia;
+import org.telegram.telegrambots.meta.api.objects.media.InputMediaPhoto;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
@@ -22,8 +26,9 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
+import org.telegram.telegrambots.meta.generics.BotSession;
+import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.exceptions.JedisConnectionException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +40,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.lang.System.out;
 
@@ -42,9 +48,9 @@ public class RouteBot extends Bot {
 
     private static final String name = "helloroute_bot";
     private static final String token = "1013761197:AAHv3uKJJzwiWMsQVxgnxUsqbpP5-PSrRy4";
-    private static final Long adminChatId = 3099992L;
+    private static final String adminChatId = "3099992";
     private static final Set<Long> hsAdminChatId = new HashSet<>();
-    private static final Long debugChatId = -487931131L;
+    private static final String debugChatId = "-487931131";
     private Map<Long, MailinigState> hsChatId2MailingState = new HashMap<>();
     private Map<Long, String> hsChatId2MailingMsg = new HashMap<>();
     private Map<Long, String> hsChatId2MailingFile = new HashMap<>();
@@ -82,6 +88,7 @@ public class RouteBot extends Bot {
         MAILING("/mailing", "Запустить произвольную рассылку"),
         ALL_CHATS("/all_chats", "Покажи все чаты"),
         SEND_MSG("/send_msg", "Покажи все чаты"),
+        MORE("/more", "Покажи все чаты"),
         SEND_JOKE("/send_joke", "Могу отправить тебе шутку.");
 
         String name;
@@ -406,22 +413,12 @@ public class RouteBot extends Bot {
     }
 
 
-    private void setInline() {
-        List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
-        List<InlineKeyboardButton> buttons1 = new ArrayList<>();
-        buttons1.add(new InlineKeyboardButton().setText("Кнопка").setCallbackData("17"));
-        buttons.add(buttons1);
-
-        InlineKeyboardMarkup markupKeyboard = new InlineKeyboardMarkup();
-        markupKeyboard.setKeyboard(buttons);
-    }
-
     public synchronized void sendMsgNoMarkDown(
-            Long chatId, String s) {
+            String chatId, String s) {
         debi("sendMsg: ",chatId +" = " + s);
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(false);
-        sendMessage.setChatId(chatId);
+        sendMessage.setChatId(String.valueOf(chatId));
         sendMessage.setText(s);
         try {
             execute(sendMessage);
@@ -517,8 +514,8 @@ public class RouteBot extends Bot {
 
     public synchronized void sendVoice(Long chatId, String fileId) {
         SendVoice voice = new SendVoice();
-        voice.setChatId(chatId);
-        voice.setVoice(fileId);
+        voice.setChatId(String.valueOf(chatId));
+        voice.setVoice(new InputFile(fileId));
         try {
             execute(voice);
         } catch (TelegramApiException e) {
@@ -529,8 +526,8 @@ public class RouteBot extends Bot {
 
     public synchronized void sendAudio(Long chatId, String fileId) {
         SendAudio audio = new SendAudio();
-        audio.setChatId(chatId);
-        audio.setAudio(fileId);
+        audio.setChatId(String.valueOf(chatId));
+        audio.setAudio(new InputFile(fileId));
         try {
             execute(audio);
         } catch (TelegramApiException e) {
@@ -542,10 +539,25 @@ public class RouteBot extends Bot {
     public synchronized void sendPhoto(
         Long chatId, String caption, String fileId) throws Exception {
         SendPhoto msg = new SendPhoto();
-        msg.setChatId(chatId);
-        msg.setPhoto(fileId);
+        msg.setChatId(String.valueOf(chatId));
+        msg.setPhoto(new InputFile(fileId));
         msg.setCaption(caption);
         execute(msg);
+    }
+
+    public synchronized void sendPhotos(
+        Long chatId, List<String> alFileIds){
+        SendMediaGroup msg = new SendMediaGroup();
+        msg.setChatId(String.valueOf(chatId));
+        List<InputMedia> inputMediaList =
+            alFileIds.stream().map(InputMediaPhoto::new).collect(Collectors.toList());
+        msg.setMedias(inputMediaList);
+        try {
+            execute(msg);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+            //Log.log(Level, "Exception: ", e.toString());
+        }
     }
 
     private synchronized void handleCallbackQuery(Update update) {
@@ -590,7 +602,7 @@ public class RouteBot extends Bot {
         }
         Message updMsg = update.getMessage();
         Long chatId = updMsg.getChatId();
-        if (debugChatId == chatId) {
+        if (debugChatId.equals(String.valueOf(chatId))) {
 
             return;
         }
@@ -815,6 +827,9 @@ public class RouteBot extends Bot {
             }
 
             sendMsgToChatHandle(chatId, msg.getText());
+        } else if (cmd == Command.MORE) {
+
+            handleMore(chatId);
         } else if (cmd == Command.SEND_JOKE) {
             sendMsg(String.valueOf(chatId),"Шутка - хуютка!");
         } else {
@@ -859,7 +874,7 @@ public class RouteBot extends Bot {
 
         String caption = photos.stream().map(PhotoSize::toString).reduce("", String::concat);
         SendPhoto msg = new SendPhoto();
-        msg.setPhoto(fileId);
+        msg.setPhoto(new InputFile(fileId));
         msg.setChatId(adminChatId);
         msg.setCaption("Вот ваш файл: " + caption);
 
@@ -878,7 +893,7 @@ public class RouteBot extends Bot {
 
         String caption = doc.toString();
         SendDocument msg = new SendDocument();
-        msg.setDocument(fileId);
+        msg.setDocument(new InputFile(fileId));
         msg.setChatId(adminChatId);
         msg.setCaption("Вот ваш файл: " + caption);
 
@@ -921,7 +936,7 @@ public class RouteBot extends Bot {
         }
         String responses = sb.toString();
         hsAdminChatId.
-                forEach(adminChatId -> sendMsgNoMarkDown(adminChatId, responses));
+                forEach(adminChatId -> sendMsgNoMarkDown(String.valueOf(adminChatId), responses));
 
         if (alAns.size() == vQuestions[trip].length) {
             String fileId = alAns.get(vQuestions[trip].length - 1);
@@ -1132,6 +1147,36 @@ public class RouteBot extends Bot {
         sendMsgNoKeyboard(String.valueOf(chatId), msgParts[1]);
     }
 
+
+    private void handleMore(Long chatId) {
+        String methodLogPrefix = "handleMore: ";
+        List<String> photots = new ArrayList<>();
+        photots.add("AgACAgIAAxkBAAJpy2H5HYktIXmhAuM0OM6Gwsg52zkFAAJIuTEbSxvJS8SLgwIWxo3QAQADAgADeAADIwQ");
+        photots.add("AgACAgIAAxkBAAJpzWH5HdbAo-OsCA3xP7MzGK_E-P6JAAJJuTEbSxvJS5OSoBYHaQJNAQADAgADeAADIwQ");
+        photots.add("AgACAgIAAxkBAAJpz2H5HfUpoZWJtXBHrtTVPkW12vlJAAJKuTEbSxvJS9RHfT4QEfNbAQADAgADeQADIwQ");
+        photots.add("AgACAgIAAxkBAAJp0WH5HimOB85PpHh3k1td6wABLGcGnAACSbkxG0sbyUuTkqAWB2kCTQEAAwIAA3kAAyME");
+        String text = "Ни года без Байкала: 23-27 февраля зовем на Ольхон и в Листвянку. \n" +
+            "\n" +
+            "Байкал – это про лед: лежать на льду, кататься на льду, облизывать лед, залезать на горы из льда, топить лед, садиться на льдышку, чтобы разогнаться на льду, подлезать под ледяную пещеру и так далее. Ощущения как будто ты ребенок, который узнает мир, в основном, ползая. При этом сверху чаще всего светит солнце, кто-то заботливо варит супчик, а через час добрый водитель буханки повезет тебя в баню.\n" +
+            "\n" +
+            "План:\n" +
+            "22/02: вылетаем\n" +
+            "23/02: прилетаем и сразу выдвигаемся на Ольхон с остановками на мраморном карьере и на обед\n" +
+            "24/02: изучаем лед, катаясь вокруг Ольхона на буханках, а потом заныриваем под лед, выходя из горячей парной, которая стоит прямо на Байкале\n" +
+            "25/02: весь день едем/летим/плывем на хивусе от Ольхона до Листвянки, с остановками на коньки и красивый (угадайте что?) лед!\n" +
+            "26/02: просыпаемся в красивом глемпинге и изучаем окрестности Листвянки, а вечером устраиваем иркутский бархоппинг\n" +
+            "27/02: утром вылетаем и 27го же утром приземляемся в Москве (благоприятственная разница во времени)\n" +
+            "\n" +
+            "Бюджет: 50 000. Включает всю-всю программу, начиная с утра 23го, кроме двух ужинов на Ольхоне и траты на бары в Иркутске. Ночи на Ольхоне и в глемпинге, буханки, хивусы, питание и снеки с собой, вино, банька с прорубью.\n" +
+            "\n" +
+            "Чтобы подать заявку, нажми /start";
+
+        sendPhotos(chatId, photots);
+        sendMsgNoKeyboard(String.valueOf(chatId), text);
+
+    }
+
+
     private void addChatToDB(Long chatId) {
         Jedis jedis = Helper.getConnection();
         if (jedis == null) {
@@ -1205,14 +1250,13 @@ public class RouteBot extends Bot {
 
 
 
-    public static void main(String[] args) {
-        ApiContextInitializer.init();
+    public static void main(String[] args) throws TelegramApiException {
 
-        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
+        TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
         try {
             Bot routeBot = new RouteBot();
-            telegramBotsApi.registerBot(routeBot);
-        } catch (TelegramApiRequestException e) {
+            botsApi.registerBot(routeBot);
+        } catch (TelegramApiException e) {
 
             e.printStackTrace();
         }
