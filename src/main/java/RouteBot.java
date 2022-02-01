@@ -422,7 +422,7 @@ public class RouteBot extends Bot {
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             //Log.log(Level, "Exception: ", e.toString());
         }
     }
@@ -482,13 +482,13 @@ public class RouteBot extends Bot {
     }
 
     public synchronized void sendMsgNotSafe(
-        String chatId, String s, ReplyKeyboardMarkup replyKeyboardMarkup) throws Exception {
+        String chatId, String s) throws Exception {
         debi("sendMsg: ",chatId +" = " + s);
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
         sendMessage.setText(s);
-        ReplyKeyboardRemove replyKeyboardRemove = new ReplyKeyboardRemove();
+        ReplyKeyboardRemove replyKeyboardRemove = new ReplyKeyboardRemove(true);
         sendMessage.setReplyMarkup(replyKeyboardRemove);
         execute(sendMessage);
     }
@@ -1203,19 +1203,21 @@ public class RouteBot extends Bot {
         sendMsgNoMarkDown(debugChatId, "НАЧАЛ РАССЫЛКУ");
         int i = 0;
         for (String chatId : hsUsers) {
-            Long chat = Long.parseLong(chatId.substring(1));
+            Long chat = Long.parseLong(chatId);
             try {
                 if (fileId == null) {
-                    sendMsg(chat, msgText);
+                    sendMsgNotSafe(String.valueOf(chat), msgText);
                 } else {
                     sendPhoto(chat, msgText, fileId);
                 }
+                i++;
                 try {
                     sendMsgNoMarkDown(debugChatId, "Отправлено: " + chat);
+                    Thread.sleep(500);
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    //ex.printStackTrace();
                 }
-                i++;
+
                 //Thread.sleep(1000);
             } catch (Exception ex) {
                 debe(methodLogPrefix, ex.getMessage());
