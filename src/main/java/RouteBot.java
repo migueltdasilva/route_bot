@@ -379,7 +379,7 @@ public class RouteBot extends Bot {
         for (Map.Entry<String, String> kv : hmTrips.entrySet())   {
             InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
             inlineKeyboardButton.setText(kv.getValue());
-            inlineKeyboardButton.setCallbackData("t_" + kv.getValue());
+            inlineKeyboardButton.setCallbackData("t_" + kv.getKey());
             List<InlineKeyboardButton> keyboardButtonsRow = new ArrayList<>();
             keyboardButtonsRow.add(inlineKeyboardButton);
             rowList.add(keyboardButtonsRow);
@@ -807,7 +807,7 @@ public class RouteBot extends Bot {
             } else {
                 sendMsg(
                     String.valueOf(chatId),
-                    "Привет! Тут можно записаться в поездку рута ⚡️ \nСейчас есть вариант: \n - Красная Поляна с 6 по 13 марта\n - Байкал 23-27 февраля\n Камчатка 21 - 29 июля или 29 июля - 6 августа" ,
+                    "Привет! Тут можно записаться в поездку рута ⚡️ \nСейчас есть вариант: \n - Красная Поляна с 6 по 13 марта\n - Байкал 23-27 февраля\n - Камчатка 21 - 29 июля или 29 июля - 6 августа" ,
                     getInlineKeyBoardWithTrips());
             }
             debi(methodLogPrefix, "msg send");
