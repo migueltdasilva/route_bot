@@ -34,6 +34,7 @@
       <change beforePath="$PROJECT_DIR$/target/classes/RouteBot$Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RouteBot$Command.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/RouteBot$MailinigState.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RouteBot$MailinigState.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/RouteBot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RouteBot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/route_bot-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/route_bot-1.0-SNAPSHOT.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -199,7 +200,7 @@
       <workItem from="1641911478629" duration="11498000" />
       <workItem from="1643297772455" duration="11697000" />
       <workItem from="1644235871739" duration="622000" />
-      <workItem from="1645020174985" duration="1580000" />
+      <workItem from="1645020174985" duration="1989000" />
     </task>
     <servers />
   </component>
