@@ -464,7 +464,7 @@ public class RouteBot extends Bot {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
-        sendMessage.setText(s);
+        sendMessage.setText(Helper.escapeChars(s));
         if (inlineKeyboardMarkup != null) {
             sendMessage.setReplyMarkup(inlineKeyboardMarkup);
         }  else {
@@ -937,7 +937,7 @@ public class RouteBot extends Bot {
         String[] curQuest = hmQuestions.get(tripId);
 
         sb.append("Ответ от:  ")
-                .append(Helper.escapeChars(userName))
+                .append(userName)
                 .append(". Время: ").append(formatter.format(date))
                 .append("\n Поездка: ").append(hmTrips.get(tripId)).append("\n\n");
         List<String> alAns = getUserAnswers(chatId, tripId);
