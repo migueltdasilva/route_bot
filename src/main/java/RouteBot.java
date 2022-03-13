@@ -1223,9 +1223,6 @@ public class RouteBot extends Bot {
         photots.add("AgACAgIAAxkBAAJ88WImO-L5JKijAt33l-nhpR55ymsiAAI9uTEbcI8xSVQ-0v_plmC4AQADAgADcwADIwQ");
         photots.add("AgACAgIAAxkBAAJ88mImO_nuZkVqEKIDU_J-IxDWqI5FAAI6uTEbcI8xSXQ8eI-B9JJ5AQADAgADcwADIwQ");
         photots.add("AgACAgIAAxkBAAJ882ImPAkfrOg0OS2kjVXDz_odQrzIAAJJuTEbcI8xSaixV9rFM337AQADAgADcwADIwQ");
-        photots.add("AgACAgIAAxkBAAJ-8mIuGDDcD3ei5gKY0D6YHeveckyKAAJVtzEbNe1xSbLVbBpp0iSNAQADAgADcwADIwQ");
-        photots.add("AgACAgIAAxkBAAJ-82IuGEAWF6WafUByribH41uZ2znBAALauTEbV0txSUje-IfMb1b5AQADAgADcwADIwQ");
-        photots.add("AgACAgIAAxkBAAJ-9GIuGGCPCiMeJB0X5zvjXxWmPzI5AAJUtzEbNe1xSeVz-uKFZ96sAQADAgADcwADIwQ");
         photots.add("AgACAgIAAxkBAAJ-9WIuGGygJoHHwhTTYmoOa9NGXuk4AALduTEbV0txSYDDPfqJvTiBAQADAgADcwADIwQ");
         photots.add("AgACAgIAAxkBAAJ-9mIuGHSxIPSDcpWxzepJxB2uL7-3AALeuTEbV0txSST779dJgJiiAQADAgADcwADIwQ");
         photots.add("AgACAgIAAxkBAAJ-92IuGHymJRvC1DS7RtggBcn893ORAAJatzEbNe1xSWKIY6071ouMAQADAgADcwADIwQ");
