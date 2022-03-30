@@ -877,7 +877,7 @@ public class RouteBot extends Bot {
             } else {
                 sendMsg(
                     String.valueOf(chatId),
-                    "Привет! Тут можно записаться в поездку рута ⚡️ \nСейчас есть вариант: Киргизия 8 - 14 мая\n - Камчатка 21 - 29 июля или 29 июля - 6 августа" ,
+                    "Привет! Тут можно записаться в поездку рута ⚡️ \nСейчас есть вариант: \n - Киргизия 8 - 14 мая\n - Камчатка 21 - 29 июля или 29 июля - 6 августа" ,
                     getInlineKeyBoardWithTrips());
             }
             debi(methodLogPrefix, "msg send");
