@@ -28,9 +28,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bbeb5125-01a8-474a-a022-21c968ce3cf9" name="Default Changelist" comment="Тестовая вторая версия бота">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="bbeb5125-01a8-474a-a022-21c968ce3cf9" name="Default Changelist" comment="Тестовая вторая версия бота" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -209,6 +207,7 @@
       <workItem from="1648742832264" duration="502000" />
       <workItem from="1648820706136" duration="134000" />
       <workItem from="1648909615459" duration="402000" />
+      <workItem from="1651132643561" duration="324000" />
     </task>
     <servers />
   </component>
@@ -267,7 +266,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/RouteBot.java</url>
-          <line>883</line>
+          <line>911</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
