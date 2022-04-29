@@ -904,7 +904,7 @@ public class RouteBot extends Bot {
             } else {
                 sendMsg(
                     String.valueOf(chatId),
-                    "Привет! Тут можно записаться в поездку рута ⚡️ \nСейчас есть варианты: \n - Автономное путешествие и фестиваль в западном Казахстане - июнь!" +
+                    "Привет! Тут можно записаться в поездку рута ⚡️ \nСейчас есть варианты: \n - Автономное путешествие и фестиваль в западном Казахстане - июнь! /more" +
                         "\n - Камчатка 21 - 29 июля или 29 июля - 6 августа" ,
                     getInlineKeyBoardWithTrips());
             }
@@ -1264,10 +1264,12 @@ public class RouteBot extends Bot {
     private void handleMore(Long chatId) {
         String methodLogPrefix = "handleMore: ";
         List<String> photots = new ArrayList<>();
-        photots.add("fileId=AgACAgIAAxkBAAKP3WJsI1hFTJZAgBrBVexQGJaq3GrEAAIKujEb-zdQSxoVWm8XNBS9AQADAgADbQADJAQ,");
-        photots.add("fileId=AgACAgIAAxkBAAKP22JsIxccr-FBcDdL6tTQcLafVUn2AAIYujEb-zdQS_TWVJF6GSRwAQADAgADeAADJAQ,");
-        photots.add("fileId=AgACAgIAAxkBAAKP3WJsI1hFTJZAgBrBVexQGJaq3GrEAAIKujEb-zdQSxoVWm8XNBS9AQADAgADbQADJAQ,");
-        photots.add("fileId=AgACAgIAAxkBAAKP22JsIxccr-FBcDdL6tTQcLafVUn2AAIYujEb-zdQS_TWVJF6GSRwAQADAgADcwADJAQ");
+        photots.add("AgACAgIAAxkBAAKP3WJsI1hFTJZAgBrBVexQGJaq3GrEAAIKujEb-zdQSxoVWm8XNBS9AQADAgADbQADJAQ,");
+        photots.add("AgACAgIAAxkBAAKP22JsIxccr-FBcDdL6tTQcLafVUn2AAIYujEb-zdQS_TWVJF6GSRwAQADAgADeAADJAQ,");
+        photots.add("AgACAgIAAxkBAAKP3WJsI1hFTJZAgBrBVexQGJaq3GrEAAIKujEb-zdQSxoVWm8XNBS9AQADAgADbQADJAQ,");
+        photots.add("AgACAgIAAxkBAAKP22JsIxccr-FBcDdL6tTQcLafVUn2AAIYujEb-zdQS_TWVJF6GSRwAQADAgADcwADJAQ");
+        photots.add("AgACAgIAAxkBAAKP6GJsJMtyZVOOJx-CQhWdG3QVLleHAAIKujEb-zdQSxoVWm8XNBS9AQADAgADeQADJAQ");
+
         String text = "Западный Казахстан — это когда едешь 4 дня по бесконечному белому, и каждый день находишь в этой пустоте чудо света: гигантскую скалу из ниоткуда, поле разбросанных каменных шаров размером с человека, соляное озеро с идеальным отражением неба, облаков, тебя. Все это в полной автономии, воды в пустыне нет, перепады температур есть, так что волей не волей становишься кочующим и немного диким человеком — комфорт не нужен на фоне этой природы, только вперед, к новым чудесам. \n" +
             "\n" +
             "А еще мы устроим свой фестиваль, привезем звук, соберем творческих и музыкальных друзей, и предложить всем посозидать в формате кемпов. Покричать про важное, и почувствовать себя песчинкой на дне древнего океана, где жизнь измеряется миллионами лет.\n" +
