@@ -1264,37 +1264,20 @@ public class RouteBot extends Bot {
     private void handleMore(Long chatId) {
         String methodLogPrefix = "handleMore: ";
         List<String> photots = new ArrayList<>();
-        photots.add("AgACAgIAAxkBAAJ87WImNt5hfan4p9GkUIBfmMFWjGPxAAJHuTEbcI8xSeinnLXjzYU6AQADAgADcwADIwQ");
-        photots.add("AgACAgIAAxkBAAJ87mImNwnrU4TlzmpdhS6UdJgdttiwAAJIuTEbcI8xSdO9n_PeLuZlAQADAgADcwADIwQ");
-        photots.add("AgACAgIAAxkBAAJ872ImNyshgd8I2RJoMFqxQFKWj4UQAAJLuTEbcI8xSazG9pTEaHAlAQADAgADcwADIwQ");
-        photots.add("AgACAgIAAxkBAAJ88GImN0BMhtAUnj1iQPTtF-c5fBfuAAI8uTEbcI8xSUvXVfi6HSqvAQADAgADcwADIwQ");
-        photots.add("AgACAgIAAxkBAAJ88WImO-L5JKijAt33l-nhpR55ymsiAAI9uTEbcI8xSVQ-0v_plmC4AQADAgADcwADIwQ");
-        photots.add("AgACAgIAAxkBAAJ88mImO_nuZkVqEKIDU_J-IxDWqI5FAAI6uTEbcI8xSXQ8eI-B9JJ5AQADAgADcwADIwQ");
-        photots.add("AgACAgIAAxkBAAJ882ImPAkfrOg0OS2kjVXDz_odQrzIAAJJuTEbcI8xSaixV9rFM337AQADAgADcwADIwQ");
-        photots.add("AgACAgIAAxkBAAJ-9WIuGGygJoHHwhTTYmoOa9NGXuk4AALduTEbV0txSYDDPfqJvTiBAQADAgADcwADIwQ");
-        photots.add("AgACAgIAAxkBAAJ-9mIuGHSxIPSDcpWxzepJxB2uL7-3AALeuTEbV0txSST779dJgJiiAQADAgADcwADIwQ");
-        photots.add("AgACAgIAAxkBAAJ-92IuGHymJRvC1DS7RtggBcn893ORAAJatzEbNe1xSWKIY6071ouMAQADAgADcwADIwQ");
-
-        String text = "Объединямем людей в коливинг-коворкинг в турецком Каше с середины марта и до середины апреля. \n" +
+        photots.add("fileId=AgACAgIAAxkBAAKP3WJsI1hFTJZAgBrBVexQGJaq3GrEAAIKujEb-zdQSxoVWm8XNBS9AQADAgADbQADJAQ,");
+        photots.add("fileId=AgACAgIAAxkBAAKP22JsIxccr-FBcDdL6tTQcLafVUn2AAIYujEb-zdQS_TWVJF6GSRwAQADAgADeAADJAQ,");
+        photots.add("fileId=AgACAgIAAxkBAAKP3WJsI1hFTJZAgBrBVexQGJaq3GrEAAIKujEb-zdQSxoVWm8XNBS9AQADAgADbQADJAQ,");
+        photots.add("fileId=AgACAgIAAxkBAAKP22JsIxccr-FBcDdL6tTQcLafVUn2AAIYujEb-zdQS_TWVJF6GSRwAQADAgADcwADJAQ");
+        String text = "Западный Казахстан — это когда едешь 4 дня по бесконечному белому, и каждый день находишь в этой пустоте чудо света: гигантскую скалу из ниоткуда, поле разбросанных каменных шаров размером с человека, соляное озеро с идеальным отражением неба, облаков, тебя. Все это в полной автономии, воды в пустыне нет, перепады температур есть, так что волей не волей становишься кочующим и немного диким человеком — комфорт не нужен на фоне этой природы, только вперед, к новым чудесам. \n" +
             "\n" +
-            "Формат:\n" +
-            "Мы арендуем отель Hideway и создаем там временное комфортное пространство для людей, которым не хватает людей. Будем разделять досуг, разгонять тревогу, проживать деньки и поддерживать друг-друга. Будем вместе искать ответы на вопрос – “что дальше?”.\n" +
+            "А еще мы устроим свой фестиваль, привезем звук, соберем творческих и музыкальных друзей, и предложить всем посозидать в формате кемпов. Покричать про важное, и почувствовать себя песчинкой на дне древнего океана, где жизнь измеряется миллионами лет.\n" +
+            " \n" +
+            "Даты: 12-17 июня, \n" +
+            "Перелеты Аэрофлотом до Актау, с прилетом 12го и вылетом вечером 17го. Идея: остаться и провести выходные на берегу Каспийского моря. \n" +
             "\n" +
-            "Место:\n" +
-            "Турецкий город Каш хорош, тут и море и горы и вообще очень уютно, не стереотипная Турция. \n" +
-            "Отель – тоже супер. Во-первых удобно расположен – и море, и центр с кафе и магазинами в 100 метрах, и дикий полустров для прогулок с другой стороны. Кажется, это лучшая локация в городе. Во-вторых офигенная веранда и крыша, с видом на море и городок, общие зоны для работы и отдыха, хорошие номера, в которых всегда можно уединиться, стабильный напор воды в душе и интернета\uD83C\uDFC4\uD83C\uDFFD\u200D♂️, частая уборка, и приятный дядька управляющий.\n" +
+            "Бюджет: 59000₽, входят 5 дней в пустыне на джипах с гидами, вся экипировка и еда, напитки, одна ночь в городе.  \n" +
             "\n" +
-            "Даты:\n" +
-            "Планируем начать с 20го марта и до 20 апреля, а может и дольше, все зависит от ваших заявок и от ситуации в мире. Вписаться можно на любой срок. \n" +
-            "\n" +
-            "Бюджет:\n" +
-            "25 евро в день марте, и 30 евро в апреле. Включает двухместное размещение в отеле, завтрак и набор фруктов, овощей с рынка, запас напитков для закатов, и еженедельную совместную активность на выходных (лодка/ хайк/ bbq). C одноместным проживанием на 15 евро дороже. Отдельно надо учесть обед, ужин. Есть доставка еды, много кафе и рестиков разной ценовой категории. Ориентировочно 10 евро в день.\n" +
-            "\n" +
-            "День в коливинге:\n" +
-            "В рабочее время собираемся работать работу в общих пространствах (веранда, зал), в свободное и вечернее время рефлексировать, организовывать себе совместный досуг – спортивный (бег, йога, шоссейники, теннис), творческий (музыкальные сеты, кино-просмотры), мыслительный (мини-лекции, чтобы делиться своим опытом, сессии придумывания идей и новых проектов, разговоры в поисках истины). Запустим традицию собираться на напиток каждый закат, а на выходных будем выбираться за пределы города и исследовать красоты. Хочется поменьше находитсья в сети, побольше с собой, с телом и с людьми. \n" +
-            "\n" +
-            "Чувствуем, что сейчас особенно важно быть в безопасном пространстве, и в окружении, которое способно на дела. Чтобы записаться – нужно ответить на вопросы бота, а любые вопросы можно задать @nikov";
-
+            "Запись через бот. Нажать /start.";
         sendPhotos(chatId, photots);
         sendMsgNoKeyboard(String.valueOf(chatId), text);
 
