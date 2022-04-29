@@ -1264,9 +1264,9 @@ public class RouteBot extends Bot {
     private void handleMore(Long chatId) {
         String methodLogPrefix = "handleMore: ";
         List<String> photots = new ArrayList<>();
-        photots.add("AgACAgIAAxkBAAKP3WJsI1hFTJZAgBrBVexQGJaq3GrEAAIKujEb-zdQSxoVWm8XNBS9AQADAgADbQADJAQ,");
-        photots.add("AgACAgIAAxkBAAKP22JsIxccr-FBcDdL6tTQcLafVUn2AAIYujEb-zdQS_TWVJF6GSRwAQADAgADeAADJAQ,");
-        photots.add("AgACAgIAAxkBAAKP3WJsI1hFTJZAgBrBVexQGJaq3GrEAAIKujEb-zdQSxoVWm8XNBS9AQADAgADbQADJAQ,");
+        photots.add("AgACAgIAAxkBAAKP3WJsI1hFTJZAgBrBVexQGJaq3GrEAAIKujEb-zdQSxoVWm8XNBS9AQADAgADbQADJAQ");
+        photots.add("AgACAgIAAxkBAAKP22JsIxccr-FBcDdL6tTQcLafVUn2AAIYujEb-zdQS_TWVJF6GSRwAQADAgADeAADJAQ");
+        photots.add("AgACAgIAAxkBAAKP3WJsI1hFTJZAgBrBVexQGJaq3GrEAAIKujEb-zdQSxoVWm8XNBS9AQADAgADbQADJAQ");
         photots.add("AgACAgIAAxkBAAKP22JsIxccr-FBcDdL6tTQcLafVUn2AAIYujEb-zdQS_TWVJF6GSRwAQADAgADcwADJAQ");
         photots.add("AgACAgIAAxkBAAKP6GJsJMtyZVOOJx-CQhWdG3QVLleHAAIKujEb-zdQSxoVWm8XNBS9AQADAgADeQADJAQ");
 
