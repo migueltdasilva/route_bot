@@ -1266,9 +1266,10 @@ public class RouteBot extends Bot {
         List<String> photots = new ArrayList<>();
         photots.add("AgACAgIAAxkBAAKP3WJsI1hFTJZAgBrBVexQGJaq3GrEAAIKujEb-zdQSxoVWm8XNBS9AQADAgADbQADJAQ");
         photots.add("AgACAgIAAxkBAAKP22JsIxccr-FBcDdL6tTQcLafVUn2AAIYujEb-zdQS_TWVJF6GSRwAQADAgADeAADJAQ");
-        photots.add("AgACAgIAAxkBAAKP3WJsI1hFTJZAgBrBVexQGJaq3GrEAAIKujEb-zdQSxoVWm8XNBS9AQADAgADbQADJAQ");
-        photots.add("AgACAgIAAxkBAAKP22JsIxccr-FBcDdL6tTQcLafVUn2AAIYujEb-zdQS_TWVJF6GSRwAQADAgADcwADJAQ");
-        photots.add("AgACAgIAAxkBAAKP6GJsJMtyZVOOJx-CQhWdG3QVLleHAAIKujEb-zdQSxoVWm8XNBS9AQADAgADeQADJAQ");
+        photots.add("AgACAgIAAxkBAAKP_mJsJjD1wQI5Lp8HU8iN2x5p1sC3AAILujEb-zdQS0VOu9vrhSbJAQADAgADbQADJAQ");
+        photots.add("AgACAgIAAxkBAAKP_2JsJjlPRmRqvz94Il678sBAkF2zAAIMujEb-zdQS6zUZpBZWuZTAQADAgADeAADJAQ");
+        photots.add("AgACAgIAAxkBAAKQAAFibCZgVjbkq4f1jRJDYxf5Xyu4RwACDboxG_s3UEvjbvc9BarmFwEAAwIAA3kAAyQE");
+        photots.add("AgACAgIAAxkBAAKQAWJsJnrcgV50zvbBkDyVlQoP4CGcAAIWujEb-zdQS6Lge5r1O2bcAQADAgADeQADJAQ");
 
         String text = "Западный Казахстан — это когда едешь 4 дня по бесконечному белому, и каждый день находишь в этой пустоте чудо света: гигантскую скалу из ниоткуда, поле разбросанных каменных шаров размером с человека, соляное озеро с идеальным отражением неба, облаков, тебя. Все это в полной автономии, воды в пустыне нет, перепады температур есть, так что волей не волей становишься кочующим и немного диким человеком — комфорт не нужен на фоне этой природы, только вперед, к новым чудесам. \n" +
             "\n" +
@@ -1279,7 +1280,7 @@ public class RouteBot extends Bot {
             "\n" +
             "Бюджет: 59000₽, входят 5 дней в пустыне на джипах с гидами, вся экипировка и еда, напитки, одна ночь в городе.  \n" +
             "\n" +
-            "Запись через бот. Нажать /start.";
+            "Запись через бот. Просто жми /start.";
         sendPhotos(chatId, photots);
         sendMsgNoKeyboard(String.valueOf(chatId), text);
 
