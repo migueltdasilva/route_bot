@@ -120,7 +120,7 @@ public class RouteBot extends Bot {
 //        hmTrips.put("baikal", "Хочу в Байкал");
         //hmTrips.put("buryat", "Хочу в Бурятию");
         hmTrips.put("kaz1", "Хочу в Мангистау");
-        hmTrips.put("kamchatka", "Хочу на Камчатку");
+        //hmTrips.put("kamchatka", "Хочу на Камчатку");
     }
     //private static final String[][] vQuestions = new String[hmTrips.size()][];
     private static final Map<String, String[]> hmQuestions = new HashMap<>();
@@ -686,6 +686,14 @@ public class RouteBot extends Bot {
         String tripId = message.substring(2);
         sendMsgNoMarkDown(debugChatId, userName + "\n" + hmTrips.get(tripId));
 
+        if (!hmTrips.containsKey(tripId)) {
+            sendMsgNoKeyboard(
+                String.valueOf(chatId),
+                "Ой. Похоже, что эта поездка уже не доступна, чтобы начать заново нажми /start.");
+
+            return;
+        }
+
         hmChat2Trip.put(chatId, tripId);
         jedis.set("t" + chatId, tripId);
         hmChat2UserInfo.put(chatId, userName);
@@ -904,8 +912,9 @@ public class RouteBot extends Bot {
             } else {
                 sendMsg(
                     String.valueOf(chatId),
-                    "Привет! Тут можно записаться в поездку рута ⚡️ \nСейчас есть варианты: \n - Автономное путешествие и фестиваль в западном Казахстане - июнь! /more" +
-                        "\n - Камчатка 21 - 29 июля или 29 июля - 6 августа" ,
+                    "Привет! Тут можно записаться в поездку рута ⚡️ \n" +
+                        "Сейчас есть варианты: \n" +
+                        " - Автономное путешествие и фестиваль в западном Казахстане - июнь! /more",
                     getInlineKeyBoardWithTrips());
             }
             debi(methodLogPrefix, "msg send");
