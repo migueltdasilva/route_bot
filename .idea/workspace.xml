@@ -30,7 +30,6 @@
   <component name="ChangeListManager">
     <list default="true" id="bbeb5125-01a8-474a-a022-21c968ce3cf9" name="Default Changelist" comment="Тестовая вторая версия бота">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/RouteBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RouteBot.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,17 +97,6 @@
     <configuration name="RouteBot" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="RouteBot" />
       <module name="route_bot" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -223,7 +211,7 @@
       <workItem from="1648909615459" duration="402000" />
       <workItem from="1651132643561" duration="324000" />
       <workItem from="1651253882026" duration="1581000" />
-      <workItem from="1652801500751" duration="345000" />
+      <workItem from="1652801500751" duration="1242000" />
     </task>
     <servers />
   </component>
@@ -282,7 +270,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/RouteBot.java</url>
-          <line>916</line>
+          <line>920</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
