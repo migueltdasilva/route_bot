@@ -965,8 +965,8 @@ public class RouteBot extends Bot {
                     "Привет! Тут можно записаться в поездку рута ⚡️ \n" +
                         "Сейчас есть варианты:" +
                         "\n - Автономное путешествие и фестиваль в западном Казахстане - июнь! /more" +
-                        "\n - Кавказ и парапланы 11-13 июня /more_kavkaz" +
-                        "\n - Сахалин и Курилы 26 июня - 6 июля\n" ,
+                        "\n - [Кавказ и парапланы](https://t.me/routecommunity/387) 11-13 июня /more_kavkaz" +
+                        "\n - Сахалин и Курилы 26 июня - 6 июля" ,
                     getInlineKeyBoardWithTrips());
             }
             debi(methodLogPrefix, "msg send");
@@ -1376,7 +1376,6 @@ public class RouteBot extends Bot {
             "план в фейсбуке \uD83E\uDE82";
         sendPhotos(chatId, photots);
         sendMsgNoKeyboard(String.valueOf(chatId), text);
-
     }
 
     private void addChatToDB(Long chatId) {
