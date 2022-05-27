@@ -1372,7 +1372,7 @@ public class RouteBot extends Bot {
             "Бюджет 23500 с отелем, джипами, экипом, едой на маршруте, но без парпаланов.\n" +
             "\n" +
             "куратор @Slavaext \n" +
-            "запись тут, жми  /start." +
+            "запись тут, жми  /start\n" +
             "план в фейсбуке \uD83E\uDE82";
         sendPhotos(chatId, photots);
         sendMsgNoKeyboard(String.valueOf(chatId), text);
