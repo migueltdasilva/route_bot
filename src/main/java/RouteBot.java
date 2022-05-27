@@ -89,6 +89,7 @@ public class RouteBot extends Bot {
         ALL_CHATS("/all_chats", "Покажи все чаты"),
         SEND_MSG("/send_msg", "Покажи все чаты"),
         MORE("/more", "Покажи все чаты"),
+        MORE_KAVKAZ("/more_kavkaz", "Покажи все чаты"),
         SEND_JOKE("/send_joke", "Могу отправить тебе шутку.");
 
         String name;
@@ -121,6 +122,7 @@ public class RouteBot extends Bot {
         //hmTrips.put("buryat", "Хочу в Бурятию");
         hmTrips.put("kaz1", "Хочу в Мангистау");
         hmTrips.put("kav", "Хочу на Кавказ");
+        hmTrips.put("sah", "Хочу на Сахалин");
 
         //hmTrips.put("kamchatka", "Хочу на Камчатку");
     }
@@ -460,7 +462,49 @@ public class RouteBot extends Bot {
                 "собираешься ли ты полетать с нами на парапланах и как ты себе" +
                 " это представляешь? А можешь записать, как будто ты уже на параплане?"
         });
+        hmQuestions.put("kav", new String[] {
+            "Классно, что ты решил присоединиться к нашей поездке!\n" +
+                "Чтобы оставить заявку – ответь, пожалуйста, на наши вопросы. " +
+                "Тебе понадобится 5 свободных минут и не стесняться.",
 
+            "Расскажи, пожалуйста, в двух словах, о себе: чем ты занимаешься, что ты любишь, почему хочешь поехать с нами?\n" +
+                "(Обещаю, дальше вопросы будут попроще. Или нет. Но точно не надо быть серьезным)\n",
+
+            "Когда в последний раз ты ночевал(а) в палатке и как вообще к ним относишься?",
+
+            "Есть ли что-то, ради чего ты готов(а) рано проснуться? Расскажи про последний такой случай.",
+
+            "Пришли, пожалуйста, ссылки на свои соц сети (например, фейсбук и инстаграм)",
+
+            "Я не смог получить твой ник в телеграмме, поэтому пришли," +
+                " пожалуйста, свой телефон, чтобы мы точно могли с тобой связаться.",
+
+            "Давай начнем разговор! Пожалуйста, запиши аудиосообщение про то, " +
+                "собираешься ли ты полетать с нами на парапланах и как ты себе" +
+                " это представляешь? А можешь записать, как будто ты уже на параплане?"
+        });
+
+        hmQuestions.put("sah", new String[] {
+            "Классно, что ты решил присоединиться к нашей поездке!\n" +
+                "Чтобы оставить заявку – ответь, пожалуйста, на наши вопросы. " +
+                "Тебе понадобится 5 свободных минут и не стесняться.",
+
+            "Расскажи, пожалуйста, в двух словах, о себе: чем ты занимаешься, что ты любишь, почему хочешь поехать с нами?\n" +
+                "(Обещаю, дальше вопросы будут попроще. Или нет. Но точно не надо быть серьезным)\n",
+
+            "Каким было твое самое запоминающееся путешествие по России? К бабушке в деревню тоже считается!",
+
+            "Что объединяет Богдана Хмельницкого и Николая Баранского?",
+
+            "Оказавшись перед Тихим океаном, что ты у него спросишь?",
+
+            "Пришли, пожалуйста, ссылки на свои соц сети (например, фейсбук и инстаграм)",
+
+            "Я не смог получить твой ник в телеграмме, поэтому пришли," +
+                " пожалуйста, свой телефон, чтобы мы точно могли с тобой связаться.",
+
+            "Коронный вопрос нашего бота — запиши аудиосообщение: каким звуком ты будешь отпугивать медведя, чтобы он больше никогда не захотел к тебе подойти?"
+        });
     }
 
     private Map<Long, List<String>> hmChat2Answers;
@@ -936,9 +980,10 @@ public class RouteBot extends Bot {
                 sendMsg(
                     String.valueOf(chatId),
                     "Привет! Тут можно записаться в поездку рута ⚡️ \n" +
-                        "Сейчас есть варианты: \n" +
-                        " - Автономное путешествие и фестиваль в западном Казахстане - июнь! /more\n" +
-                        " - Кавказ и парапланы 11-13 июня " ,
+                        "Сейчас есть варианты:" +
+                        "\n - Автономное путешествие и фестиваль в западном Казахстане - июнь! /more" +
+                        "\n - Кавказ и парапланы 11-13 июня /more_kavkaz" +
+                        "\n - Сахалин и Курилы 26 июня - 6 июля\n" ,
                     getInlineKeyBoardWithTrips());
             }
             debi(methodLogPrefix, "msg send");
@@ -975,6 +1020,9 @@ public class RouteBot extends Bot {
         } else if (cmd == Command.MORE) {
 
             handleMore(chatId);
+        } else if (cmd == Command.MORE_KAVKAZ) {
+
+            handleMoreKavkaz(chatId);
         } else if (cmd == Command.SEND_JOKE) {
             sendMsg(String.valueOf(chatId),"Шутка - хуютка!");
         } else {
@@ -1319,6 +1367,34 @@ public class RouteBot extends Bot {
 
     }
 
+    private void handleMoreKavkaz(Long chatId) {
+        String methodLogPrefix = "handleMore: ";
+        List<String> photots = new ArrayList<>();
+        photots.add("AgACAgIAAxkBAAKjm2KQyBIdwOmHtQvehIZyFQXui_XMAAJbvDEbToGISNrf6W-dZAAB5wEAAwIAA3kAAyQE");
+        photots.add("AgACAgIAAxkBAAKjl2KQx9eWlK7Rhs2-S63jBNdE7KgoAAJVvDEbToGISJ4hWEQZcOf8AQADAgADeQADJAQ");
+        photots.add("fAgACAgIAAxkBAAKjmWKQx_Zsnxa7EFvKnXYRblQb_K_VAAJXvDEbToGISB4PShyckOPzAQADAgADeQADJAQ");
+        photots.add("AgACAgIAAxkBAAKjnWKQyDMCJc--nNBvZvGb6IyT4LFbAAJcvDEbToGISLWa05Q7bP9FAQADAgADeQADJAQ");
+        photots.add("AgACAgIAAxkBAAKjn2KQyEjhdcrrGCVKAAHV4onH4Vvo4gACXbwxG06BiEhOHIKuF4KCtAEAAwIAA3kAAyQE");
+        photots.add("AgACAgIAAxkBAAKjo2KQyHn7UbRHciaac4lGLfJ8wYAEAAJgvDEbToGISIj3p6n0a6zXAQADAgADeQADJAQ");
+        photots.add("AgACAgIAAxkBAAKjoWKQyFuw_UY9TSbcT1bjNQk4MDksAAJfvDEbToGISMCTt1e_VBgDAQADAgADeQADJAQ");
+
+        String text = "11-13 ИЮНЯ — КАВКАЗ — ПАРАПЛАНЫ — ДЖИПЫ — ПАЛАТКИ — ВОДОПАД — ХЫЧИН \n" +
+            "\n" +
+            "Традиционный и любимый маршрут на выходные по Кабардино-Балкарии. \n" +
+            "\n" +
+            "Два идеальных дня среди большой природы Кавказа, которую целиком не понять, но можно почувствовать – умчать в горы на фотогеничных джипах, парить над огромным ущельем, засыпать в палатке под шум реки, ощущать брызги от водопада, много бегать по лугам, собирая цветы и улыбки. \n" +
+            "\n" +
+            "Шалость работает, 5 раз проверяли.\n" +
+            "\n" +
+            "Бюджет 23500 с отелем, джипами, экипом, едой на маршруте, но без парпаланов.\n" +
+            "\n" +
+            "куратор @Slavaext \n" +
+            "запись тут, жми  /start." +
+            "план в фейсбуке \uD83E\uDE82";
+        sendPhotos(chatId, photots);
+        sendMsgNoKeyboard(String.valueOf(chatId), text);
+
+    }
 
     private void addChatToDB(Long chatId) {
         Jedis jedis = Helper.getConnection();
