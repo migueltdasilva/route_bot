@@ -967,7 +967,7 @@ public class RouteBot extends Bot {
                         "Сейчас есть варианты:" +
                         "\n - Автономное путешествие и фестиваль в западном Казахстане - июнь! /kazakhstan" +
                         "\n - Кавказ и парапланы 11-13 июня /kavkaz" +
-                        "\n - Сахалин и Курилы 26 июня - 6 июля /sakhain" ,
+                        "\n - Сахалин и Курилы 26 июня - 6 июля /sakhalin" ,
                     getInlineKeyBoardWithTrips());
             }
             debi(methodLogPrefix, "msg send");
