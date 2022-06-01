@@ -88,8 +88,9 @@ public class RouteBot extends Bot {
         MAILING("/mailing", "Запустить произвольную рассылку"),
         ALL_CHATS("/all_chats", "Покажи все чаты"),
         SEND_MSG("/send_msg", "Покажи все чаты"),
-        MORE("/more", "Покажи все чаты"),
-        MORE_KAVKAZ("/more_kavkaz", "Покажи все чаты"),
+        KAZAKHSTAN("/kazakhstan", "Покажи все чаты"),
+        KAVKAZ("/kavkaz", "Покажи все чаты"),
+        SAKHALIN("/sakhalin", "Покажи все чаты"),
         SEND_JOKE("/send_joke", "Могу отправить тебе шутку.");
 
         String name;
@@ -964,9 +965,9 @@ public class RouteBot extends Bot {
                     String.valueOf(chatId),
                     "Привет! Тут можно записаться в поездку рута ⚡️ \n" +
                         "Сейчас есть варианты:" +
-                        "\n - Автономное путешествие и фестиваль в западном Казахстане - июнь! /more" +
-                        "\n - Кавказ и парапланы 11-13 июня /more_kavkaz" +
-                        "\n - Сахалин и Курилы 26 июня - 6 июля" ,
+                        "\n - Автономное путешествие и фестиваль в западном Казахстане - июнь! /kazakhstan" +
+                        "\n - Кавказ и парапланы 11-13 июня /kavkaz" +
+                        "\n - Сахалин и Курилы 26 июня - 6 июля /sakhain" ,
                     getInlineKeyBoardWithTrips());
             }
             debi(methodLogPrefix, "msg send");
@@ -1000,12 +1001,15 @@ public class RouteBot extends Bot {
             }
 
             sendMsgToChatHandle(chatId, msg.getText());
-        } else if (cmd == Command.MORE) {
+        } else if (cmd == Command.KAZAKHSTAN) {
 
             handleMore(chatId);
-        } else if (cmd == Command.MORE_KAVKAZ) {
+        } else if (cmd == Command.KAVKAZ) {
 
             handleMoreKavkaz(chatId);
+        } else if (cmd == Command.SAKHALIN) {
+
+            handleMoreSakhalin(chatId);
         } else if (cmd == Command.SEND_JOKE) {
             sendMsg(String.valueOf(chatId),"Шутка - хуютка!");
         } else {
@@ -1377,6 +1381,37 @@ public class RouteBot extends Bot {
         sendPhotos(chatId, photots);
         sendMsgNoKeyboard(String.valueOf(chatId), text);
     }
+
+    private void handleMoreSakhalin(Long chatId) {
+        String methodLogPrefix = "handleMore: ";
+        List<String> photots = new ArrayList<>();
+        photots.add("AgACAgIAAxkBAAKpFGKX1E4eY8Rg0cDZ_xl1CtLYG-0wAAKhvzEb7J7ASDyRMoGIzQY9AQADAgADeQADJAQ");
+        photots.add("AgACAgIAAxkBAAKpFWKX1MEcV_pWj9YSd4Pg08m2b77QAALJvzEb7J7ASOOXRKz_R6B3AQADAgADeQADJAQ");
+        photots.add("AgACAgIAAxkBAAKpFmKX1N8umd_zecFHGmRihGFFcfdCAALKvzEb7J7ASELuFrwFCCUMAQADAgADeQADJAQ");
+        photots.add("AgACAgIAAxkBAAKpF2KX1PcJmxgBEfQ9zNZe8GbX5CcyAALLvzEb7J7ASIC4cTc7kY8CAQADAgADeQADJAQ");
+        photots.add("AgACAgIAAxkBAAKpGGKX1Q8jimTqp7HpY7tvnLKXW3u8AALMvzEb7J7ASB2QyeBJxfSFAQADAgADeQADJAQ");
+        photots.add("AgACAgIAAxkBAAKpGWKX1SBo2nhAfPQSdkXX9ERgqPNMAALOvzEb7J7ASI56qUBGrMjOAQADAgADeQADJAQ");
+        photots.add("AgACAgIAAxkBAAKpGmKX1TK24j1G1LAySse-99t0Rm9UAALPvzEb7J7ASI87Y09zAiLLAQADAgADeAADJAQ");
+        photots.add("AgACAgIAAxkBAAKpG2KX1Y74K9XxhaohRF_KQCWGqanoAALQvzEb7J7ASBi86d772kRdAQADAgADeQADJAQ");
+
+        String text = "26 ИЮНЯ-6 ИЮЛЯ — САХАРИЛЫ — ТИХИЙ — ДЖИПЫ — СЕРФ — КРАБЫ \n" +
+            "\n" +
+            "\n" +
+            "Возвращаемся на любимый остров в Тихом океане – Итуруп. Мы свозили туда уже сто человек и все сто влюбились – «мы ездим по острову и собираем мурашки». \n" +
+            "\n" +
+            "На этот раз программа на Итурупе стала длиннее: посмотрим все точки прошлогодных маршрутов во главе с Белыми скалами, устроим пикник на Янкито, а еще доберемся до новых мест – куда еще не ступала рут-нога. По примеру одной из групп мы добавили день на лодках, а еще попробуем устроить больше разговоров и историй от местных жителей.\n" +
+            "\n" +
+            "Кроме Итурупа мы еще посмотрим Сахалин – самый красивый мыс Птичий, серф и крабы в бухте Тихая, попробуем доплыть до маяка Анива, изучим, что нового появилось в Южно-Сахалинске за последний год. \n" +
+            "\n" +
+            "Всего 18 человек + @nemescu и @nikov\n" +
+            "\n" +
+            "Бюджет 109000 на 10 дней – более подробно про бюджет в комментарии. \n" +
+            "\n" +
+            "\uD83E\uDD80Запись в дальневосточный отпуск через /start";
+        sendPhotos(chatId, photots);
+        sendMsgNoKeyboard(String.valueOf(chatId), text);
+    }
+
 
     private void addChatToDB(Long chatId) {
         Jedis jedis = Helper.getConnection();
