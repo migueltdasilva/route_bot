@@ -91,6 +91,7 @@ public class RouteBot extends Bot {
         KAZAKHSTAN("/kazakhstan", "Покажи все чаты"),
         KAVKAZ("/kavkaz", "Покажи все чаты"),
         SAKHALIN("/sakhalin", "Покажи все чаты"),
+        DAGESTAN("/dagestan", "Покажи все чаты"),
         SEND_JOKE("/send_joke", "Могу отправить тебе шутку.");
 
         String name;
@@ -989,10 +990,8 @@ public class RouteBot extends Bot {
                     String.valueOf(chatId),
                     "Привет! Тут можно записаться в поездку рута ⚡️ \n" +
                         "Сейчас есть варианты:" +
-                        "\n - Автономное путешествие и фестиваль в западном Казахстане - июнь! /kazakhstan" +
-                        "\n - Кавказ и парапланы 11-13 июня /kavkaz" +
                         "\n - Сахалин и Курилы 26 июня - 6 июля /sakhalin" +
-                        "\n - Сплав в Дагестане 8-10 июля" ,
+                        "\n - Сплав в Дагестане 8-10 июля /dagestan" ,
                     getInlineKeyBoardWithTrips());
             }
             debi(methodLogPrefix, "msg send");
@@ -1035,6 +1034,9 @@ public class RouteBot extends Bot {
         } else if (cmd == Command.SAKHALIN) {
 
             handleMoreSakhalin(chatId);
+        } else if (cmd == Command.DAGESTAN) {
+
+            handleMoreDagestan(chatId);
         } else if (cmd == Command.SEND_JOKE) {
             sendMsg(String.valueOf(chatId),"Шутка - хуютка!");
         } else {
@@ -1437,6 +1439,34 @@ public class RouteBot extends Bot {
         sendMsgNoKeyboard(String.valueOf(chatId), text);
     }
 
+    private void handleMoreDagestan(Long chatId) {
+        String methodLogPrefix = "handleMore: ";
+        List<String> photots = new ArrayList<>();
+        photots.add("AgACAgIAAxkBAAK262Kx0AOFdVn7XjKCyuXQpMdhUEm7AAL7vDEbKiyRSY9rJZ7fMCNmAQADAgADeQADKQQ");
+        photots.add("AgACAgIAAxkBAAK27GKx0CCOD-8ve03DHBs-LhIq3CzBAAL9vDEbKiyRSRKMQgKeboiBAQADAgADeQADKQQ");
+        photots.add("AgACAgIAAxkBAAK27WKx0DaKsewucRpESCQimk7F4cPPAAL_vDEbKiyRSUiImyuPMn6SAQADAgADeQADKQQ");
+        photots.add("AgACAgIAAxkBAAK27mKx0EnDTjzj9mxHLHKbY0F2P9q0AAO9MRsqLJFJAmR39tBGb9IBAAMCAAN5AAMpBA");
+        photots.add("AgACAgIAAxkBAAK272Kx0FeI3DwwuHsgeAvnw9P46RnwAAIBvTEbKiyRSVTi6uhAZjGaAQADAgADeQADKQQ");
+
+        String text = "СЛАВОСПЛАВ – ДАГЕСТАН – СУЛАКСКИЙ КАНЬОН – 8-10 ИЮЛЯ\n" +
+            "\n" +
+            "Возвращаемся в гостеприимную республику с новым маршрутом — сплав по Сулакскому каньону. Вокруг высоченные скалы и бирюзовая вода, впереди 30 км гребли и закат с вином в палаточном лагере.\n" +
+            "\n" +
+            "\n" +
+            "8/07, пт: прилет в Махачкалу. Вечером или в течение дня, чтобы погулять у моря или поработать из кафе. Вечером встретимся на ужин. \n" +
+            "\n" +
+            "9/07, сб: рано утром старт к Сулакскому каньону — самому глубокому в Европе!\n" +
+            "\n" +
+            "Сплавляться будем под присмотром уже знакомых инструкторов-гидов. Водный маршрут - это 30 км или 10 часов, разбитые на 2 дня. Будем не только активно грести, но созерцать величественную природу с воды, останавливаться на обеды и купания. К 19 часам приплывем к точке для ночлега, разобьем лагерь, раскупорим вино своими сильными руками и устроим красивый ужин. \n" +
+            "\n" +
+            "\n" +
+            "10/07, вс: Сразу после завтрака – небольшой хайк недалеко от лагеря. Дальше лениво доплываем наш маршрут, пикнике и аэропорт. \n" +
+            "\n" +
+            "Бюджет 30 000 руб. Подробнее в комментарии.\n" +
+            "Запись в сплав /start";
+        sendPhotos(chatId, photots);
+        sendMsgNoKeyboard(String.valueOf(chatId), text);
+    }
 
     private void addChatToDB(Long chatId) {
         Jedis jedis = Helper.getConnection();
