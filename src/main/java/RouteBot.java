@@ -122,8 +122,6 @@ public class RouteBot extends Bot {
 //        hmTrips.put("polyana", "Хочу в Поляну Красную");
 //        hmTrips.put("baikal", "Хочу в Байкал");
         //hmTrips.put("buryat", "Хочу в Бурятию");
-        hmTrips.put("kaz1", "Хочу в Мангистау");
-        hmTrips.put("kav", "Хочу на Кавказ");
         hmTrips.put("sah", "Хочу на Сахалин");
         hmTrips.put("dag", "Хочу в Дагестан");
 
