@@ -1013,7 +1013,7 @@ public class RouteBot extends Bot {
                     String.valueOf(chatId),
                     "Привет! Тут можно записаться в поездку рута ⚡️ \n" +
                         "Сейчас есть варианты:" +
-                        "\n - Поход на Алтай, 21-28 августа" +
+                        "\n - Поход на Алтай 21-28 августа" +
                         "\n - Сплав в Дагестане 9-11 сентября /dagestan" ,
                     getInlineKeyBoardWithTrips());
             }
