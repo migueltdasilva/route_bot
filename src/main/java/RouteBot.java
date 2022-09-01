@@ -123,9 +123,10 @@ public class RouteBot extends Bot {
 //        hmTrips.put("baikal", "Хочу в Байкал");
         //hmTrips.put("buryat", "Хочу в Бурятию");
         //hmTrips.put("zakam", "Хочу в Закан");
-        hmTrips.put("alt", "Хочу на Алтай");
+
         hmTrips.put("kar", "Хочу в Карелию");
         hmTrips.put("dag1", "Хочу в Дагестан");
+        hmTrips.put("krg", "Хочу в Киргизию");
 
         //hmTrips.put("kamchatka", "Хочу на Камчатку");
     }
@@ -1060,9 +1061,9 @@ public class RouteBot extends Bot {
                     String.valueOf(chatId),
                     "Привет! Тут можно записаться в поездку рута ⚡️ \n" +
                         "Сейчас есть варианты:" +
-                        "\n - Поход на Алтай 21-28 августа" +
                         "\n - Карелия 9-11 сентября" +
-                        "\n - Сплав в Дагестане 9-11 сентября /dagestan" ,
+                        "\n - Сплав в Дагестане 9-11 сентября /dagestan" +
+                        "\n - Киргизия 3-9 октября",
                     getInlineKeyBoardWithTrips());
             }
             debi(methodLogPrefix, "msg send");
