@@ -733,6 +733,7 @@ public class RouteBot extends Bot {
         sendMessage.setChatId(chatId);
         if (html) {
             sendMessage.setText(s);
+            sendMessage.disableWebPagePreview();
         } else {
             sendMessage.setText(Helper.escapeChars(s));
         }
@@ -1096,7 +1097,7 @@ public class RouteBot extends Bot {
                     "Привет! Тут можно записаться в поездку рута ⚡️ \n" +
                         "Сейчас есть варианты:" +
                         "\n - <a href=\"https://t.me/routecommunity/527\">Дальние-дальние Зеленцы 30 сентября - 2 октября</a>\n" +
-                        "\n - Киргизия 3-9 октября",
+                        "\n - <a href=\"https://t.me/routecommunity/515\">Киргизия 3-9 октября</a>",
                     getInlineKeyBoardWithTrips(), true);
             }
             debi(methodLogPrefix, "msg send");
