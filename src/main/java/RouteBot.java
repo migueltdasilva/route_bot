@@ -732,9 +732,9 @@ public class RouteBot extends Bot {
         }
         sendMessage.setChatId(chatId);
         if (html) {
-            sendMessage.setText(Helper.escapeChars(s));
-        } else {
             sendMessage.setText(s);
+        } else {
+            sendMessage.setText(Helper.escapeChars(s));
         }
         if (inlineKeyboardMarkup != null) {
             sendMessage.setReplyMarkup(inlineKeyboardMarkup);
