@@ -1096,7 +1096,7 @@ public class RouteBot extends Bot {
                     String.valueOf(chatId),
                     "Привет! Тут можно записаться в поездку рута ⚡️ \n" +
                         "Сейчас есть варианты:" +
-                        "\n - <a href=\"https://t.me/routecommunity/527\">Дальние-дальние Зеленцы 30 сентября - 2 октября</a>\n" +
+                        "\n - <a href=\"https://t.me/routecommunity/527\">Дальние-дальние Зеленцы 30 сентября - 2 октября</a>" +
                         "\n - <a href=\"https://t.me/routecommunity/515\">Киргизия 3-9 октября</a>",
                     getInlineKeyBoardWithTrips(), true);
             }
