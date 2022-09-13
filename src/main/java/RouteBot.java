@@ -722,16 +722,20 @@ public class RouteBot extends Bot {
 
     public synchronized void sendMsg(
             String chatId, String s, ReplyKeyboardMarkup replyKeyboardMarkup,
-            InlineKeyboardMarkup inlineKeyboardMarkup, boolean markdownv2) {
+            InlineKeyboardMarkup inlineKeyboardMarkup, boolean html) {
         debi("sendMsg: ",chatId +" = " + s);
         SendMessage sendMessage = new SendMessage();
-        if (markdownv2) {
-            sendMessage.enableMarkdownV2(true);
+        if (html) {
+            sendMessage.enableHtml(true);
         } else {
             sendMessage.enableMarkdown(true);
         }
         sendMessage.setChatId(chatId);
-        sendMessage.setText(Helper.escapeChars(s));
+        if (html) {
+            sendMessage.setText(Helper.escapeChars(s));
+        } else {
+            sendMessage.setText(s);
+        }
         if (inlineKeyboardMarkup != null) {
             sendMessage.setReplyMarkup(inlineKeyboardMarkup);
         }  else {
@@ -762,9 +766,9 @@ public class RouteBot extends Bot {
     }
 
     public synchronized void sendMsg(
-        String chatId, String s, InlineKeyboardMarkup inlineKeyboardMarkup, boolean markdownv2) {
+        String chatId, String s, InlineKeyboardMarkup inlineKeyboardMarkup, boolean html) {
 
-        sendMsg(chatId, s, null, inlineKeyboardMarkup, markdownv2);
+        sendMsg(chatId, s, null, inlineKeyboardMarkup, html);
     }
 
     public synchronized void sendMsgNotSafe(
@@ -1091,7 +1095,7 @@ public class RouteBot extends Bot {
                     String.valueOf(chatId),
                     "Привет! Тут можно записаться в поездку рута ⚡️ \n" +
                         "Сейчас есть варианты:" +
-                        "\n - [Дальние-дальние Зеленцы 30 сентября - 2 октября](https://t.me/routecommunity/527) \n" +
+                        "\n - <a href=\"https://t.me/routecommunity/527\">Дальние-дальние Зеленцы 30 сентября - 2 октября</a>\n" +
                         "\n - Киргизия 3-9 октября",
                     getInlineKeyBoardWithTrips(), true);
             }
