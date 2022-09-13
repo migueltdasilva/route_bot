@@ -211,6 +211,8 @@ public class Helper {
             .replace("]", "\\]")
             .replace("-", "\\-")
             .replace("!", "\\!")
+            .replace("(", "\\(")
+            .replace(")", "\\)")
             .replace("'", "\\'");
     }
 
