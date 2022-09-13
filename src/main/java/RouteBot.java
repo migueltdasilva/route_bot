@@ -124,8 +124,6 @@ public class RouteBot extends Bot {
         //hmTrips.put("buryat", "Хочу в Бурятию");
         //hmTrips.put("zakam", "Хочу в Закан");
 
-        hmTrips.put("kar", "Хочу в Карелию");
-        hmTrips.put("dag1", "Хочу в Дагестан");
         hmTrips.put("zel", "Хочу в Зеленцы");
         hmTrips.put("krg", "Хочу в Киргизию");
 
@@ -708,12 +706,12 @@ public class RouteBot extends Bot {
 
     public synchronized void sendMsg(Long chatId, String s) {
 
-        sendMsg(String.valueOf(chatId), s, null, null);
+        sendMsg(String.valueOf(chatId), s, null, null, false);
     }
 
     public synchronized void sendMsg(String chatId, String s) {
 
-        sendMsg(chatId, s, null, null);
+        sendMsg(chatId, s, null, null, false);
     }
 
     public synchronized void sendMsg(
@@ -724,10 +722,14 @@ public class RouteBot extends Bot {
 
     public synchronized void sendMsg(
             String chatId, String s, ReplyKeyboardMarkup replyKeyboardMarkup,
-            InlineKeyboardMarkup inlineKeyboardMarkup) {
+            InlineKeyboardMarkup inlineKeyboardMarkup, boolean markdownv2) {
         debi("sendMsg: ",chatId +" = " + s);
         SendMessage sendMessage = new SendMessage();
-        sendMessage.enableMarkdown(true);
+        if (markdownv2) {
+            sendMessage.enableMarkdownV2(true);
+        } else {
+            sendMessage.enableMarkdown(true);
+        }
         sendMessage.setChatId(chatId);
         sendMessage.setText(Helper.escapeChars(s));
         if (inlineKeyboardMarkup != null) {
@@ -750,13 +752,19 @@ public class RouteBot extends Bot {
     public synchronized void sendMsg(
         String chatId, String s, ReplyKeyboardMarkup replyKeyboardMarkup) {
 
-        sendMsg(chatId, s, replyKeyboardMarkup, null);
+        sendMsg(chatId, s, replyKeyboardMarkup, null, false);
     }
 
     public synchronized void sendMsg(
         String chatId, String s, InlineKeyboardMarkup inlineKeyboardMarkup) {
 
-        sendMsg(chatId, s, null, inlineKeyboardMarkup);
+        sendMsg(chatId, s, null, inlineKeyboardMarkup, false);
+    }
+
+    public synchronized void sendMsg(
+        String chatId, String s, InlineKeyboardMarkup inlineKeyboardMarkup, boolean markdownv2) {
+
+        sendMsg(chatId, s, null, inlineKeyboardMarkup, markdownv2);
     }
 
     public synchronized void sendMsgNotSafe(
@@ -1083,11 +1091,9 @@ public class RouteBot extends Bot {
                     String.valueOf(chatId),
                     "Привет! Тут можно записаться в поездку рута ⚡️ \n" +
                         "Сейчас есть варианты:" +
-                        "\n - Карелия 9-11 сентября" +
-                        "\n - Сплав в Дагестане 9-11 сентября /dagestan" +
-                        "\n - Дальние-дальние Зеленцы 30 сентября - 2 октября\n" +
+                        "\n - '[Дальние-дальние Зеленцы 30 сентября - 2 октября](<https://t.me/routecommunity/527>)' \n" +
                         "\n - Киргизия 3-9 октября",
-                    getInlineKeyBoardWithTrips());
+                    getInlineKeyBoardWithTrips(), true);
             }
             debi(methodLogPrefix, "msg send");
         } else if (cmd == Command.SEND_RESPONSES) {
