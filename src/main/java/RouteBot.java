@@ -1089,9 +1089,9 @@ public class RouteBot extends Bot {
             } else {
                 sendMsg(
                     String.valueOf(chatId),
-                    "Привет! Тут можно записаться в поездку рута ⚡️ \n" +
+                    "Привет\\! Тут можно записаться в поездку рута ⚡️ \n" +
                         "Сейчас есть варианты:" +
-                        "\n - '[Дальние-дальние Зеленцы 30 сентября - 2 октября](<https://t.me/routecommunity/527>)' \n" +
+                        "\n - [Дальние-дальние Зеленцы 30 сентября - 2 октября](https://t.me/routecommunity/527) \n" +
                         "\n - Киргизия 3-9 октября",
                     getInlineKeyBoardWithTrips(), true);
             }
