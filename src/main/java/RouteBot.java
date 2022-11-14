@@ -125,7 +125,7 @@ public class RouteBot extends Bot {
         //hmTrips.put("zakam", "Хочу в Закан");
 //        hmTrips.put("hell", "Хочу на Хеллоуин");
 //        hmTrips.put("kash", "Хочу в Каш");
-        hmTrips.put("r007", "Хочу на ROUTE 007");
+//        hmTrips.put("r007", "Хочу на ROUTE 007");
         hmTrips.put("gesh", "Хочу в Геш");
 //        hmTrips.put("zel", "Хочу в Зеленцы");
 //        hmTrips.put("krg", "Хочу в Киргизию");
@@ -1188,8 +1188,7 @@ public class RouteBot extends Bot {
                     String.valueOf(chatId),
                     "Привет! Тут можно записаться в поездку рута ⚡️ \n" +
                         "Сейчас есть такие варианты:" +
-                        "\n - ROUTE 007 и пляж бабочек" +
-                        "\n - Шерегеш с 4 по 11 декабря",
+                        "\n - <a href=\"https://t.me/routecommunity/582\">Шерегеш с 3 по 11 декабря</a>",
                     getInlineKeyBoardWithTrips(), true);
             }
             debi(methodLogPrefix, "msg send");
