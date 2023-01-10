@@ -47,7 +47,7 @@ import static java.lang.System.out;
 public class RouteBot extends Bot {
 
     private static final String name = "helloroute_bot";
-    private static final String token = "1013761197:AAHv3uKJJzwiWMsQVxgnxUsqbpP5-PSrRy4";
+    private static final String token = "";
     private static final String adminChatId = "3099992";
     private static final Set<Long> hsAdminChatId = new HashSet<>();
     private static final String debugChatId = "-487931131";
